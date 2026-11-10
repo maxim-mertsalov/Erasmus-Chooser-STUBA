@@ -1,5 +1,6 @@
 "use client";
 import { useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { ArrowLeft, ArrowRight, FileSpreadsheet, FolderOpen, GraduationCap, RotateCcw, Upload } from "lucide-react";
 import { FIELD_LABELS, isMappingValid } from "@/lib/columns";
 import type { Agreement, ColumnMapping, FieldKey, Filters } from "@/lib/types";
@@ -123,6 +124,12 @@ export function StartScreen(props: {
             <span>Upload spreadsheet</span>
           </button>
         </Card>
+      </div>
+
+      <div className="pt-2 text-center">
+        <Link href="/privacy" className="text-xs text-slate-300 transition-colors hover:text-slate-500">
+          Privacy Policy
+        </Link>
       </div>
     </div>
   );
