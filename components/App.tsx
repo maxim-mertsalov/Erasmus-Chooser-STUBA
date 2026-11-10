@@ -250,14 +250,16 @@ export default function App() {
     return (
       <>
         {error && (
-          <div className="fixed left-1/2 top-3 z-[3000] flex max-w-xl -translate-x-1/2 items-start gap-2 rounded-lg border border-rose-200 bg-rose-50 px-4 py-2.5 text-sm text-rose-800 shadow-lg">
+          <div className="fixed left-1/2 top-3 z-[3000] flex max-w-xl -translate-x-1/2 items-start gap-2 rounded-lg border border-rose-200 bg-rose-50 px-4 py-2.5 text-sm text-rose-800 shadow-lg dark:border-rose-900 dark:bg-rose-950 dark:text-rose-200">
             <span className="flex-1">⚠ {error}</span>
             <button onClick={() => setError("")}>✕</button>
           </div>
         )}
         {busy && (
-          <div className="fixed inset-0 z-[3000] flex items-center justify-center bg-slate-900/30">
-            <div className="rounded-lg bg-white px-5 py-3 text-sm font-medium shadow-xl">{busy}</div>
+          <div className="fixed inset-0 z-[3000] flex items-center justify-center bg-slate-900/30 dark:bg-black/60">
+            <div className="rounded-lg border border-slate-200 bg-white px-5 py-3 text-sm font-medium shadow-xl dark:border-slate-700 dark:bg-slate-900">
+              {busy}
+            </div>
           </div>
         )}
         <MainView
@@ -282,9 +284,9 @@ export default function App() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 px-4 py-10">
+    <main className="min-h-screen bg-slate-50 px-4 py-10 dark:bg-slate-950">
       {error && (
-        <div className="mx-auto mb-4 flex max-w-3xl items-start gap-2 rounded-lg border border-rose-200 bg-rose-50 p-3 text-sm text-rose-800">
+        <div className="mx-auto mb-4 flex max-w-3xl items-start gap-2 rounded-lg border border-rose-200 bg-rose-50 p-3 text-sm text-rose-800 dark:border-rose-900 dark:bg-rose-950/70 dark:text-rose-200">
           <span className="flex-1">⚠ {error}</span>
           <button onClick={() => setError("")}>✕</button>
         </div>

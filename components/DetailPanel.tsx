@@ -17,9 +17,9 @@ export interface UniGroup {
 
 function Section({ title, children, right }: { title: string; children: React.ReactNode; right?: React.ReactNode }) {
   return (
-    <section className="border-t border-slate-100 px-4 py-3">
+    <section className="border-t border-slate-100 px-4 py-3 dark:border-slate-800">
       <div className="mb-2 flex items-center justify-between">
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">{title}</h3>
+        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{title}</h3>
         {right}
       </div>
       {children}
@@ -66,9 +66,9 @@ export function DetailPanel({
     setGeoMsg("");
     try {
       const r = await autoLocate(uni.name, uni.country, uni.code);
-      if (r) store.setUni(uni.uniKey, { lat: r.lat, lon: r.lon, geoSource: r.source, geoLabel: r.label });
+      if (r) store.setUni(uni.uniKey, { lat: r.lat, lon: r.lon, geoSource: r.source, geoScore: r.score, geoLabel: r.label });
       else {
-        store.setUni(uni.uniKey, { geoSource: "failed" });
+        store.setUni(uni.uniKey, { geoSource: "failed", geoScore: undefined });
         setGeoMsg("Nothing found. Try searching or pick on the map.");
       }
     } catch (e) {
@@ -105,11 +105,11 @@ export function DetailPanel({
   notes.forEach((n) => (notesByCat.get(n.category) ?? notesByCat.set(n.category, []).get(n.category)!).push(n));
 
   return (
-    <aside className="flex h-full flex-col overflow-hidden border-l border-slate-200 bg-white shadow-xl">
+    <aside className="flex h-full flex-col overflow-hidden border-l border-slate-200 bg-white text-slate-900 shadow-xl dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100">
       <header className="flex items-start gap-2 px-4 py-3">
         <div className="min-w-0 flex-1">
-          <h2 className="font-semibold leading-tight">{uni.name}</h2>
-          <div className="mt-0.5 text-sm text-slate-500">
+          <h2 className="font-semibold leading-tight text-slate-900 dark:text-slate-100">{uni.name}</h2>
+          <div className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
             {flag(uni.country)} {countryName(uni.country)} {uni.code && <>· <code>{uni.code}</code></>}
           </div>
         </div>
@@ -128,7 +128,11 @@ export function DetailPanel({
                 <div
                   key={a.id}
                   onClick={() => onSelectRow(a.id)}
-                  className={`cursor-pointer rounded-md border p-2 text-sm ${selectedRow === a.id ? "border-indigo-400 bg-indigo-50" : "border-slate-200"} ${rd.hidden ? "opacity-50" : ""}`}
+                  className={`cursor-pointer rounded-md border p-2 text-sm ${
+                    selectedRow === a.id
+                      ? "border-indigo-400 bg-indigo-50 dark:border-indigo-500 dark:bg-indigo-950/50"
+                      : "border-slate-200 dark:border-slate-700"
+                  } ${rd.hidden ? "opacity-50" : ""}`}
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span>
@@ -136,13 +140,13 @@ export function DetailPanel({
                     </span>
                     <Stars value={rd.priority ?? 0} disabled={ro} onChange={(v) => store.setRow(a.id, { priority: v })} size="text-sm" />
                   </div>
-                  <div className="mt-1 flex items-center gap-2 text-xs text-slate-500">
-                    <span className={expired ? "text-rose-600" : ""}>
+                  <div className="mt-1 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                    <span className={expired ? "text-rose-600 dark:text-rose-400" : ""}>
                       {a.validFrom || "?"} → {a.validTo || "?"}
                     </span>
-                    {!a.active && <span className="rounded bg-slate-200 px-1">inactive</span>}
+                    {!a.active && <span className="rounded bg-slate-200 px-1 dark:bg-slate-700">inactive</span>}
                     <select
-                      className="ml-auto rounded border border-slate-200 px-1 py-0.5"
+                      className="ml-auto rounded border border-slate-200 bg-white px-1 py-0.5 dark:border-slate-700 dark:bg-slate-900"
                       value={rd.status ?? ""}
                       disabled={ro}
                       onClick={(e) => e.stopPropagation()}
@@ -155,7 +159,7 @@ export function DetailPanel({
                       ))}
                     </select>
                     <button
-                      className="inline-flex items-center text-slate-500 hover:text-slate-800"
+                      className="inline-flex items-center text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
                       disabled={ro}
                       title={rd.hidden ? "Show" : "Hide"}
                       onClick={(e) => {
@@ -178,7 +182,7 @@ export function DetailPanel({
 
         <Section title="University info">
           <div className="grid grid-cols-[100px_1fr] items-center gap-2 text-sm">
-            <span className="text-slate-500">Language</span>
+            <span className="text-slate-500 dark:text-slate-400">Language</span>
             <CommitInput
               value={data.language ?? ""}
               disabled={ro}
@@ -186,9 +190,9 @@ export function DetailPanel({
               placeholder="e.g. English, German B2"
               onCommit={(v) => store.setUni(uni.uniKey, { language: v })}
             />
-            <span className="text-slate-500">City</span>
+            <span className="text-slate-500 dark:text-slate-400">City</span>
             <CommitInput value={data.city ?? ""} disabled={ro} onCommit={(v) => store.setUni(uni.uniKey, { city: v })} />
-            <span className="text-slate-500">Cost of living</span>
+            <span className="text-slate-500 dark:text-slate-400">Cost of living</span>
             <select
               className={inputCls}
               disabled={ro}
@@ -196,11 +200,11 @@ export function DetailPanel({
               onChange={(e) => store.setUni(uni.uniKey, { costOfLiving: e.target.value as "" })}
             >
               <option value="">—</option>
-              <option value="low">💶 Low</option>
-              <option value="medium">💶💶 Medium</option>
-              <option value="high">💶💶💶 High</option>
+              <option value="low">€ Low</option>
+              <option value="medium">€€ Medium</option>
+              <option value="high">€€€ High</option>
             </select>
-            <span className="text-slate-500">Tags</span>
+            <span className="text-slate-500 dark:text-slate-400">Tags</span>
             <CommitInput
               value={data.tags ?? ""}
               disabled={ro}
@@ -235,17 +239,33 @@ export function DetailPanel({
             {data.lat != null ? (
               <div>
                 <span
-                  className={`mr-1 rounded px-1.5 py-0.5 text-xs ${data.geoSource === "approx" ? "bg-amber-100 text-amber-800" : data.geoSource === "manual" ? "bg-violet-100 text-violet-800" : "bg-emerald-100 text-emerald-800"}`}
+                  className={`mr-1.5 inline-block rounded px-1.5 py-0.5 text-xs font-medium ${
+                    data.geoSource === "exact"
+                      ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300"
+                      : data.geoSource === "auto"
+                        ? "bg-amber-100 text-amber-800 dark:bg-amber-950/70 dark:text-amber-300"
+                        : data.geoSource === "manual"
+                          ? "bg-violet-100 text-violet-800 dark:bg-violet-950/70 dark:text-violet-300"
+                          : "bg-rose-100 text-rose-800 dark:bg-rose-950/70 dark:text-rose-300"
+                  }`}
                 >
-                  {data.geoSource === "approx" ? "approximate" : data.geoSource}
+                  {data.geoSource === "exact"
+                    ? "Exact match"
+                    : data.geoSource === "auto"
+                      ? `Resolved automatically${data.geoScore != null ? ` (${data.geoScore}%)` : ""}`
+                      : data.geoSource === "manual"
+                        ? "Manual"
+                        : `Unresolved${data.geoScore != null ? ` (${data.geoScore}%)` : ""}`}
                 </span>
-                <span className="text-slate-600">{data.geoLabel}</span>
+                <span className="text-slate-600 dark:text-slate-300">{data.geoLabel}</span>
                 <div className="text-xs text-slate-400">
                   {data.lat.toFixed(5)}, {data.lon?.toFixed(5)}
                 </div>
               </div>
             ) : (
-              <div className="text-amber-700">{data.geoSource === "failed" ? "Not found automatically." : "Not located yet."}</div>
+              <div className="text-amber-700 dark:text-amber-400">
+                {data.geoSource === "failed" ? "Not found automatically." : "Not located yet."}
+              </div>
             )}
           </div>
           {!ro && (
@@ -281,14 +301,14 @@ export function DetailPanel({
                 </button>
               </div>
               {geoHits && (
-                <div className="max-h-48 overflow-auto rounded border border-slate-200">
+                <div className="max-h-48 overflow-auto rounded border border-slate-200 dark:border-slate-700">
                   {geoHits.length === 0 && <div className="p-2 text-xs text-slate-500">No results</div>}
                   {geoHits.map((h, i) => (
                     <button
                       key={i}
-                      className="block w-full border-b border-slate-100 px-2 py-1 text-left text-xs hover:bg-indigo-50"
+                      className="block w-full border-b border-slate-100 px-2 py-1 text-left text-xs hover:bg-indigo-50 dark:border-slate-800 dark:hover:bg-indigo-950/60"
                       onClick={() => {
-                        store.setUni(uni.uniKey, { lat: h.lat, lon: h.lon, geoSource: "manual", geoLabel: h.label });
+                        store.setUni(uni.uniKey, { lat: h.lat, lon: h.lon, geoSource: "manual", geoScore: 100, geoLabel: h.label });
                         setGeoHits(null);
                       }}
                     >
@@ -303,7 +323,7 @@ export function DetailPanel({
                   Set
                 </button>
               </div>
-              {geoMsg && <div className="text-xs text-amber-700">{geoMsg}</div>}
+              {geoMsg && <div className="text-xs text-amber-700 dark:text-amber-400">{geoMsg}</div>}
             </div>
           )}
         </Section>
@@ -349,10 +369,10 @@ export function DetailPanel({
           <div className="flex flex-col gap-3">
             {[...notesByCat.entries()].map(([cat, items]) => (
               <div key={cat}>
-                <div className="mb-1 text-xs font-medium text-indigo-700">{cat}</div>
+                <div className="mb-1 text-xs font-medium text-indigo-700 dark:text-indigo-400">{cat}</div>
                 <div className="flex flex-col gap-1.5">
                   {items.map((n) => (
-                    <div key={n.key} className="group rounded-md bg-slate-50 p-2 text-sm">
+                    <div key={n.key} className="group rounded-md bg-slate-50 p-2 text-sm dark:bg-slate-800">
                       {editingNote === n.key ? (
                         <textarea
                           autoFocus

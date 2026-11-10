@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
         {children}
         <Script src="https://www.googletagmanager.com/gtm.js?id=GTM-T598JCN2" strategy="afterInteractive" />
         <Script id="google-tag-init" strategy="afterInteractive">

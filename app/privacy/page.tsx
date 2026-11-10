@@ -8,23 +8,23 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="min-h-screen bg-slate-50 px-4 py-10 text-slate-700">
-      <div className="mx-auto max-w-2xl rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+    <main className="min-h-screen bg-slate-50 px-4 py-10 text-slate-700 dark:bg-slate-950 dark:text-slate-300">
+      <div className="mx-auto max-w-2xl rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8 dark:border-slate-800 dark:bg-slate-900">
         <div className="flex items-center justify-between gap-4 text-sm">
-          <Link href="/" className="text-indigo-600 hover:underline">
+          <Link href="/" className="text-indigo-600 hover:underline dark:text-indigo-400">
             ← Back to Erasmus Chooser
           </Link>
-          <Link href="/terms" className="text-slate-400 hover:text-slate-600 hover:underline">
+          <Link href="/terms" className="text-slate-400 hover:text-slate-600 hover:underline dark:text-slate-500 dark:hover:text-slate-300">
             Terms of Use
           </Link>
         </div>
 
-        <h1 className="mt-4 text-2xl font-bold text-slate-900">Privacy Policy</h1>
+        <h1 className="mt-4 text-2xl font-bold text-slate-900 dark:text-slate-100">Privacy Policy</h1>
         <p className="mt-1 text-xs text-slate-400">Last updated: November 10, 2026</p>
 
         <div className="mt-6 space-y-5 text-sm leading-relaxed">
           <section>
-            <h2 className="font-semibold text-slate-900">1. Overview</h2>
+            <h2 className="font-semibold text-slate-900 dark:text-slate-100">1. Overview</h2>
             <p className="mt-1">
               Erasmus Chooser is a client-first tool for browsing and organizing university exchange agreements. We do not operate our own user
               account database and we do not sell or share your spreadsheet data or notes with third parties.
@@ -32,7 +32,7 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-semibold text-slate-900">2. Google Account &amp; Google Drive / Sheets Data</h2>
+            <h2 className="font-semibold text-slate-900 dark:text-slate-100">2. Google Account &amp; Google Drive / Sheets Data</h2>
             <p className="mt-1">
               If you sign in with Google, the app requests only the non-sensitive <code>https://www.googleapis.com/auth/drive.file</code> scope.
               This grants access strictly to spreadsheets you explicitly pick via Google Picker or copies created by the app.
@@ -51,7 +51,7 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-semibold text-slate-900">3. Local File Mode</h2>
+            <h2 className="font-semibold text-slate-900 dark:text-slate-100">3. Local File Mode</h2>
             <p className="mt-1">
               If you upload a local spreadsheet (<code>.xlsx</code>, <code>.xls</code>, <code>.csv</code>), the file is parsed entirely inside your
               browser. Your file contents and notes stay in your browser&apos;s <code>localStorage</code> and are never uploaded to our server.
@@ -59,7 +59,7 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-semibold text-slate-900">4. Analytics &amp; Search Indexing</h2>
+            <h2 className="font-semibold text-slate-900 dark:text-slate-100">4. Analytics &amp; Search Indexing</h2>
             <p className="mt-1">
               We use Google Tag Manager / Google Analytics to collect basic, aggregated usage statistics (such as page views, device type, and
               browser region) in order to understand how the site is used and improve it. Google Analytics may set cookies or collect standard
@@ -69,7 +69,7 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-semibold text-slate-900">5. Map &amp; Geocoding Services</h2>
+            <h2 className="font-semibold text-slate-900 dark:text-slate-100">5. Map &amp; Geocoding Services</h2>
             <p className="mt-1">
               To display partner universities on the map, university names and country codes (no personal user data) are queried against OpenStreetMap
               Nominatim and Komoot Photon via our geocoding proxy, and map tiles are loaded directly from OpenStreetMap.
@@ -77,7 +77,7 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-semibold text-slate-900">6. Data Removal</h2>
+            <h2 className="font-semibold text-slate-900 dark:text-slate-100">6. Data Removal</h2>
             <p className="mt-1">
               You can revoke the app&apos;s access at any time from your Google Account permissions settings, delete the <code>_erasmus_app</code>{" "}
               sheet from your spreadsheet, clear your browser storage, or block analytics cookies in your browser.

@@ -1,16 +1,16 @@
 "use client";
 import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, FileSpreadsheet, FolderOpen, GraduationCap, RotateCcw, Upload } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronDown, Download, ExternalLink, FileSpreadsheet, FolderOpen, GraduationCap, RotateCcw, Upload } from "lucide-react";
 import { FIELD_LABELS, isMappingValid } from "@/lib/columns";
 import type { Agreement, ColumnMapping, FieldKey, Filters } from "@/lib/types";
 import { b, inputCls, Spinner } from "./ui";
 
 function Card({ title, subtitle, children }: { title: string; subtitle?: string; children: React.ReactNode }) {
   return (
-    <div className="mx-auto w-full max-w-3xl rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
-      <h2 className="text-xl font-semibold">{title}</h2>
-      {subtitle && <p className="mt-1 text-sm text-slate-500">{subtitle}</p>}
+    <div className="mx-auto w-full max-w-3xl rounded-xl border border-slate-200 bg-white p-4 text-slate-900 shadow-sm sm:p-6 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100">
+      <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">{title}</h2>
+      {subtitle && <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{subtitle}</p>}
       <div className="mt-5">{children}</div>
     </div>
   );
@@ -40,23 +40,25 @@ export function StartScreen(props: {
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-4">
       <div className="text-center">
-        <h1 className="inline-flex items-center gap-2.5 text-3xl font-bold tracking-tight">
-          <GraduationCap className="h-8 w-8 text-indigo-600" strokeWidth={1.75} />
+        <h1 className="inline-flex items-center gap-2.5 text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+          <GraduationCap className="h-8 w-8 text-indigo-600 dark:text-indigo-400" strokeWidth={1.75} />
           <span>Erasmus Chooser</span>
         </h1>
-        <p className="mt-2 text-slate-500">Load the agreements spreadsheet, filter it, take notes and explore partners on a map.</p>
+        <p className="mt-2 text-slate-500 dark:text-slate-400">
+          Load the agreements spreadsheet, filter it, take notes and explore partners on a map.
+        </p>
       </div>
 
       {props.busy && (
-        <div className="flex items-center justify-center gap-2 rounded-lg bg-indigo-50 p-3 text-sm text-indigo-700">
+        <div className="flex items-center justify-center gap-2 rounded-lg bg-indigo-50 p-3 text-sm text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300">
           <Spinner /> {props.busy}
         </div>
       )}
 
       {props.invite && (
-        <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-4">
+        <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-4 dark:border-indigo-900 dark:bg-indigo-950/50">
           <div className="font-medium">You have been invited to open a shared spreadsheet.</div>
-          <p className="text-sm text-slate-600">Sign in with Google and confirm access in the dialog.</p>
+          <p className="text-sm text-slate-600 dark:text-slate-300">Sign in with Google and confirm access in the dialog.</p>
           <button className={b("primary", "mt-3")} disabled={disabled || !props.googleConfigured} onClick={props.onAcceptInvite}>
             Open shared spreadsheet
           </button>
@@ -66,7 +68,7 @@ export function StartScreen(props: {
       {props.resumeLabel && (
         <button className={b("secondary", "justify-between py-3")} disabled={disabled} onClick={props.onResume}>
           <span className="inline-flex items-center gap-2">
-            <RotateCcw className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+            <RotateCcw className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
             <span>
               Continue with <b>{props.resumeLabel}</b>
             </span>
@@ -78,7 +80,7 @@ export function StartScreen(props: {
       <div className="grid gap-4 md:grid-cols-2">
         <Card title="Google Sheets" subtitle="Recommended. Notes are saved into the spreadsheet and shared with everyone who opens it.">
           {!props.googleConfigured ? (
-            <p className="rounded bg-amber-50 p-3 text-sm text-amber-800">
+            <p className="rounded bg-amber-50 p-3 text-sm text-amber-800 dark:bg-amber-950/50 dark:text-amber-300">
               Google API keys are not configured. Add them to <code>.env.local</code> (see README).
             </p>
           ) : !props.signedIn ? (
@@ -87,7 +89,7 @@ export function StartScreen(props: {
             </button>
           ) : (
             <div className="flex flex-col gap-3">
-              <div className="flex items-center justify-between text-sm text-slate-600">
+              <div className="flex items-center justify-between text-sm text-slate-600 dark:text-slate-300">
                 <span className="truncate">Signed in{props.user ? ` as ${props.user}` : ""}</span>
                 <button className="text-xs text-slate-400 hover:underline" onClick={props.onSignOut}>
                   Sign out
@@ -126,12 +128,116 @@ export function StartScreen(props: {
         </Card>
       </div>
 
-      <div className="flex items-center justify-center gap-3 pt-2 text-xs text-slate-300">
-        <Link href="/privacy" className="transition-colors hover:text-slate-500">
+      {/* STU sample spreadsheet guide */}
+      <div className="rounded-xl border border-slate-200 bg-white/80 p-4 text-sm shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="min-w-0">
+            <div className="flex items-center gap-2 font-medium text-slate-800 dark:text-slate-100">
+              <FileSpreadsheet className="h-4 w-4 shrink-0 text-indigo-600 dark:text-indigo-400" strokeWidth={1.75} />
+              <span>Example agreements spreadsheet (STU Bratislava)</span>
+            </div>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+              Download the official STU Excel file and upload it via <b>Local file</b> or import it into Google Sheets.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <a
+              href="https://www.stuba.sk/dokumenty/docs/stu/pracoviska/rektorat/odd_zahranicne_vztahy/Erasmus_studium/Dohody_platne_k_11.06.2026.xlsx"
+              target="_blank"
+              rel="noreferrer"
+              className={b("secondary", "py-1 text-xs")}
+            >
+              <Download className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+              <span>Download .xlsx</span>
+            </a>
+            <a
+              href="https://www.stuba.sk/sk/spolupraca/medzinarodne-aktivity/sk/zahranicne-partnerske-institucie.html?page_id=204"
+              target="_blank"
+              rel="noreferrer"
+              className={b("ghost", "py-1 text-xs")}
+            >
+              <ExternalLink className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+              <span>STU partners page</span>
+            </a>
+          </div>
+        </div>
+
+        <details className="group mt-3 border-t border-slate-100 pt-2.5 dark:border-slate-800">
+          <summary className="inline-flex cursor-pointer list-none items-center gap-1 text-xs font-medium text-indigo-600 hover:underline dark:text-indigo-400">
+            <span>How to find the latest spreadsheet on stuba.sk</span>
+            <ChevronDown className="h-3.5 w-3.5 transition-transform group-open:rotate-180" strokeWidth={1.75} />
+          </summary>
+          <ol className="mt-2.5 list-decimal space-y-1.5 pl-5 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+            <li>
+              Open{" "}
+              <a
+                href="https://www.stuba.sk/sk/spolupraca/medzinarodne-aktivity/erasmus-mobility"
+                target="_blank"
+                rel="noreferrer"
+                className="text-indigo-600 hover:underline dark:text-indigo-400"
+              >
+                Erasmus+ mobility | Slovenská technická univerzita v Bratislave
+              </a>
+              .
+            </li>
+            <li>
+              Click{" "}
+              <a
+                href="https://www.stuba.sk/18277"
+                target="_blank"
+                rel="noreferrer"
+                className="text-indigo-600 hover:underline dark:text-indigo-400"
+              >
+                Študentské mobility
+              </a>
+              .
+            </li>
+            <li>
+              Click{" "}
+              <a
+                href="https://www.stuba.sk/1818"
+                target="_blank"
+                rel="noreferrer"
+                className="text-indigo-600 hover:underline dark:text-indigo-400"
+              >
+                Štúdium
+              </a>
+              .
+            </li>
+            <li>
+              Under <i>&ldquo;Kam môžete vycestovať?&rdquo;</i>, open{" "}
+              <a
+                href="https://www.stuba.sk/sk/spolupraca/medzinarodne-aktivity/sk/zahranicne-partnerske-institucie.html?page_id=204"
+                target="_blank"
+                rel="noreferrer"
+                className="text-indigo-600 hover:underline dark:text-indigo-400"
+              >
+                Aktuálny zoznam partnerských univerzít
+              </a>
+              .
+            </li>
+            <li>
+              Download the Excel file via{" "}
+              <a
+                href="https://www.stuba.sk/dokumenty/docs/stu/pracoviska/rektorat/odd_zahranicne_vztahy/Erasmus_studium/Dohody_platne_k_11.06.2026.xlsx"
+                target="_blank"
+                rel="noreferrer"
+                className="text-indigo-600 hover:underline dark:text-indigo-400"
+              >
+                Dohody programu Erasmus+ platné k 11.06.2026
+              </a>
+              .
+            </li>
+          </ol>
+        </details>
+      </div>
+
+      <div className="flex items-center justify-center gap-3 pt-2 text-xs text-slate-400/70 dark:text-slate-600">
+        <Link href="/privacy" className="transition-colors hover:text-slate-600 dark:hover:text-slate-400">
           Privacy Policy
         </Link>
         <span>·</span>
-        <Link href="/terms" className="transition-colors hover:text-slate-500">
+        <Link href="/terms" className="transition-colors hover:text-slate-600 dark:hover:text-slate-400">
           Terms of Use
         </Link>
       </div>
@@ -222,12 +328,12 @@ export function ColumnMappingStep(props: {
         ))}
       </div>
 
-      <div className="mt-5 overflow-x-auto rounded border border-slate-200">
+      <div className="mt-5 overflow-x-auto rounded border border-slate-200 dark:border-slate-700">
         <table className="w-full text-xs">
-          <thead className="bg-slate-50">
+          <thead className="bg-slate-50 dark:bg-slate-800">
             <tr>
               {fields.map((f) => (
-                <th key={f} className="px-2 py-1 text-left font-medium text-slate-500">
+                <th key={f} className="px-2 py-1 text-left font-medium text-slate-500 dark:text-slate-400">
                   {FIELD_LABELS[f].label}
                 </th>
               ))}
@@ -235,7 +341,7 @@ export function ColumnMappingStep(props: {
           </thead>
           <tbody>
             {preview.map((r, i) => (
-              <tr key={i} className="border-t border-slate-100">
+              <tr key={i} className="border-t border-slate-100 dark:border-slate-800">
                 {fields.map((f) => (
                   <td key={f} className="max-w-48 truncate px-2 py-1">
                     {mapping[f] >= 0 ? r[mapping[f]] : ""}
@@ -278,10 +384,10 @@ function FilterGroup({
       <div className="mb-2 flex items-center justify-between">
         <h3 className="font-medium">{title}</h3>
         <div className="flex gap-2 text-xs">
-          <button className="text-indigo-600 hover:underline" onClick={() => onChange(items.map((i) => i[0]))}>
+          <button className="text-indigo-600 hover:underline dark:text-indigo-400" onClick={() => onChange(items.map((i) => i[0]))}>
             All
           </button>
-          <button className="text-slate-500 hover:underline" onClick={() => onChange([])}>
+          <button className="text-slate-500 hover:underline dark:text-slate-400" onClick={() => onChange([])}>
             None
           </button>
         </div>
@@ -292,7 +398,9 @@ function FilterGroup({
             key={v}
             onClick={() => toggle(v)}
             className={`rounded-full border px-3 py-1 text-sm transition ${
-              selected.includes(v) ? "border-indigo-600 bg-indigo-600 text-white" : "border-slate-300 bg-white hover:border-indigo-400"
+              selected.includes(v)
+                ? "border-indigo-600 bg-indigo-600 text-white dark:border-indigo-500 dark:bg-indigo-500"
+                : "border-slate-300 bg-white hover:border-indigo-400 dark:border-slate-700 dark:bg-slate-800 dark:hover:border-indigo-500"
             }`}
           >
             {v} <span className="opacity-60">{n}</span>

@@ -35,7 +35,7 @@ export interface Agreement {
   sourceRow: number;
 }
 
-export type GeoSource = "auto" | "approx" | "manual" | "failed";
+export type GeoSource = "exact" | "auto" | "approx" | "unresolved" | "manual" | "failed";
 
 export interface UniData {
   language?: string;
@@ -45,6 +45,7 @@ export interface UniData {
   lat?: number;
   lon?: number;
   geoSource?: GeoSource;
+  geoScore?: number; // 0..100 similarity
   geoLabel?: string;
 }
 
@@ -102,7 +103,7 @@ export interface Filters {
   showHidden: boolean;
   onlyActive: boolean;
   hideExpired: boolean;
-  location: "" | "missing" | "approx" | "ok";
+  location: "" | "missing" | "unresolved" | "auto" | "exact" | "manual";
 }
 
 export const NOTE_CATEGORIES = [
@@ -117,10 +118,10 @@ export const NOTE_CATEGORIES = [
 ];
 
 export const STATUSES: { value: RowStatus; label: string; cls: string }[] = [
-  { value: "", label: "—", cls: "" },
-  { value: "interested", label: "Interested", cls: "bg-sky-100 text-sky-800" },
-  { value: "shortlisted", label: "Shortlisted", cls: "bg-violet-100 text-violet-800" },
-  { value: "applied", label: "Applied", cls: "bg-amber-100 text-amber-800" },
-  { value: "accepted", label: "Accepted", cls: "bg-emerald-100 text-emerald-800" },
-  { value: "rejected", label: "Rejected", cls: "bg-rose-100 text-rose-800" },
+  { value: "", label: "—", cls: "bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400" },
+  { value: "interested", label: "Interested", cls: "bg-sky-100 text-sky-800 dark:bg-sky-950/70 dark:text-sky-300" },
+  { value: "shortlisted", label: "Shortlisted", cls: "bg-violet-100 text-violet-800 dark:bg-violet-950/70 dark:text-violet-300" },
+  { value: "applied", label: "Applied", cls: "bg-amber-100 text-amber-800 dark:bg-amber-950/70 dark:text-amber-300" },
+  { value: "accepted", label: "Accepted", cls: "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300" },
+  { value: "rejected", label: "Rejected", cls: "bg-rose-100 text-rose-800 dark:bg-rose-950/70 dark:text-rose-300" },
 ];

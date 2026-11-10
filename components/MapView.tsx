@@ -1,8 +1,17 @@
 "use client";
 import "leaflet/dist/leaflet.css";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useSyncExternalStore } from "react";
 import { Languages, MessageSquareText } from "lucide-react";
 import { CircleMarker, MapContainer, Popup, TileLayer, Tooltip, useMap, useMapEvents } from "react-leaflet";
+
+const DARK_QUERY = "(prefers-color-scheme: dark)";
+function subscribeDark(cb: () => void) {
+  const mq = window.matchMedia(DARK_QUERY);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+}
+const getIsDark = () => window.matchMedia(DARK_QUERY).matches;
+const getIsDarkServer = () => false;
 import type { CircleMarker as LCircleMarker } from "leaflet";
 import { flag } from "@/lib/countries";
 import type { Agreement, UniData } from "@/lib/types";
@@ -14,6 +23,7 @@ export interface MapPoint {
   lat: number;
   lon: number;
   approx: boolean;
+  locStatus: "exact" | "auto" | "unresolved" | "manual";
   priority: number;
   data: UniData;
   agreements: Agreement[];
@@ -103,6 +113,7 @@ export default function MapView(props: {
   geoStatus: React.ReactNode;
 }) {
   const markers = useRef(new Map<string, LCircleMarker>());
+  const isDark = useSyncExternalStore(subscribeDark, getIsDark, getIsDarkServer);
   const { points, selected } = props;
   // Higher priority markers are drawn on top.
   const ordered = useMemo(() => [...points].sort((a, b) => a.priority - b.priority), [points]);
@@ -138,10 +149,10 @@ export default function MapView(props: {
               center={[p.lat + dy, p.lon + dx]}
               radius={isSel ? 11 : 7}
               pathOptions={{
-                color: isSel ? "#1e1b4b" : "#ffffff",
+                color: isSel ? (isDark ? "#ffffff" : "#1e1b4b") : isDark ? "#0f172a" : "#ffffff",
                 weight: isSel ? 3 : 1.5,
                 fillColor: COLORS[Math.min(p.priority, 5)],
-                fillOpacity: 0.9,
+                fillOpacity: isDark ? 0.95 : 0.9,
                 dashArray: p.approx ? "3 3" : undefined,
               }}
               eventHandlers={{ click: () => !props.pickLabel && props.onSelectUni(p.uniKey) }}
@@ -154,17 +165,26 @@ export default function MapView(props: {
                   <div className="font-semibold">
                     {flag(p.country)} {p.name}
                   </div>
-                  {p.data.city && <div className="text-slate-500">{p.data.city}</div>}
-                  {p.approx && <div className="text-xs text-amber-600">Approximate location (city)</div>}
+                  {p.data.city && <div className="text-slate-500 dark:text-slate-400">{p.data.city}</div>}
+                  {p.locStatus === "unresolved" && (
+                    <div className="my-0.5 inline-block rounded bg-rose-100 px-1.5 py-0.5 text-xs font-medium text-rose-700 dark:bg-rose-950/70 dark:text-rose-300">
+                      Unresolved — verify location
+                    </div>
+                  )}
+                  {p.locStatus === "auto" && (
+                    <div className="my-0.5 inline-block rounded bg-amber-100 px-1.5 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-950/70 dark:text-amber-300">
+                      Resolved automatically
+                    </div>
+                  )}
                   {p.data.language && (
                     <div className="inline-flex items-center gap-1.5">
-                      <Languages className="h-3.5 w-3.5 shrink-0 text-slate-500" strokeWidth={1.75} />
+                      <Languages className="h-3.5 w-3.5 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
                       <span>{p.data.language}</span>
                     </div>
                   )}
                   {p.noteCount > 0 && (
                     <div className="inline-flex items-center gap-1.5">
-                      <MessageSquareText className="h-3.5 w-3.5 shrink-0 text-slate-500" strokeWidth={1.75} />
+                      <MessageSquareText className="h-3.5 w-3.5 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
                       <span>{p.noteCount} note(s)</span>
                     </div>
                   )}
@@ -172,14 +192,14 @@ export default function MapView(props: {
                     {p.agreements.map((a) => (
                       <button
                         key={a.id}
-                        className="block w-full rounded px-1 text-left hover:bg-indigo-50"
+                        className="block w-full rounded px-1 text-left hover:bg-indigo-50 dark:hover:bg-indigo-950/60"
                         onClick={() => props.onSelectRow(p.uniKey, a.id)}
                       >
                         <b>{a.faculty}</b> · {a.program} {a.validTo && <span className="text-slate-400">until {a.validTo}</span>}
                       </button>
                     ))}
                   </div>
-                  <button className="mt-2 text-indigo-600 hover:underline" onClick={() => props.onOpenDetails(p.uniKey)}>
+                  <button className="mt-2 text-indigo-600 hover:underline dark:text-indigo-400" onClick={() => props.onOpenDetails(p.uniKey)}>
                     Open details →
                   </button>
                 </div>
@@ -198,9 +218,9 @@ export default function MapView(props: {
         </div>
       )}
 
-      <div className="absolute bottom-6 left-2 z-[1000] flex flex-col gap-1 rounded-lg bg-white/90 px-3 py-2 text-xs shadow">
+      <div className="absolute bottom-6 left-2 z-[1000] flex flex-col gap-1 rounded-lg bg-white/90 px-3 py-2 text-xs shadow dark:border dark:border-slate-700 dark:bg-slate-900/90 dark:text-slate-200">
         <div className="flex items-center gap-1.5">
-          <span className="text-slate-500">Priority:</span>
+          <span className="text-slate-500 dark:text-slate-400">Priority:</span>
           {COLORS.map((c, i) => (
             <span key={i} className="inline-flex items-center gap-0.5">
               <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ background: c }} />
@@ -208,7 +228,7 @@ export default function MapView(props: {
             </span>
           ))}
         </div>
-        {props.missingCount > 0 && <div className="text-amber-700">{props.missingCount} universities without location</div>}
+        {props.missingCount > 0 && <div className="text-amber-700 dark:text-amber-400">{props.missingCount} universities without location</div>}
         {props.geoStatus}
       </div>
     </div>

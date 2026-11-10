@@ -69,10 +69,15 @@ const COLUMNS: { key: SortKey; label: React.ReactNode; cls?: string }[] = [
   { key: "location", label: <MapPin className="mx-auto h-3.5 w-3.5" strokeWidth={1.75} />, cls: "w-10" },
 ];
 
-function locState(state: StoreState, uniKey: string): "ok" | "approx" | "missing" {
+type LocStatus = "exact" | "auto" | "unresolved" | "manual" | "missing";
+
+function locState(state: StoreState, uniKey: string): LocStatus {
   const d = state.uni.get(uniKey);
   if (d?.lat == null) return "missing";
-  return d.geoSource === "approx" ? "approx" : "ok";
+  if (d.geoSource === "manual") return "manual";
+  if (d.geoSource === "exact") return "exact";
+  if (d.geoSource === "auto") return "auto";
+  return "unresolved";
 }
 
 export function MainView(props: {
@@ -206,7 +211,7 @@ export function MainView(props: {
         case "notes":
           return (state.notes.get(a.uniKey)?.length ?? 0) + (state.links.get(a.uniKey)?.length ?? 0);
         case "location":
-          return ["missing", "approx", "ok"].indexOf(locState(state, a.uniKey));
+          return ["missing", "unresolved", "auto", "exact", "manual"].indexOf(locState(state, a.uniKey));
         default:
           return a[sort.key];
       }
@@ -232,13 +237,15 @@ export function MainView(props: {
         miss++;
         return;
       }
+      const loc = locState(state, uniKey);
       pts.push({
         uniKey,
         name: g.name,
         country: g.country,
         lat: d.lat,
         lon: d.lon,
-        approx: d.geoSource === "approx",
+        approx: loc === "unresolved",
+        locStatus: loc === "missing" ? "unresolved" : loc,
         priority: Math.max(0, ...rows.map((r) => state.row.get(r.id)?.priority ?? 0)),
         data: d,
         agreements: rows,
@@ -270,7 +277,10 @@ export function MainView(props: {
         try {
           const r = await autoLocate(g.name, g.country, g.code);
           if (cancelled) return;
-          store.setUni(g.uniKey, r ? { lat: r.lat, lon: r.lon, geoSource: r.source, geoLabel: r.label } : { geoSource: "failed" });
+          store.setUni(
+            g.uniKey,
+            r ? { lat: r.lat, lon: r.lon, geoSource: r.source, geoScore: r.score, geoLabel: r.label } : { geoSource: "failed" },
+          );
         } catch (e) {
           if (!cancelled) setGeo((s) => ({ ...s, error: (e as Error).message, current: "" }));
           return;
@@ -363,17 +373,17 @@ export function MainView(props: {
   };
 
   return (
-    <div className="flex h-screen flex-col">
+    <div className="flex h-screen flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       {/* Top bar */}
-      <header className="flex items-center gap-2 border-b border-slate-200 bg-white px-2.5 py-2 sm:px-3">
-        <button className={b("ghost", "shrink-0 px-2 text-indigo-600")} onClick={props.onClose} title="Back to start">
+      <header className="flex items-center gap-2 border-b border-slate-200 bg-white px-2.5 py-2 sm:px-3 dark:border-slate-800 dark:bg-slate-900">
+        <button className={b("ghost", "shrink-0 px-2 text-indigo-600 dark:text-indigo-400")} onClick={props.onClose} title="Back to start">
           <GraduationCap className="h-5 w-5" strokeWidth={1.75} />
         </button>
         <div className="min-w-0 flex-1 min-[580px]:flex-initial">
-          <div className="truncate text-sm font-semibold">
+          <div className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">
             {props.source.kind === "google" ? props.source.title : props.source.fileName}
           </div>
-          <div className="truncate text-xs text-slate-500">
+          <div className="truncate text-xs text-slate-500 dark:text-slate-400">
             {sorted.length}/{base.length}{" "}
             <span className="hidden min-[580px]:inline">agreements · {groups.size} universities</span>
           </div>
@@ -386,20 +396,24 @@ export function MainView(props: {
             <button
               type="button"
               onClick={() => setMobileTab((t) => (t === "table" ? "map" : "table"))}
-              className="inline-flex h-[34px] overflow-hidden rounded-md border border-slate-300 text-sm font-medium"
+              className="inline-flex h-[34px] overflow-hidden rounded-md border border-slate-300 text-sm font-medium dark:border-slate-700"
               title="Switch between Table and Map"
             >
               <span
                 className={`inline-flex items-center gap-1.5 px-2.5 ${
-                  mobileTab === "table" ? "bg-indigo-600 text-white" : "bg-white text-slate-700"
+                  mobileTab === "table"
+                    ? "bg-indigo-600 text-white dark:bg-indigo-500"
+                    : "bg-white text-slate-700 dark:bg-slate-900 dark:text-slate-200"
                 }`}
               >
                 <Table2 className="h-4 w-4 shrink-0" strokeWidth={1.75} />
                 <span className="hidden min-[580px]:inline">Table</span>
               </span>
               <span
-                className={`inline-flex items-center gap-1.5 border-l border-slate-300 px-2.5 ${
-                  mobileTab === "map" ? "bg-indigo-600 text-white" : "bg-white text-slate-700"
+                className={`inline-flex items-center gap-1.5 border-l border-slate-300 px-2.5 dark:border-slate-700 ${
+                  mobileTab === "map"
+                    ? "bg-indigo-600 text-white dark:bg-indigo-500"
+                    : "bg-white text-slate-700 dark:bg-slate-900 dark:text-slate-200"
                 }`}
               >
                 <MapIcon className="h-4 w-4 shrink-0" strokeWidth={1.75} />
@@ -407,10 +421,12 @@ export function MainView(props: {
               </span>
             </button>
           ) : (
-            <div className="inline-flex h-[34px] overflow-hidden rounded-md border border-slate-300 text-sm font-medium">
+            <div className="inline-flex h-[34px] overflow-hidden rounded-md border border-slate-300 text-sm font-medium dark:border-slate-700">
               <button
                 className={`inline-flex items-center gap-1.5 px-3 ${
-                  desktopTable ? "bg-indigo-600 text-white" : "bg-white text-slate-700 hover:bg-slate-50"
+                  desktopTable
+                    ? "bg-indigo-600 text-white dark:bg-indigo-500"
+                    : "bg-white text-slate-700 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
                 }`}
                 onClick={() => (desktopTable && !desktopMap ? null : setDesktopTable(!desktopTable))}
               >
@@ -418,8 +434,10 @@ export function MainView(props: {
                 <span>Table</span>
               </button>
               <button
-                className={`inline-flex items-center gap-1.5 border-l border-slate-300 px-3 ${
-                  desktopMap ? "bg-indigo-600 text-white" : "bg-white text-slate-700 hover:bg-slate-50"
+                className={`inline-flex items-center gap-1.5 border-l border-slate-300 px-3 dark:border-slate-700 ${
+                  desktopMap
+                    ? "bg-indigo-600 text-white dark:bg-indigo-500"
+                    : "bg-white text-slate-700 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
                 }`}
                 onClick={() => (desktopMap && !desktopTable ? null : setDesktopMap(!desktopMap))}
               >
@@ -431,7 +449,11 @@ export function MainView(props: {
           <button
             className={b(
               "secondary",
-              `h-[34px] px-2.5 min-[580px]:px-3 ${showFilters || activeFilterCount > 0 ? "border-indigo-400 bg-indigo-50 text-indigo-700" : ""}`,
+              `h-[34px] px-2.5 min-[580px]:px-3 ${
+                showFilters || activeFilterCount > 0
+                  ? "border-indigo-400 bg-indigo-50 text-indigo-700 dark:border-indigo-500 dark:bg-indigo-950/60 dark:text-indigo-300"
+                  : ""
+              }`,
             )}
             onClick={() => setShowFilters((v) => !v)}
             title="Show or hide search and detailed filters"
@@ -465,49 +487,49 @@ export function MainView(props: {
             <summary className={b("secondary", "h-[34px] cursor-pointer list-none px-2.5")} title="More actions">
               <MoreHorizontal className="h-4 w-4 shrink-0" strokeWidth={1.75} />
             </summary>
-            <div className="absolute right-0 z-[1100] mt-1 flex w-64 max-w-[calc(100vw-1rem)] flex-col rounded-md border border-slate-200 bg-white p-1 text-sm shadow-lg">
+            <div className="absolute right-0 z-[1100] mt-1 flex w-64 max-w-[calc(100vw-1rem)] flex-col rounded-md border border-slate-200 bg-white p-1 text-sm text-slate-700 shadow-lg dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
               <div className="px-2 py-1.5 min-[880px]:hidden">
                 <SyncBadge state={state} onRetry={() => store.retry()} onReconnect={props.onReconnect} />
               </div>
               <div className="min-[1110px]:hidden">
                 <button
-                  className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50"
+                  className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800"
                   onClick={() => {
                     if (menuRef.current) menuRef.current.open = false;
                     props.onEditSetup();
                   }}
                 >
-                  <SlidersHorizontal className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+                  <SlidersHorizontal className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
                   <span>Faculties & programs</span>
                 </button>
               </div>
               {props.source.kind === "google" && (
                 <div className="min-[880px]:hidden">
                   <button
-                    className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50"
+                    className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800"
                     onClick={() => {
                       if (menuRef.current) menuRef.current.open = false;
                       shareLink();
                     }}
                   >
-                    <Share2 className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+                    <Share2 className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
                     <span>Share link</span>
                   </button>
                 </div>
               )}
-              <div className="my-1 border-t border-slate-100 min-[1110px]:hidden" />
+              <div className="my-1 border-t border-slate-100 min-[1110px]:hidden dark:border-slate-800" />
               <button
                 type="button"
                 role="switch"
                 aria-checked={openOnClick}
-                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50"
+                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800"
                 onClick={() => setOpenOnClick((v) => !v)}
               >
-                <MousePointerClick className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+                <MousePointerClick className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
                 <span className="flex-1">Open details on click</span>
                 <span
                   className={`inline-flex h-4 w-7 shrink-0 items-center rounded-full p-0.5 transition-colors ${
-                    openOnClick ? "bg-indigo-600" : "bg-slate-300"
+                    openOnClick ? "bg-indigo-600 dark:bg-indigo-500" : "bg-slate-300 dark:bg-slate-700"
                   }`}
                 >
                   <span
@@ -517,20 +539,20 @@ export function MainView(props: {
                   />
                 </span>
               </button>
-              <div className="my-1 border-t border-slate-100" />
+              <div className="my-1 border-t border-slate-100 dark:border-slate-800" />
               <button
-                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50"
+                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800"
                 onClick={() => {
                   if (menuRef.current) menuRef.current.open = false;
                   exportJson();
                 }}
               >
-                <Download className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+                <Download className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
                 <span>Export notes (JSON)</span>
               </button>
               {!ro && (
-                <label className="flex w-full cursor-pointer items-center gap-2.5 rounded px-2.5 py-1.5 hover:bg-slate-50">
-                  <Upload className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+                <label className="flex w-full cursor-pointer items-center gap-2.5 rounded px-2.5 py-1.5 hover:bg-slate-50 dark:hover:bg-slate-800">
+                  <Upload className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
                   <span>Import notes (JSON)</span>
                   <input
                     type="file"
@@ -544,22 +566,22 @@ export function MainView(props: {
                 </label>
               )}
               <button
-                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50"
+                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800"
                 onClick={() => {
                   if (menuRef.current) menuRef.current.open = false;
                   setGeoEnabled((v) => !v);
                 }}
               >
                 {geoEnabled ? (
-                  <Pause className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+                  <Pause className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
                 ) : (
-                  <Play className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+                  <Play className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
                 )}
                 <span>{geoEnabled ? "Pause auto-locating" : "Resume auto-locating"}</span>
               </button>
               {props.source.kind === "google" && (
                 <a
-                  className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 hover:bg-slate-50"
+                  className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 hover:bg-slate-50 dark:hover:bg-slate-800"
                   target="_blank"
                   rel="noreferrer"
                   href={`https://docs.google.com/spreadsheets/d/${props.source.spreadsheetId}/edit`}
@@ -567,12 +589,12 @@ export function MainView(props: {
                     if (menuRef.current) menuRef.current.open = false;
                   }}
                 >
-                  <ExternalLink className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+                  <ExternalLink className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
                   <span>Open in Google Sheets</span>
                 </a>
               )}
               <a
-                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 hover:bg-slate-50"
+                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 hover:bg-slate-50 dark:hover:bg-slate-800"
                 target="_blank"
                 rel="noreferrer"
                 href={GITHUB_URL}
@@ -580,12 +602,12 @@ export function MainView(props: {
                   if (menuRef.current) menuRef.current.open = false;
                 }}
               >
-                <GitHubIcon className="h-4 w-4 shrink-0 text-slate-500" />
+                <GitHubIcon className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" />
                 <span>Open on GitHub</span>
               </a>
-              <div className="my-1 border-t border-slate-100" />
+              <div className="my-1 border-t border-slate-100 dark:border-slate-800" />
               <button
-                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left text-rose-600 hover:bg-rose-50"
+                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left text-rose-600 hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-950/50"
                 onClick={() => {
                   if (menuRef.current) menuRef.current.open = false;
                   props.onClose();
@@ -600,7 +622,7 @@ export function MainView(props: {
       </header>
 
       {ro && (
-        <div className="flex items-center gap-2 bg-amber-50 px-3 py-1.5 text-sm text-amber-900">
+        <div className="flex items-center gap-2 bg-amber-50 px-3 py-1.5 text-sm text-amber-900 dark:bg-amber-950/60 dark:text-amber-200">
           <Eye className="h-4 w-4 shrink-0" strokeWidth={1.75} />
           <span>View-only access: your changes are not saved.</span>
           <button className={b("secondary", "py-0.5 text-xs")} onClick={props.onMakeCopy}>
@@ -611,7 +633,7 @@ export function MainView(props: {
 
       {/* Filter bar */}
       {showFilters && (
-        <div className="flex max-h-[45vh] flex-wrap items-center gap-1.5 overflow-y-auto border-b border-slate-200 bg-slate-50 px-3 py-2 sm:max-h-none sm:overflow-visible">
+        <div className="flex max-h-[45vh] flex-wrap items-center gap-1.5 overflow-y-auto border-b border-slate-200 bg-slate-50 px-3 py-2 sm:max-h-none sm:overflow-visible dark:border-slate-800 dark:bg-slate-900/70">
           <input
             className={`${inputCls} w-full sm:w-56`}
             placeholder="Search name, city, notes…"
@@ -663,8 +685,10 @@ export function MainView(props: {
           </select>
           <select className={`${inputCls} w-auto`} value={filters.location} onChange={(e) => f({ location: e.target.value as Filters["location"] })}>
             <option value="">Location: any</option>
-            <option value="ok">Located</option>
-            <option value="approx">Approximate</option>
+            <option value="exact">Exact match</option>
+            <option value="auto">Resolved automatically</option>
+            <option value="unresolved">Unresolved</option>
+            <option value="manual">Manual</option>
             <option value="missing">Missing</option>
           </select>
           <label className="flex items-center gap-1 text-sm">
@@ -675,7 +699,7 @@ export function MainView(props: {
           </label>
           {activeFilterCount > 0 && (
             <button
-              className="text-sm text-indigo-600 hover:underline"
+              className="text-sm text-indigo-600 hover:underline dark:text-indigo-400"
               onClick={() =>
                 setFilters({ ...defaultFilters(), faculties: filters.faculties, programs: filters.programs, onlyActive: filters.onlyActive })
               }
@@ -691,16 +715,16 @@ export function MainView(props: {
         {showTable && (
           <div
             style={showMap ? { width: `${splitPct}%` } : undefined}
-            className={`relative flex min-w-0 flex-col ${showMap ? "shrink-0" : "flex-1"} ${dragging ? "pointer-events-none" : ""}`}
+            className={`relative flex min-w-0 flex-col bg-white dark:bg-slate-950 ${showMap ? "shrink-0" : "flex-1"} ${dragging ? "pointer-events-none" : ""}`}
           >
             <div ref={tableRef} className="min-h-0 flex-1 overflow-auto">
               <table className="w-full border-collapse text-sm">
-                <thead className="sticky top-0 z-10 bg-white shadow-[0_1px_0_#e2e8f0]">
+                <thead className="sticky top-0 z-10 bg-white shadow-[0_1px_0_#e2e8f0] dark:bg-slate-900 dark:shadow-[0_1px_0_#1e293b]">
                   <tr>
                     {COLUMNS.map((c) => (
                       <th
                         key={c.key}
-                        className={`cursor-pointer select-none whitespace-nowrap px-2 py-2 text-left text-xs font-semibold text-slate-600 hover:bg-slate-50 ${c.cls ?? ""}`}
+                        className={`cursor-pointer select-none whitespace-nowrap px-2 py-2 text-left text-xs font-semibold text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800 ${c.cls ?? ""}`}
                         onClick={() => setSort((s) => (s.key === c.key ? { key: c.key, dir: s.dir === 1 ? -1 : 1 } : { key: c.key, dir: 1 }))}
                       >
                         {c.label}
@@ -727,13 +751,19 @@ export function MainView(props: {
                         data-row={a.id}
                         onClick={() => selectFromTable(a)}
                         onDoubleClick={() => setDetailUni(a.uniKey)}
-                        className={`cursor-pointer border-b border-slate-100 ${isRow ? "bg-indigo-100" : isUni ? "bg-indigo-50" : "hover:bg-slate-50"} ${rd.hidden ? "opacity-50" : ""}`}
+                        className={`cursor-pointer border-b border-slate-100 dark:border-slate-800/80 ${
+                          isRow
+                            ? "bg-indigo-100 dark:bg-indigo-950/70"
+                            : isUni
+                              ? "bg-indigo-50 dark:bg-indigo-950/40"
+                              : "hover:bg-slate-50 dark:hover:bg-slate-900/60"
+                        } ${rd.hidden ? "opacity-50" : ""}`}
                       >
                         <td className="px-2 py-1.5">
                           <Stars value={rd.priority ?? 0} disabled={ro} size="text-sm" onChange={(v) => store.setRow(a.id, { priority: v })} />
                         </td>
                         <td className="px-2 py-1.5">
-                          <div className="font-medium leading-tight hover:text-indigo-700">{a.uniName}</div>
+                          <div className="font-medium leading-tight hover:text-indigo-700 dark:hover:text-indigo-400">{a.uniName}</div>
                           <div className="text-xs text-slate-400">
                             {a.uniCode}
                             {ud.city && ` · ${ud.city}`}
@@ -745,7 +775,7 @@ export function MainView(props: {
                         </td>
                         <td className="px-2 py-1.5">{a.faculty}</td>
                         <td className="px-2 py-1.5 text-xs">{a.program}</td>
-                        <td className={`whitespace-nowrap px-2 py-1.5 text-xs ${expired ? "text-rose-600" : soon ? "text-amber-600" : ""}`}>
+                        <td className={`whitespace-nowrap px-2 py-1.5 text-xs ${expired ? "text-rose-600 dark:text-rose-400" : soon ? "text-amber-600 dark:text-amber-400" : ""}`}>
                           {a.validTo}
                           {!a.active && <div className="text-slate-400">inactive</div>}
                         </td>
@@ -755,7 +785,7 @@ export function MainView(props: {
                             disabled={ro}
                             value={rd.status ?? ""}
                             onChange={(e) => store.setRow(a.id, { status: e.target.value as RowStatus })}
-                            className={`w-full rounded border-0 px-1 py-0.5 text-xs ${STATUSES.find((s) => s.value === (rd.status ?? ""))?.cls || "bg-transparent text-slate-400"}`}
+                            className={`w-full rounded-md border-0 px-2 py-1 text-xs font-medium ${STATUSES.find((s) => s.value === (rd.status ?? ""))?.cls || STATUSES[0].cls}`}
                           >
                             {STATUSES.map((s) => (
                               <option key={s.value} value={s.value}>
@@ -768,7 +798,7 @@ export function MainView(props: {
                           <div className="inline-flex items-center gap-2">
                             {notes.length > 0 && (
                               <span
-                                className="inline-flex items-center gap-1 text-slate-600"
+                                className="inline-flex items-center gap-1 text-slate-600 dark:text-slate-300"
                                 title={[...new Set(notes.map((n) => n.category))].join(", ")}
                               >
                                 <MessageSquareText className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
@@ -776,25 +806,52 @@ export function MainView(props: {
                               </span>
                             )}
                             {links.length > 0 && (
-                              <span className="inline-flex items-center gap-1 text-slate-600">
+                              <span className="inline-flex items-center gap-1 text-slate-600 dark:text-slate-300">
                                 <Link2 className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
                                 {links.length}
                               </span>
                             )}
                           </div>
                         </td>
-                        <td className="px-2 py-1.5 text-center" title={loc === "missing" ? "No location" : loc === "approx" ? "Approximate" : "Located"}>
-                          {loc === "ok" ? (
-                            <MapPin className="mx-auto h-3.5 w-3.5 text-emerald-600" strokeWidth={1.75} />
-                          ) : loc === "approx" ? (
-                            <MapPin className="mx-auto h-3.5 w-3.5 text-amber-500" strokeWidth={1.75} />
+                        <td
+                          className="px-2 py-1.5 text-center"
+                          title={
+                            loc === "exact"
+                              ? "Exact match"
+                              : loc === "auto"
+                                ? `Resolved automatically${ud.geoScore != null ? ` (${ud.geoScore}%)` : ""}`
+                                : loc === "manual"
+                                  ? "Manual location"
+                                  : loc === "unresolved"
+                                    ? `Unresolved — check location${ud.geoScore != null ? ` (${ud.geoScore}%)` : ""}`
+                                    : "No location"
+                          }
+                        >
+                          {loc === "exact" ? (
+                            <span className="inline-flex items-center justify-center rounded-md bg-emerald-100 px-1.5 py-0.5 text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300">
+                              <MapPin className="h-3.5 w-3.5" strokeWidth={1.75} />
+                            </span>
+                          ) : loc === "auto" ? (
+                            <span className="inline-flex items-center justify-center rounded-md bg-amber-100 px-1.5 py-0.5 text-amber-700 dark:bg-amber-950/70 dark:text-amber-300">
+                              <MapPin className="h-3.5 w-3.5" strokeWidth={1.75} />
+                            </span>
+                          ) : loc === "manual" ? (
+                            <span className="inline-flex items-center justify-center rounded-md bg-violet-100 px-1.5 py-0.5 text-violet-700 dark:bg-violet-950/70 dark:text-violet-300">
+                              <MapPin className="h-3.5 w-3.5" strokeWidth={1.75} />
+                            </span>
+                          ) : loc === "unresolved" ? (
+                            <span className="inline-flex items-center justify-center rounded-md bg-rose-100 px-1.5 py-0.5 text-rose-700 dark:bg-rose-950/70 dark:text-rose-300">
+                              <AlertTriangle className="h-3.5 w-3.5" strokeWidth={1.75} />
+                            </span>
                           ) : (
-                            <HelpCircle className="mx-auto h-3.5 w-3.5 text-slate-400" strokeWidth={1.75} />
+                            <span className="inline-flex items-center justify-center rounded-md bg-slate-100 px-1.5 py-0.5 text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+                              <HelpCircle className="h-3.5 w-3.5" strokeWidth={1.75} />
+                            </span>
                           )}
                         </td>
                         <td className="whitespace-nowrap px-1 py-1.5 text-right">
                           <button
-                            className="inline-flex items-center justify-center rounded p-1 text-slate-400 hover:bg-slate-200 hover:text-slate-700"
+                            className="inline-flex items-center justify-center rounded p-1 text-slate-400 hover:bg-slate-200 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200"
                             title={rd.hidden ? "Show" : "Hide"}
                             disabled={ro}
                             onClick={(e) => {
@@ -809,7 +866,7 @@ export function MainView(props: {
                             )}
                           </button>
                           <button
-                            className="inline-flex items-center justify-center rounded p-1 text-slate-400 hover:bg-slate-200 hover:text-slate-700"
+                            className="inline-flex items-center justify-center rounded p-1 text-slate-400 hover:bg-slate-200 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200"
                             title="Details & notes"
                             onClick={(e) => {
                               e.stopPropagation();
@@ -865,10 +922,10 @@ export function MainView(props: {
             }}
             onDoubleClick={() => setSplitPct(50)}
             className={`group relative z-10 flex w-1.5 shrink-0 cursor-col-resize items-center justify-center transition-colors ${
-              dragging ? "bg-indigo-500" : "bg-slate-200 hover:bg-indigo-400"
+              dragging ? "bg-indigo-500" : "bg-slate-200 hover:bg-indigo-400 dark:bg-slate-800 dark:hover:bg-indigo-500"
             }`}
           >
-            <div className="h-8 w-0.5 rounded-full bg-slate-400 group-hover:bg-white" />
+            <div className="h-8 w-0.5 rounded-full bg-slate-400 group-hover:bg-white dark:bg-slate-600" />
           </div>
         )}
         {showMap && (
@@ -887,16 +944,16 @@ export function MainView(props: {
                 else setDesktopTable(true);
               }}
               onPick={(lat, lon) => {
-                if (pickUni) store.setUni(pickUni, { lat, lon, geoSource: "manual", geoLabel: "Picked on map" });
+                if (pickUni) store.setUni(pickUni, { lat, lon, geoSource: "manual", geoScore: 100, geoLabel: "Picked on map" });
                 setPickUni(null);
               }}
               onCancelPick={() => setPickUni(null)}
               missingCount={missing}
               geoStatus={
                 geo.error ? (
-                  <div className="text-rose-600">Auto-locate stopped: {geo.error}</div>
+                  <div className="text-rose-600 dark:text-rose-400">Auto-locate stopped: {geo.error}</div>
                 ) : geoEnabled && geo.current ? (
-                  <div className="flex items-center gap-1 text-indigo-700">
+                  <div className="flex items-center gap-1 text-indigo-700 dark:text-indigo-400">
                     <Spinner className="h-3 w-3" /> Locating {geo.done + 1}/{geo.total}: <span className="max-w-40 truncate">{geo.current}</span>
                   </div>
                 ) : null
@@ -912,14 +969,14 @@ export function MainView(props: {
 function SyncBadge({ state, onRetry, onReconnect }: { state: StoreState; onRetry: () => void; onReconnect: () => void }) {
   if (state.kind === "local")
     return (
-      <span className="inline-flex items-center gap-1 rounded bg-slate-100 px-2 py-0.5 text-xs text-slate-600">
+      <span className="inline-flex items-center gap-1 rounded bg-slate-100 px-2 py-0.5 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-300">
         <HardDrive className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
         <span>Saved in this browser</span>
       </span>
     );
   if (state.readOnly)
     return (
-      <span className="inline-flex items-center gap-1 rounded bg-amber-100 px-2 py-0.5 text-xs text-amber-800">
+      <span className="inline-flex items-center gap-1 rounded bg-amber-100 px-2 py-0.5 text-xs text-amber-800 dark:bg-amber-950/60 dark:text-amber-300">
         <Eye className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
         <span>View only</span>
       </span>
@@ -927,20 +984,27 @@ function SyncBadge({ state, onRetry, onReconnect }: { state: StoreState; onRetry
   switch (state.status) {
     case "saving":
       return (
-        <span className="inline-flex items-center gap-1 rounded bg-indigo-50 px-2 py-0.5 text-xs text-indigo-700">
+        <span className="inline-flex items-center gap-1 rounded bg-indigo-50 px-2 py-0.5 text-xs text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300">
           <Spinner className="h-3 w-3" /> Saving…
         </span>
       );
     case "auth":
       return (
-        <button className="inline-flex items-center gap-1 rounded bg-rose-100 px-2 py-0.5 text-xs text-rose-700 hover:bg-rose-200" onClick={onReconnect}>
+        <button
+          className="inline-flex items-center gap-1 rounded bg-rose-100 px-2 py-0.5 text-xs text-rose-700 hover:bg-rose-200 dark:bg-rose-950/60 dark:text-rose-300 dark:hover:bg-rose-950"
+          onClick={onReconnect}
+        >
           <AlertTriangle className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
           <span>Session expired — reconnect</span>
         </button>
       );
     case "error":
       return (
-        <button className="inline-flex items-center gap-1 rounded bg-rose-100 px-2 py-0.5 text-xs text-rose-700 hover:bg-rose-200" onClick={onRetry} title={state.error}>
+        <button
+          className="inline-flex items-center gap-1 rounded bg-rose-100 px-2 py-0.5 text-xs text-rose-700 hover:bg-rose-200 dark:bg-rose-950/60 dark:text-rose-300 dark:hover:bg-rose-950"
+          onClick={onRetry}
+          title={state.error}
+        >
           <AlertTriangle className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
           <span>Sync error — retry</span>
         </button>
@@ -948,7 +1012,7 @@ function SyncBadge({ state, onRetry, onReconnect }: { state: StoreState; onRetry
     default:
       return (
         <span
-          className="inline-flex items-center gap-1 rounded bg-emerald-50 px-2 py-0.5 text-xs text-emerald-700"
+          className="inline-flex items-center gap-1 rounded bg-emerald-50 px-2 py-0.5 text-xs text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300"
           title={`Last sync ${new Date(state.lastSync).toLocaleTimeString()}`}
         >
           <Check className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
