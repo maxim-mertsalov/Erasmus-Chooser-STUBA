@@ -1,6 +1,7 @@
 "use client";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useMemo, useRef } from "react";
+import { Languages, MessageSquareText } from "lucide-react";
 import { CircleMarker, MapContainer, Popup, TileLayer, Tooltip, useMap, useMapEvents } from "react-leaflet";
 import type { CircleMarker as LCircleMarker } from "leaflet";
 import { flag } from "@/lib/countries";
@@ -155,8 +156,18 @@ export default function MapView(props: {
                   </div>
                   {p.data.city && <div className="text-slate-500">{p.data.city}</div>}
                   {p.approx && <div className="text-xs text-amber-600">Approximate location (city)</div>}
-                  {p.data.language && <div>🗣 {p.data.language}</div>}
-                  {p.noteCount > 0 && <div>📝 {p.noteCount} note(s)</div>}
+                  {p.data.language && (
+                    <div className="inline-flex items-center gap-1.5">
+                      <Languages className="h-3.5 w-3.5 shrink-0 text-slate-500" strokeWidth={1.75} />
+                      <span>{p.data.language}</span>
+                    </div>
+                  )}
+                  {p.noteCount > 0 && (
+                    <div className="inline-flex items-center gap-1.5">
+                      <MessageSquareText className="h-3.5 w-3.5 shrink-0 text-slate-500" strokeWidth={1.75} />
+                      <span>{p.noteCount} note(s)</span>
+                    </div>
+                  )}
                   <div className="mt-1 max-h-40 overflow-auto">
                     {p.agreements.map((a) => (
                       <button

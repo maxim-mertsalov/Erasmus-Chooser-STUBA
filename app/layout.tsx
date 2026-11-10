@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Erasmus Chooser",
+  title: "Erasmus Chooser STU in Bratislava",
   description: "Choose your Erasmus partner university: table, notes and map",
 };
 

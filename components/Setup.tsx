@@ -1,12 +1,13 @@
 "use client";
 import { useMemo, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight, FileSpreadsheet, FolderOpen, GraduationCap, RotateCcw, Upload } from "lucide-react";
 import { FIELD_LABELS, isMappingValid } from "@/lib/columns";
 import type { Agreement, ColumnMapping, FieldKey, Filters } from "@/lib/types";
 import { b, inputCls, Spinner } from "./ui";
 
 function Card({ title, subtitle, children }: { title: string; subtitle?: string; children: React.ReactNode }) {
   return (
-    <div className="mx-auto w-full max-w-3xl rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div className="mx-auto w-full max-w-3xl rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
       <h2 className="text-xl font-semibold">{title}</h2>
       {subtitle && <p className="mt-1 text-sm text-slate-500">{subtitle}</p>}
       <div className="mt-5">{children}</div>
@@ -38,7 +39,10 @@ export function StartScreen(props: {
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-4">
       <div className="text-center">
-        <h1 className="text-3xl font-bold tracking-tight">🎓 Erasmus Chooser</h1>
+        <h1 className="inline-flex items-center gap-2.5 text-3xl font-bold tracking-tight">
+          <GraduationCap className="h-8 w-8 text-indigo-600" strokeWidth={1.75} />
+          <span>Erasmus Chooser</span>
+        </h1>
         <p className="mt-2 text-slate-500">Load the agreements spreadsheet, filter it, take notes and explore partners on a map.</p>
       </div>
 
@@ -60,10 +64,13 @@ export function StartScreen(props: {
 
       {props.resumeLabel && (
         <button className={b("secondary", "justify-between py-3")} disabled={disabled} onClick={props.onResume}>
-          <span>
-            ↩ Continue with <b>{props.resumeLabel}</b>
+          <span className="inline-flex items-center gap-2">
+            <RotateCcw className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+            <span>
+              Continue with <b>{props.resumeLabel}</b>
+            </span>
           </span>
-          <span className="text-slate-400">→</span>
+          <ArrowRight className="h-4 w-4 shrink-0 text-slate-400" strokeWidth={1.75} />
         </button>
       )}
 
@@ -86,7 +93,8 @@ export function StartScreen(props: {
                 </button>
               </div>
               <button className={b("primary")} disabled={disabled} onClick={props.onPick}>
-                📂 Choose from Google Drive
+                <FolderOpen className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+                <span>Choose from Google Drive</span>
               </button>
               <div className="flex gap-2">
                 <input className={inputCls} placeholder="…or paste a Google Sheets link" value={link} onChange={(e) => setLink(e.target.value)} />
@@ -111,7 +119,8 @@ export function StartScreen(props: {
             }}
           />
           <button className={b("secondary", "w-full")} disabled={disabled} onClick={() => fileRef.current?.click()}>
-            ⬆ Upload spreadsheet
+            <Upload className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+            <span>Upload spreadsheet</span>
           </button>
         </Card>
       </div>
@@ -127,12 +136,14 @@ export function SheetSelect({ sheets, onSelect, onBack }: { sheets: string[]; on
       <div className="grid gap-2">
         {sheets.map((s) => (
           <button key={s} className={b("secondary", "justify-start py-2.5")} onClick={() => onSelect(s)}>
-            📄 {s}
+            <FileSpreadsheet className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+            <span>{s}</span>
           </button>
         ))}
       </div>
       <button className={b("ghost", "mt-4")} onClick={onBack}>
-        ← Back
+        <ArrowLeft className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+        <span>Back</span>
       </button>
     </Card>
   );

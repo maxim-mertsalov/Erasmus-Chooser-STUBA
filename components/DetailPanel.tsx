@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { ExternalLink, Eye, EyeOff, Link2, MapPin, RefreshCw, X } from "lucide-react";
 import { countryName, flag } from "@/lib/countries";
 import { autoLocate, geocode, type GeoHit } from "@/lib/geocode";
 import type { RecordStore, StoreState } from "@/lib/store";
@@ -113,7 +114,7 @@ export function DetailPanel({
           </div>
         </div>
         <button className={b("ghost", "px-2")} onClick={onClose} title="Close">
-          ✕
+          <X className="h-4 w-4" strokeWidth={1.75} />
         </button>
       </header>
 
@@ -154,7 +155,7 @@ export function DetailPanel({
                       ))}
                     </select>
                     <button
-                      className="hover:text-slate-800"
+                      className="inline-flex items-center text-slate-500 hover:text-slate-800"
                       disabled={ro}
                       title={rd.hidden ? "Show" : "Hide"}
                       onClick={(e) => {
@@ -162,7 +163,11 @@ export function DetailPanel({
                         store.setRow(a.id, { hidden: !rd.hidden });
                       }}
                     >
-                      {rd.hidden ? "🙈" : "👁"}
+                      {rd.hidden ? (
+                        <EyeOff className="h-3.5 w-3.5" strokeWidth={1.75} />
+                      ) : (
+                        <Eye className="h-3.5 w-3.5" strokeWidth={1.75} />
+                      )}
                     </button>
                   </div>
                 </div>
@@ -215,12 +220,13 @@ export function DetailPanel({
           right={
             data.lat != null && (
               <a
-                className="text-xs text-indigo-600 hover:underline"
+                className="inline-flex items-center gap-1 text-xs text-indigo-600 hover:underline"
                 target="_blank"
                 rel="noreferrer"
                 href={`https://www.openstreetmap.org/?mlat=${data.lat}&mlon=${data.lon}#map=15/${data.lat}/${data.lon}`}
               >
-                Open in OSM ↗
+                <span>Open in OSM</span>
+                <ExternalLink className="h-3 w-3 shrink-0" strokeWidth={1.75} />
               </a>
             )
           }
@@ -246,10 +252,12 @@ export function DetailPanel({
             <div className="mt-2 flex flex-col gap-2">
               <div className="flex flex-wrap gap-2">
                 <button className={b("secondary", "text-xs")} disabled={geoBusy} onClick={runAuto}>
-                  {geoBusy ? <Spinner /> : "🔄"} Auto-locate
+                  {geoBusy ? <Spinner className="h-3.5 w-3.5" /> : <RefreshCw className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />}
+                  <span>Auto-locate</span>
                 </button>
                 <button className={b("secondary", "text-xs")} onClick={onStartPick}>
-                  📍 Pick on map
+                  <MapPin className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+                  <span>Pick on map</span>
                 </button>
                 {data.lat != null && (
                   <button
@@ -304,12 +312,13 @@ export function DetailPanel({
           <ul className="flex flex-col gap-1 text-sm">
             {links.map((l) => (
               <li key={l.key} className="flex items-center gap-2">
-                <a href={l.url} target="_blank" rel="noreferrer" className="flex-1 truncate text-indigo-600 hover:underline">
-                  🔗 {l.label || l.url}
+                <a href={l.url} target="_blank" rel="noreferrer" className="inline-flex min-w-0 flex-1 items-center gap-1.5 text-indigo-600 hover:underline">
+                  <Link2 className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+                  <span className="truncate">{l.label || l.url}</span>
                 </a>
                 {!ro && (
-                  <button className="text-xs text-slate-400 hover:text-rose-600" onClick={() => store.deleteLink(l.key)}>
-                    ✕
+                  <button className="inline-flex items-center text-slate-400 hover:text-rose-600" onClick={() => store.deleteLink(l.key)} title="Delete">
+                    <X className="h-3.5 w-3.5" strokeWidth={1.75} />
                   </button>
                 )}
               </li>

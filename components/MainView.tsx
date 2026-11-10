@@ -1,6 +1,34 @@
 "use client";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import {
+  AlertTriangle,
+  Check,
+  ChevronDown,
+  ChevronUp,
+  Download,
+  ExternalLink,
+  Eye,
+  EyeOff,
+  Filter,
+  GraduationCap,
+  HardDrive,
+  HelpCircle,
+  Link2,
+  Map as MapIcon,
+  MapPin,
+  MessageSquareText,
+  MoreHorizontal,
+  MousePointerClick,
+  Pause,
+  Pencil,
+  Play,
+  Share2,
+  SlidersHorizontal,
+  Table2,
+  Upload,
+  X,
+} from "lucide-react";
 import { countryName, flag } from "@/lib/countries";
 import { autoLocate } from "@/lib/geocode";
 import type { RecordStore, StoreState } from "@/lib/store";
@@ -8,7 +36,16 @@ import { defaultFilters, type Source } from "@/lib/session";
 import { NOTE_CATEGORIES, STATUSES, type Agreement, type Filters, type RowStatus } from "@/lib/types";
 import { DetailPanel, type UniGroup } from "./DetailPanel";
 import type { MapPoint } from "./MapView";
-import { b, inputCls, MultiSelect, Spinner, Stars } from "./ui";
+import { b, GITHUB_URL, GitHubIcon, inputCls, MultiSelect, Spinner, Stars } from "./ui";
+
+const MOBILE_QUERY = "(max-width: 767px)";
+function subscribeMobile(cb: () => void) {
+  const mq = window.matchMedia(MOBILE_QUERY);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+}
+const getIsMobile = () => window.matchMedia(MOBILE_QUERY).matches;
+const getIsMobileServer = () => false;
 
 const MapView = dynamic(() => import("./MapView"), {
   ssr: false,
@@ -19,7 +56,7 @@ export const orEmpty = (v: string) => v || "(empty)";
 
 type SortKey = "priority" | "uniName" | "country" | "faculty" | "program" | "validTo" | "language" | "status" | "notes" | "location";
 
-const COLUMNS: { key: SortKey; label: string; cls?: string }[] = [
+const COLUMNS: { key: SortKey; label: React.ReactNode; cls?: string }[] = [
   { key: "priority", label: "Priority", cls: "w-24" },
   { key: "uniName", label: "University" },
   { key: "country", label: "Country", cls: "w-20" },
@@ -29,7 +66,7 @@ const COLUMNS: { key: SortKey; label: string; cls?: string }[] = [
   { key: "language", label: "Language", cls: "w-28" },
   { key: "status", label: "Status", cls: "w-28" },
   { key: "notes", label: "Notes / links", cls: "w-28" },
-  { key: "location", label: "📍", cls: "w-10" },
+  { key: "location", label: <MapPin className="mx-auto h-3.5 w-3.5" strokeWidth={1.75} />, cls: "w-10" },
 ];
 
 function locState(state: StoreState, uniKey: string): "ok" | "approx" | "missing" {
@@ -51,9 +88,14 @@ export function MainView(props: {
 }) {
   const { store, filters, setFilters } = props;
   const state = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
-  const [showTable, setShowTable] = useState(true);
-  const [showMap, setShowMap] = useState(true);
+  const isMobile = useSyncExternalStore(subscribeMobile, getIsMobile, getIsMobileServer);
+  const [desktopTable, setDesktopTable] = useState(true);
+  const [desktopMap, setDesktopMap] = useState(true);
+  const [mobileTab, setMobileTab] = useState<"table" | "map">("table");
+  const showTable = isMobile ? mobileTab === "table" : desktopTable;
+  const showMap = isMobile ? mobileTab === "map" : desktopMap;
   const [showFilters, setShowFilters] = useState(false);
+  const [openOnClick, setOpenOnClick] = useState(true);
   const [splitPct, setSplitPct] = useState(50);
   const [dragging, setDragging] = useState(false);
   const splitRef = useRef<HTMLDivElement>(null);
@@ -66,7 +108,16 @@ export function MainView(props: {
   const [geoEnabled, setGeoEnabled] = useState(true);
   const [geo, setGeo] = useState({ done: 0, total: 0, current: "", error: "" });
   const tableRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDetailsElement>(null);
   const [now] = useState(() => Date.now());
+
+  useEffect(() => {
+    const close = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) menuRef.current.open = false;
+    };
+    document.addEventListener("mousedown", close);
+    return () => document.removeEventListener("mousedown", close);
+  }, []);
 
   useEffect(() => {
     if (!dragging) return;
@@ -235,10 +286,11 @@ export function MainView(props: {
 
   // Selection handlers
   const selectFromTable = (a: Agreement) => {
+    const alreadySelected = selectedRow === a.id;
     setSelectedUni(a.uniKey);
     setSelectedRow(a.id);
     setFlyKey((k) => k + 1);
-    if (detailUni) setDetailUni(a.uniKey);
+    if (openOnClick || detailUni || alreadySelected) setDetailUni(a.uniKey);
   };
   const scrollToRow = (rowId: string) =>
     requestAnimationFrame(() =>
@@ -313,83 +365,234 @@ export function MainView(props: {
   return (
     <div className="flex h-screen flex-col">
       {/* Top bar */}
-      <header className="flex flex-wrap items-center gap-2 border-b border-slate-200 bg-white px-3 py-2">
-        <button className={b("ghost", "px-2 font-bold")} onClick={props.onClose} title="Back to start">
-          🎓
+      <header className="flex items-center gap-2 border-b border-slate-200 bg-white px-2.5 py-2 sm:px-3">
+        <button className={b("ghost", "shrink-0 px-2 text-indigo-600")} onClick={props.onClose} title="Back to start">
+          <GraduationCap className="h-5 w-5" strokeWidth={1.75} />
         </button>
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1 min-[580px]:flex-initial">
           <div className="truncate text-sm font-semibold">
             {props.source.kind === "google" ? props.source.title : props.source.fileName}
           </div>
-          <div className="text-xs text-slate-500">
-            {sorted.length} of {base.length} agreements · {groups.size} universities
+          <div className="truncate text-xs text-slate-500">
+            {sorted.length}/{base.length}{" "}
+            <span className="hidden min-[580px]:inline">agreements · {groups.size} universities</span>
           </div>
         </div>
-        <SyncBadge state={state} onRetry={() => store.retry()} onReconnect={props.onReconnect} />
-        <div className="ml-auto flex flex-wrap items-center gap-1.5">
-          <div className="inline-flex overflow-hidden rounded-md border border-slate-300 text-sm">
+        <div className="hidden min-[880px]:block">
+          <SyncBadge state={state} onRetry={() => store.retry()} onReconnect={props.onReconnect} />
+        </div>
+        <div className="ml-auto flex shrink-0 items-center gap-1.5">
+          {isMobile ? (
             <button
-              className={`px-3 py-1 ${showTable ? "bg-indigo-600 text-white" : "bg-white"}`}
-              onClick={() => (showTable && !showMap ? null : setShowTable(!showTable))}
+              type="button"
+              onClick={() => setMobileTab((t) => (t === "table" ? "map" : "table"))}
+              className="inline-flex h-[34px] overflow-hidden rounded-md border border-slate-300 text-sm font-medium"
+              title="Switch between Table and Map"
             >
-              Table
+              <span
+                className={`inline-flex items-center gap-1.5 px-2.5 ${
+                  mobileTab === "table" ? "bg-indigo-600 text-white" : "bg-white text-slate-700"
+                }`}
+              >
+                <Table2 className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+                <span className="hidden min-[580px]:inline">Table</span>
+              </span>
+              <span
+                className={`inline-flex items-center gap-1.5 border-l border-slate-300 px-2.5 ${
+                  mobileTab === "map" ? "bg-indigo-600 text-white" : "bg-white text-slate-700"
+                }`}
+              >
+                <MapIcon className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+                <span className="hidden min-[580px]:inline">Map</span>
+              </span>
             </button>
-            <button
-              className={`border-l border-slate-300 px-3 py-1 ${showMap ? "bg-indigo-600 text-white" : "bg-white"}`}
-              onClick={() => (showMap && !showTable ? null : setShowMap(!showMap))}
-            >
-              Map
-            </button>
-          </div>
+          ) : (
+            <div className="inline-flex h-[34px] overflow-hidden rounded-md border border-slate-300 text-sm font-medium">
+              <button
+                className={`inline-flex items-center gap-1.5 px-3 ${
+                  desktopTable ? "bg-indigo-600 text-white" : "bg-white text-slate-700 hover:bg-slate-50"
+                }`}
+                onClick={() => (desktopTable && !desktopMap ? null : setDesktopTable(!desktopTable))}
+              >
+                <Table2 className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+                <span>Table</span>
+              </button>
+              <button
+                className={`inline-flex items-center gap-1.5 border-l border-slate-300 px-3 ${
+                  desktopMap ? "bg-indigo-600 text-white" : "bg-white text-slate-700 hover:bg-slate-50"
+                }`}
+                onClick={() => (desktopMap && !desktopTable ? null : setDesktopMap(!desktopMap))}
+              >
+                <MapIcon className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+                <span>Map</span>
+              </button>
+            </div>
+          )}
           <button
             className={b(
               "secondary",
-              showFilters || activeFilterCount > 0 ? "border-indigo-400 bg-indigo-50 text-indigo-700" : "",
+              `h-[34px] px-2.5 min-[580px]:px-3 ${showFilters || activeFilterCount > 0 ? "border-indigo-400 bg-indigo-50 text-indigo-700" : ""}`,
             )}
             onClick={() => setShowFilters((v) => !v)}
             title="Show or hide search and detailed filters"
           >
-            🔍 Filters
+            <Filter className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+            <span className="hidden min-[580px]:inline">Filters</span>
             {activeFilterCount > 0 && (
               <span className="rounded bg-indigo-600 px-1.5 text-xs text-white">{activeFilterCount}</span>
             )}
-            <span className="text-xs">{showFilters ? "▲" : "▾"}</span>
+            {showFilters ? (
+              <ChevronUp className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+            ) : (
+              <ChevronDown className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+            )}
           </button>
-          <button className={b()} onClick={props.onEditSetup}>
-            ⚙ Faculties & programs
-          </button>
-          {props.source.kind === "google" && (
-            <button className={b()} onClick={shareLink} title="Copy a link for friends">
-              🔗 Share
+          <div className="hidden items-center gap-1.5 min-[1110px]:flex">
+            <button className={b("secondary", "h-[34px]")} onClick={props.onEditSetup} title="Faculties & programs">
+              <SlidersHorizontal className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+              <span>Faculties & programs</span>
             </button>
+          </div>
+          {props.source.kind === "google" && (
+            <div className="hidden items-center gap-1.5 min-[880px]:flex">
+              <button className={b("secondary", "h-[34px]")} onClick={shareLink} title="Copy a link for friends">
+                <Share2 className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+                <span>Share</span>
+              </button>
+            </div>
           )}
-          <details className="relative">
-            <summary className={b("ghost", "cursor-pointer list-none")}>⋯</summary>
-            <div className="absolute right-0 z-[1100] mt-1 flex w-56 flex-col rounded-md border border-slate-200 bg-white p-1 text-sm shadow-lg">
-              <button className="rounded px-2 py-1.5 text-left hover:bg-slate-50" onClick={exportJson}>
-                ⬇ Export notes (JSON)
+          <details ref={menuRef} className="relative">
+            <summary className={b("secondary", "h-[34px] cursor-pointer list-none px-2.5")} title="More actions">
+              <MoreHorizontal className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+            </summary>
+            <div className="absolute right-0 z-[1100] mt-1 flex w-64 max-w-[calc(100vw-1rem)] flex-col rounded-md border border-slate-200 bg-white p-1 text-sm shadow-lg">
+              <div className="px-2 py-1.5 min-[880px]:hidden">
+                <SyncBadge state={state} onRetry={() => store.retry()} onReconnect={props.onReconnect} />
+              </div>
+              <div className="min-[1110px]:hidden">
+                <button
+                  className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50"
+                  onClick={() => {
+                    if (menuRef.current) menuRef.current.open = false;
+                    props.onEditSetup();
+                  }}
+                >
+                  <SlidersHorizontal className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+                  <span>Faculties & programs</span>
+                </button>
+              </div>
+              {props.source.kind === "google" && (
+                <div className="min-[880px]:hidden">
+                  <button
+                    className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50"
+                    onClick={() => {
+                      if (menuRef.current) menuRef.current.open = false;
+                      shareLink();
+                    }}
+                  >
+                    <Share2 className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+                    <span>Share link</span>
+                  </button>
+                </div>
+              )}
+              <div className="my-1 border-t border-slate-100 min-[1110px]:hidden" />
+              <button
+                type="button"
+                role="switch"
+                aria-checked={openOnClick}
+                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50"
+                onClick={() => setOpenOnClick((v) => !v)}
+              >
+                <MousePointerClick className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+                <span className="flex-1">Open details on click</span>
+                <span
+                  className={`inline-flex h-4 w-7 shrink-0 items-center rounded-full p-0.5 transition-colors ${
+                    openOnClick ? "bg-indigo-600" : "bg-slate-300"
+                  }`}
+                >
+                  <span
+                    className={`h-3 w-3 rounded-full bg-white transition-transform ${
+                      openOnClick ? "translate-x-3" : "translate-x-0"
+                    }`}
+                  />
+                </span>
+              </button>
+              <div className="my-1 border-t border-slate-100" />
+              <button
+                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50"
+                onClick={() => {
+                  if (menuRef.current) menuRef.current.open = false;
+                  exportJson();
+                }}
+              >
+                <Download className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+                <span>Export notes (JSON)</span>
               </button>
               {!ro && (
-                <label className="cursor-pointer rounded px-2 py-1.5 hover:bg-slate-50">
-                  ⬆ Import notes (JSON)
-                  <input type="file" accept=".json" className="hidden" onChange={(e) => e.target.files?.[0] && importJson(e.target.files[0])} />
+                <label className="flex w-full cursor-pointer items-center gap-2.5 rounded px-2.5 py-1.5 hover:bg-slate-50">
+                  <Upload className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+                  <span>Import notes (JSON)</span>
+                  <input
+                    type="file"
+                    accept=".json"
+                    className="hidden"
+                    onChange={(e) => {
+                      if (menuRef.current) menuRef.current.open = false;
+                      if (e.target.files?.[0]) void importJson(e.target.files[0]);
+                    }}
+                  />
                 </label>
               )}
-              <button className="rounded px-2 py-1.5 text-left hover:bg-slate-50" onClick={() => setGeoEnabled((v) => !v)}>
-                {geoEnabled ? "⏸ Pause auto-locating" : "▶ Resume auto-locating"}
+              <button
+                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50"
+                onClick={() => {
+                  if (menuRef.current) menuRef.current.open = false;
+                  setGeoEnabled((v) => !v);
+                }}
+              >
+                {geoEnabled ? (
+                  <Pause className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+                ) : (
+                  <Play className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+                )}
+                <span>{geoEnabled ? "Pause auto-locating" : "Resume auto-locating"}</span>
               </button>
               {props.source.kind === "google" && (
                 <a
-                  className="rounded px-2 py-1.5 hover:bg-slate-50"
+                  className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 hover:bg-slate-50"
                   target="_blank"
                   rel="noreferrer"
                   href={`https://docs.google.com/spreadsheets/d/${props.source.spreadsheetId}/edit`}
+                  onClick={() => {
+                    if (menuRef.current) menuRef.current.open = false;
+                  }}
                 >
-                  ↗ Open in Google Sheets
+                  <ExternalLink className="h-4 w-4 shrink-0 text-slate-500" strokeWidth={1.75} />
+                  <span>Open in Google Sheets</span>
                 </a>
               )}
-              <button className="rounded px-2 py-1.5 text-left hover:bg-slate-50" onClick={props.onClose}>
-                ✕ Close file
+              <a
+                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 hover:bg-slate-50"
+                target="_blank"
+                rel="noreferrer"
+                href={GITHUB_URL}
+                onClick={() => {
+                  if (menuRef.current) menuRef.current.open = false;
+                }}
+              >
+                <GitHubIcon className="h-4 w-4 shrink-0 text-slate-500" />
+                <span>Open on GitHub</span>
+              </a>
+              <div className="my-1 border-t border-slate-100" />
+              <button
+                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left text-rose-600 hover:bg-rose-50"
+                onClick={() => {
+                  if (menuRef.current) menuRef.current.open = false;
+                  props.onClose();
+                }}
+              >
+                <X className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+                <span>Close file</span>
               </button>
             </div>
           </details>
@@ -397,8 +600,9 @@ export function MainView(props: {
       </header>
 
       {ro && (
-        <div className="flex items-center gap-3 bg-amber-50 px-3 py-1.5 text-sm text-amber-900">
-          👀 View-only access: your changes are not saved.
+        <div className="flex items-center gap-2 bg-amber-50 px-3 py-1.5 text-sm text-amber-900">
+          <Eye className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+          <span>View-only access: your changes are not saved.</span>
           <button className={b("secondary", "py-0.5 text-xs")} onClick={props.onMakeCopy}>
             Make an editable copy
           </button>
@@ -407,10 +611,10 @@ export function MainView(props: {
 
       {/* Filter bar */}
       {showFilters && (
-        <div className="flex flex-wrap items-center gap-1.5 border-b border-slate-200 bg-slate-50 px-3 py-2">
+        <div className="flex max-h-[45vh] flex-wrap items-center gap-1.5 overflow-y-auto border-b border-slate-200 bg-slate-50 px-3 py-2 sm:max-h-none sm:overflow-visible">
           <input
-            className={`${inputCls} w-56`}
-            placeholder="🔍 Search name, city, notes…"
+            className={`${inputCls} w-full sm:w-56`}
+            placeholder="Search name, city, notes…"
             value={filters.search}
             onChange={(e) => f({ search: e.target.value })}
           />
@@ -529,7 +733,7 @@ export function MainView(props: {
                           <Stars value={rd.priority ?? 0} disabled={ro} size="text-sm" onChange={(v) => store.setRow(a.id, { priority: v })} />
                         </td>
                         <td className="px-2 py-1.5">
-                          <div className="font-medium leading-tight">{a.uniName}</div>
+                          <div className="font-medium leading-tight hover:text-indigo-700">{a.uniName}</div>
                           <div className="text-xs text-slate-400">
                             {a.uniCode}
                             {ud.city && ` · ${ud.city}`}
@@ -561,17 +765,36 @@ export function MainView(props: {
                           </select>
                         </td>
                         <td className="px-2 py-1.5 text-xs">
-                          {notes.length > 0 && (
-                            <span title={[...new Set(notes.map((n) => n.category))].join(", ")}>📝 {notes.length} </span>
-                          )}
-                          {links.length > 0 && <span>🔗 {links.length}</span>}
+                          <div className="inline-flex items-center gap-2">
+                            {notes.length > 0 && (
+                              <span
+                                className="inline-flex items-center gap-1 text-slate-600"
+                                title={[...new Set(notes.map((n) => n.category))].join(", ")}
+                              >
+                                <MessageSquareText className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+                                {notes.length}
+                              </span>
+                            )}
+                            {links.length > 0 && (
+                              <span className="inline-flex items-center gap-1 text-slate-600">
+                                <Link2 className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+                                {links.length}
+                              </span>
+                            )}
+                          </div>
                         </td>
                         <td className="px-2 py-1.5 text-center" title={loc === "missing" ? "No location" : loc === "approx" ? "Approximate" : "Located"}>
-                          {loc === "ok" ? "📍" : loc === "approx" ? "≈" : <span className="text-amber-500">?</span>}
+                          {loc === "ok" ? (
+                            <MapPin className="mx-auto h-3.5 w-3.5 text-emerald-600" strokeWidth={1.75} />
+                          ) : loc === "approx" ? (
+                            <MapPin className="mx-auto h-3.5 w-3.5 text-amber-500" strokeWidth={1.75} />
+                          ) : (
+                            <HelpCircle className="mx-auto h-3.5 w-3.5 text-slate-400" strokeWidth={1.75} />
+                          )}
                         </td>
                         <td className="whitespace-nowrap px-1 py-1.5 text-right">
                           <button
-                            className="rounded px-1 text-slate-400 hover:bg-slate-200 hover:text-slate-700"
+                            className="inline-flex items-center justify-center rounded p-1 text-slate-400 hover:bg-slate-200 hover:text-slate-700"
                             title={rd.hidden ? "Show" : "Hide"}
                             disabled={ro}
                             onClick={(e) => {
@@ -579,10 +802,14 @@ export function MainView(props: {
                               store.setRow(a.id, { hidden: !rd.hidden });
                             }}
                           >
-                            {rd.hidden ? "🙈" : "👁"}
+                            {rd.hidden ? (
+                              <EyeOff className="h-3.5 w-3.5" strokeWidth={1.75} />
+                            ) : (
+                              <Eye className="h-3.5 w-3.5" strokeWidth={1.75} />
+                            )}
                           </button>
                           <button
-                            className="rounded px-1 text-slate-400 hover:bg-slate-200 hover:text-slate-700"
+                            className="inline-flex items-center justify-center rounded p-1 text-slate-400 hover:bg-slate-200 hover:text-slate-700"
                             title="Details & notes"
                             onClick={(e) => {
                               e.stopPropagation();
@@ -590,7 +817,7 @@ export function MainView(props: {
                               setDetailUni(a.uniKey);
                             }}
                           >
-                            ✎
+                            <Pencil className="h-3.5 w-3.5" strokeWidth={1.75} />
                           </button>
                         </td>
                       </tr>
@@ -601,7 +828,7 @@ export function MainView(props: {
               {!sorted.length && <div className="p-8 text-center text-slate-400">No agreements match the filters.</div>}
             </div>
             {detailGroup && (
-              <div className="absolute inset-y-0 right-0 z-20 w-full max-w-md">
+              <div className="fixed inset-0 z-[1200] md:absolute md:inset-y-0 md:left-auto md:right-0 md:z-20 md:w-full md:max-w-md">
                 <DetailPanel
                   key={detailGroup.uniKey}
                   uni={detailGroup}
@@ -615,7 +842,12 @@ export function MainView(props: {
                   onClose={() => setDetailUni(null)}
                   onStartPick={() => {
                     setPickUni(detailGroup.uniKey);
-                    setShowMap(true);
+                    if (isMobile) {
+                      setMobileTab("map");
+                      setDetailUni(null);
+                    } else {
+                      setDesktopMap(true);
+                    }
                   }}
                 />
               </div>
@@ -650,8 +882,9 @@ export function MainView(props: {
               onSelectRow={selectRowFromMap}
               onOpenDetails={(k) => {
                 setSelectedUni(k);
-                setShowTable(true);
                 setDetailUni(k);
+                if (isMobile) setMobileTab("table");
+                else setDesktopTable(true);
               }}
               onPick={(lat, lon) => {
                 if (pickUni) store.setUni(pickUni, { lat, lon, geoSource: "manual", geoLabel: "Picked on map" });
@@ -678,31 +911,48 @@ export function MainView(props: {
 
 function SyncBadge({ state, onRetry, onReconnect }: { state: StoreState; onRetry: () => void; onReconnect: () => void }) {
   if (state.kind === "local")
-    return <span className="rounded bg-slate-100 px-2 py-0.5 text-xs text-slate-600">💾 Saved in this browser</span>;
-  if (state.readOnly) return <span className="rounded bg-amber-100 px-2 py-0.5 text-xs text-amber-800">View only</span>;
+    return (
+      <span className="inline-flex items-center gap-1 rounded bg-slate-100 px-2 py-0.5 text-xs text-slate-600">
+        <HardDrive className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+        <span>Saved in this browser</span>
+      </span>
+    );
+  if (state.readOnly)
+    return (
+      <span className="inline-flex items-center gap-1 rounded bg-amber-100 px-2 py-0.5 text-xs text-amber-800">
+        <Eye className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+        <span>View only</span>
+      </span>
+    );
   switch (state.status) {
     case "saving":
       return (
-        <span className="flex items-center gap-1 rounded bg-indigo-50 px-2 py-0.5 text-xs text-indigo-700">
+        <span className="inline-flex items-center gap-1 rounded bg-indigo-50 px-2 py-0.5 text-xs text-indigo-700">
           <Spinner className="h-3 w-3" /> Saving…
         </span>
       );
     case "auth":
       return (
-        <button className="rounded bg-rose-100 px-2 py-0.5 text-xs text-rose-700 hover:bg-rose-200" onClick={onReconnect}>
-          ⚠ Session expired — reconnect
+        <button className="inline-flex items-center gap-1 rounded bg-rose-100 px-2 py-0.5 text-xs text-rose-700 hover:bg-rose-200" onClick={onReconnect}>
+          <AlertTriangle className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+          <span>Session expired — reconnect</span>
         </button>
       );
     case "error":
       return (
-        <button className="rounded bg-rose-100 px-2 py-0.5 text-xs text-rose-700 hover:bg-rose-200" onClick={onRetry} title={state.error}>
-          ⚠ Sync error — retry
+        <button className="inline-flex items-center gap-1 rounded bg-rose-100 px-2 py-0.5 text-xs text-rose-700 hover:bg-rose-200" onClick={onRetry} title={state.error}>
+          <AlertTriangle className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+          <span>Sync error — retry</span>
         </button>
       );
     default:
       return (
-        <span className="rounded bg-emerald-50 px-2 py-0.5 text-xs text-emerald-700" title={`Last sync ${new Date(state.lastSync).toLocaleTimeString()}`}>
-          ✓ Synced with Google Sheets
+        <span
+          className="inline-flex items-center gap-1 rounded bg-emerald-50 px-2 py-0.5 text-xs text-emerald-700"
+          title={`Last sync ${new Date(state.lastSync).toLocaleTimeString()}`}
+        >
+          <Check className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+          <span>Synced with Google Sheets</span>
         </span>
       );
   }
