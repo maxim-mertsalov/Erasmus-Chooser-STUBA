@@ -126,9 +126,13 @@ export function StartScreen(props: {
         </Card>
       </div>
 
-      <div className="pt-2 text-center">
-        <Link href="/privacy" className="text-xs text-slate-300 transition-colors hover:text-slate-500">
+      <div className="flex items-center justify-center gap-3 pt-2 text-xs text-slate-300">
+        <Link href="/privacy" className="transition-colors hover:text-slate-500">
           Privacy Policy
+        </Link>
+        <span>·</span>
+        <Link href="/terms" className="transition-colors hover:text-slate-500">
+          Terms of Use
         </Link>
       </div>
     </div>

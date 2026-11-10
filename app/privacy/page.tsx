@@ -10,9 +10,14 @@ export default function PrivacyPolicyPage() {
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-10 text-slate-700">
       <div className="mx-auto max-w-2xl rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-        <Link href="/" className="text-sm text-indigo-600 hover:underline">
-          ← Back to Erasmus Chooser
-        </Link>
+        <div className="flex items-center justify-between gap-4 text-sm">
+          <Link href="/" className="text-indigo-600 hover:underline">
+            ← Back to Erasmus Chooser
+          </Link>
+          <Link href="/terms" className="text-slate-400 hover:text-slate-600 hover:underline">
+            Terms of Use
+          </Link>
+        </div>
 
         <h1 className="mt-4 text-2xl font-bold text-slate-900">Privacy Policy</h1>
         <p className="mt-1 text-xs text-slate-400">Last updated: November 10, 2026</p>
@@ -21,8 +26,8 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2 className="font-semibold text-slate-900">1. Overview</h2>
             <p className="mt-1">
-              Erasmus Chooser is a client-first tool for browsing and organizing university exchange agreements. We do not operate a user database,
-              do not sell or share personal information, and do not track you with analytics or advertising cookies.
+              Erasmus Chooser is a client-first tool for browsing and organizing university exchange agreements. We do not operate our own user
+              account database and we do not sell or share your spreadsheet data or notes with third parties.
             </p>
           </section>
 
@@ -33,9 +38,15 @@ export default function PrivacyPolicyPage() {
               This grants access strictly to spreadsheets you explicitly pick via Google Picker or copies created by the app.
             </p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
-              <li>Your Google OAuth access token is kept only in your browser&apos;s <code>sessionStorage</code> and is never sent to or stored on our server.</li>
+              <li>
+                Your Google OAuth access token is kept only in your browser&apos;s <code>sessionStorage</code> and is never sent to or stored on our
+                server.
+              </li>
               <li>Your basic Google profile email/display name is read only in your browser to label notes you create.</li>
-              <li>Your notes, priorities, tags, links, and pin coordinates are written directly to the <code>_erasmus_app</code> sheet inside your chosen Google Spreadsheet.</li>
+              <li>
+                Your notes, priorities, tags, links, and pin coordinates are written directly to the <code>_erasmus_app</code> sheet inside your
+                chosen Google Spreadsheet.
+              </li>
             </ul>
           </section>
 
@@ -48,7 +59,17 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-semibold text-slate-900">4. Map &amp; Geocoding Services</h2>
+            <h2 className="font-semibold text-slate-900">4. Analytics &amp; Search Indexing</h2>
+            <p className="mt-1">
+              We use Google Tag Manager / Google Analytics to collect basic, aggregated usage statistics (such as page views, device type, and
+              browser region) in order to understand how the site is used and improve it. Google Analytics may set cookies or collect standard
+              usage telemetry as governed by Google&apos;s Privacy Policy. Your spreadsheet contents, university notes, and Google Drive tokens are
+              never sent to analytics.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-semibold text-slate-900">5. Map &amp; Geocoding Services</h2>
             <p className="mt-1">
               To display partner universities on the map, university names and country codes (no personal user data) are queried against OpenStreetMap
               Nominatim and Komoot Photon via our geocoding proxy, and map tiles are loaded directly from OpenStreetMap.
@@ -56,10 +77,10 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-semibold text-slate-900">5. Data Removal</h2>
+            <h2 className="font-semibold text-slate-900">6. Data Removal</h2>
             <p className="mt-1">
               You can revoke the app&apos;s access at any time from your Google Account permissions settings, delete the <code>_erasmus_app</code>{" "}
-              sheet from your spreadsheet, and clear your browser storage.
+              sheet from your spreadsheet, clear your browser storage, or block analytics cookies in your browser.
             </p>
           </section>
         </div>
