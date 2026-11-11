@@ -21,7 +21,7 @@ export default function AboutPage() {
 
         <header className="mt-6 border-b border-slate-200 pb-6 dark:border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-md dark:bg-indigo-500">
+            <div className="flex h-12 w-12 shrink-0 aspect-square items-center justify-center rounded-xl bg-indigo-600 text-white shadow-md dark:bg-indigo-500">
               <GraduationCap className="h-7 w-7" strokeWidth={1.75} />
             </div>
             <div>

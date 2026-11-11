@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ChevronDown,
   ChevronUp,
@@ -16,7 +16,8 @@ import { b } from "@/components/ui";
 import { useUIStore } from "@/lib/stores/uiStore";
 import { SyncBadge } from "./SyncBadge";
 import { SettingsMenu } from "./SettingsMenu";
-import { ColumnVisibilityMenu } from "./ColumnVisibilityMenu";
+import { ColumnVisibilityMenu, ColumnVisibilityList } from "./ColumnVisibilityMenu";
+import { Columns3 } from "lucide-react";
 
 export function TopBar({
   source,
@@ -59,6 +60,15 @@ export function TopBar({
 }) {
   const [ui, uiStoreActions] = useUIStore();
   const [showMobileColumnMenu, setShowMobileColumnMenu] = useState(false);
+
+  useEffect(() => {
+    if (!showMobileColumnMenu) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setShowMobileColumnMenu(false);
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [showMobileColumnMenu]);
 
   return (
     <header className="flex items-center gap-2 border-b border-slate-200 bg-white px-2.5 py-2 sm:px-3 dark:border-slate-800 dark:bg-slate-900">
@@ -204,20 +214,32 @@ export function TopBar({
 
       {/* Mobile/Tablet Column Visibility Dialog */}
       {showMobileColumnMenu && (
-        <div className="fixed inset-0 z-[2200] flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-xs min-[1110px]:hidden">
-          <div className="w-full max-w-sm rounded-xl border border-slate-200 bg-white p-4 shadow-2xl dark:border-slate-800 dark:bg-slate-900">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-2 dark:border-slate-800">
-              <h3 className="font-semibold text-sm text-slate-900 dark:text-slate-100">Table Columns</h3>
+        <div
+          className="fixed inset-0 z-[2200] flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-xs min-[1110px]:hidden"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setShowMobileColumnMenu(false);
+          }}
+        >
+          <div
+            className="w-full max-w-sm rounded-xl border border-slate-200 bg-white p-4 shadow-2xl dark:border-slate-800 dark:bg-slate-900"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2.5 dark:border-slate-800">
+              <div className="flex items-center gap-2">
+                <Columns3 className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+                <h3 className="font-semibold text-sm text-slate-900 dark:text-slate-100">Table Columns</h3>
+              </div>
               <button
                 type="button"
                 onClick={() => setShowMobileColumnMenu(false)}
                 className="rounded p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                title="Close"
               >
                 ✕
               </button>
             </div>
-            <div className="mt-2">
-              <ColumnVisibilityMenu
+            <div className="mt-3">
+              <ColumnVisibilityList
                 visibility={columnVisibility}
                 onToggle={onToggleColumn}
                 onReset={onResetColumns}

@@ -170,37 +170,43 @@ export function BudgetEditorModal({
               key={cat.id}
               className="rounded-lg border border-slate-200 bg-slate-50/70 p-3 dark:border-slate-800 dark:bg-slate-900/60"
             >
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/80 pb-2 dark:border-slate-800">
-                <div className="flex min-w-0 flex-1 items-center gap-2">
+              <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200/80 pb-2.5 dark:border-slate-800">
+                <div className="min-w-0 flex-1">
                   <input
-                    className={`${inputCls} min-w-32 flex-1 font-semibold`}
+                    className={`${inputCls} w-full font-semibold`}
                     value={cat.name}
                     placeholder="Category name"
                     onChange={(e) => updateCategory(cat.id, { name: e.target.value })}
                   />
-                  <div className="flex shrink-0 items-center gap-1.5 whitespace-nowrap">
+                </div>
+
+                <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
+                  <div className="flex shrink-0 items-stretch overflow-hidden rounded-md border border-slate-300 bg-white shadow-xs focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500 dark:border-slate-700 dark:bg-slate-900">
                     <input
                       type="number"
                       min={0}
                       step={10}
-                      className={`${inputCls} w-20 shrink-0 text-right font-medium`}
+                      className="w-20 bg-transparent py-1 pl-2.5 pr-1 text-right text-sm font-semibold text-slate-900 focus:outline-none dark:text-slate-100"
                       value={cat.monthlyAmount}
                       onChange={(e) => updateCategory(cat.id, { monthlyAmount: Number(e.target.value) || 0 })}
                     />
-                    <span className="select-none text-xs font-semibold text-slate-500 whitespace-nowrap dark:text-slate-400">
+                    <span
+                      style={{ whiteSpace: "nowrap", flexShrink: 0, minWidth: "3.75rem", wordBreak: "keep-all" }}
+                      className="inline-flex shrink-0 select-none items-center justify-center whitespace-nowrap border-l border-slate-200 bg-slate-50 px-2 text-xs font-semibold text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400"
+                    >
                       €/mo
                     </span>
                   </div>
-                </div>
 
-                <button
-                  type="button"
-                  onClick={() => deleteCategory(cat.id)}
-                  title="Delete category"
-                  className="rounded p-1 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => deleteCategory(cat.id)}
+                    title="Delete category"
+                    className="shrink-0 rounded p-1.5 text-slate-400 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/40 dark:hover:text-rose-400"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
 
               {/* Countries in this category */}

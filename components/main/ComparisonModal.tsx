@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import {
   Coins,
@@ -18,6 +18,85 @@ import type { MapPoint } from "@/components/MapView";
 import { countryName, flag } from "@/lib/countries";
 import { type GrantCategory, getGrantForCountry } from "@/lib/config/erasmusGrants";
 import { Stars } from "@/components/ui";
+import { extractCityForUni, useLivingCost } from "@/lib/services/livingCostService";
+
+function LivingCostComparisonCell({
+  geoLabel,
+  code,
+  name,
+  country,
+  userCostRating,
+}: {
+  geoLabel?: string;
+  code?: string;
+  name: string;
+  country: string;
+  userCostRating?: string;
+}) {
+  const city = React.useMemo(() => extractCityForUni(geoLabel, code, name, country), [geoLabel, code, name, country]);
+  const cName = countryName(country);
+  const { data, loading } = useLivingCost(city, cName);
+
+  if (loading) {
+    return <span className="text-xs text-slate-400">Loading…</span>;
+  }
+
+  if (data && data.hasData) {
+    const isCheaper = (data.costOfLivingDiff ?? 0) < 0;
+    return (
+      <div className="flex flex-col gap-1 text-xs">
+        <div className="flex items-center gap-1.5">
+          <span
+            className={`font-semibold ${
+              isCheaper ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"
+            }`}
+          >
+            {data.costOfLivingDiff != null ? (data.costOfLivingDiff > 0 ? `+${data.costOfLivingDiff}%` : `${data.costOfLivingDiff}%`) : ""}
+          </span>
+          <span className="text-[11px] text-slate-500">vs Bratislava</span>
+        </div>
+        {data.rentDiff != null && (
+          <div className="text-[11px] text-slate-500 dark:text-slate-400">
+            Rent:{" "}
+            <span className="font-medium text-slate-700 dark:text-slate-300">
+              {data.rentDiff > 0 ? `+${data.rentDiff}%` : `${data.rentDiff}%`}
+            </span>
+          </div>
+        )}
+        <a
+          href={data.compareUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-0.5 text-[11px] text-indigo-600 hover:underline dark:text-indigo-400"
+        >
+          <span>Numbeo</span>
+          <ExternalLink className="h-2.5 w-2.5" />
+        </a>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-1 text-xs">
+      {userCostRating ? (
+        <span className="capitalize font-medium text-slate-700 dark:text-slate-300">{userCostRating}</span>
+      ) : (
+        <span className="text-slate-400">—</span>
+      )}
+      {data?.compareUrl && (
+        <a
+          href={data.compareUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-0.5 text-[11px] text-indigo-600 hover:underline dark:text-indigo-400"
+        >
+          <span>Check on Numbeo</span>
+          <ExternalLink className="h-2.5 w-2.5" />
+        </a>
+      )}
+    </div>
+  );
+}
 
 const MapView = dynamic(() => import("@/components/MapView"), {
   ssr: false,
@@ -47,6 +126,15 @@ export function ComparisonModal({
   selectedFaculties?: string[];
   onOpenDetails: (uniKey: string) => void;
 }) {
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [isOpen, onClose]);
+
   if (!isOpen || comparedKeys.length === 0) return null;
 
   // Build university summary objects for each compared key, filtering agreements to selected faculties
@@ -118,9 +206,18 @@ export function ComparisonModal({
       noteCount: u.notes.length,
     }));
 
+
   return (
-    <div className="fixed inset-0 z-[2000] flex flex-col bg-slate-900/60 backdrop-blur-sm">
-      <div className="mx-auto flex h-full w-full max-w-6xl flex-col bg-white shadow-2xl dark:bg-slate-950">
+    <div
+      className="fixed inset-0 z-[2000] flex flex-col bg-slate-900/60 backdrop-blur-sm sm:p-4"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div
+        className="mx-auto flex h-full w-full max-w-6xl flex-col bg-white shadow-2xl dark:bg-slate-950 sm:rounded-xl overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Top Bar */}
         <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3 dark:border-slate-800">
           <div className="flex items-center gap-2">
@@ -249,13 +346,13 @@ export function ComparisonModal({
                   <td className="px-3 py-2.5 font-medium text-slate-500 dark:text-slate-400">Cost of living</td>
                   {unis.map((u) => (
                     <td key={u.uniKey} className="px-3 py-2.5">
-                      {u.data.costOfLiving ? (
-                        <span className="capitalize font-medium text-slate-700 dark:text-slate-300">
-                          {u.data.costOfLiving} cost
-                        </span>
-                      ) : (
-                        <span className="text-slate-400">—</span>
-                      )}
+                      <LivingCostComparisonCell
+                        geoLabel={u.data.geoLabel}
+                        code={u.uniCode}
+                        name={u.uniName}
+                        country={u.country}
+                        userCostRating={u.data.costOfLiving}
+                      />
                     </td>
                   ))}
                 </tr>

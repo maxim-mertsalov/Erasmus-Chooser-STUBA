@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Coins,
   Columns3,
@@ -48,6 +48,25 @@ export function SettingsMenu({
 }) {
   const [ui, uiStoreActions] = useUIStore();
   const menuRef = useRef<HTMLDetailsElement>(null);
+
+  useEffect(() => {
+    const handleDocClick = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        menuRef.current.open = false;
+      }
+    };
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && menuRef.current) {
+        menuRef.current.open = false;
+      }
+    };
+    document.addEventListener("mousedown", handleDocClick);
+    window.addEventListener("keydown", handleKey);
+    return () => {
+      document.removeEventListener("mousedown", handleDocClick);
+      window.removeEventListener("keydown", handleKey);
+    };
+  }, []);
 
   const close = () => {
     if (menuRef.current) menuRef.current.open = false;

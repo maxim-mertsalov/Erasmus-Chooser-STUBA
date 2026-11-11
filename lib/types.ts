@@ -40,6 +40,7 @@ export type GeoSource = "exact" | "auto" | "approx" | "unresolved" | "manual" | 
 export interface UniData {
   language?: string;
   city?: string;
+  country?: string;
   costOfLiving?: "" | "low" | "medium" | "high";
   tags?: string;
   lat?: number;

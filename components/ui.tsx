@@ -1,6 +1,7 @@
 "use client";
 // Small reusable UI pieces (Tailwind only).
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { X } from "lucide-react";
 
 export const btn = {
   base: "inline-flex items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition disabled:opacity-50 disabled:cursor-not-allowed",
@@ -145,10 +146,39 @@ export function Modal({
   onClose?: () => void;
   maxWidth?: string;
 }) {
+  useEffect(() => {
+    if (!onClose) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   return (
-    <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-slate-900/50 p-4 dark:bg-black/70" onClick={onClose}>
-      <div className={`w-full ${maxWidth} rounded-xl border border-slate-200 bg-white p-5 shadow-xl dark:border-slate-700 dark:bg-slate-900`} onClick={(e) => e.stopPropagation()}>
-        <h2 className="mb-3 text-lg font-semibold">{title}</h2>
+    <div
+      className="fixed inset-0 z-[2000] flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-xs dark:bg-black/70"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose?.();
+      }}
+    >
+      <div
+        className={`w-full ${maxWidth} rounded-xl border border-slate-200 bg-white p-5 shadow-xl dark:border-slate-700 dark:bg-slate-900`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{title}</h2>
+          {onClose && (
+            <button
+              type="button"
+              onClick={onClose}
+              className="rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+              title="Close (Esc)"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          )}
+        </div>
         {children}
       </div>
     </div>

@@ -82,10 +82,26 @@ function computeClusters(
     const [dy, dx] = jitter(p.uniKey, p.approx);
     const lat = p.lat + dy;
     const lon = p.lon + dx;
+
+    // The selected university is ALWAYS rendered as an independent pin, never merged into a cluster!
+    if (isSel) {
+      clusters.push({
+        id: `single-${p.uniKey}`,
+        lat,
+        lon,
+        points: [p],
+        maxPriority: p.priority,
+        hasSelected: true,
+      });
+      continue;
+    }
+
     const pt = map.latLngToLayerPoint([lat, lon]);
 
     let matched: ClusterItem | null = null;
     for (const c of clusters) {
+      // Do not group other pins into the selected uni pin
+      if (c.hasSelected) continue;
       const cPt = map.latLngToLayerPoint([c.lat, c.lon]);
       const dist = Math.hypot(pt.x - cPt.x, pt.y - cPt.y);
       if (dist < radius) {
@@ -97,7 +113,6 @@ function computeClusters(
     if (matched) {
       matched.points.push(p);
       matched.maxPriority = Math.max(matched.maxPriority, p.priority);
-      if (isSel) matched.hasSelected = true;
     } else {
       clusters.push({
         id: `c-${p.uniKey}`,
@@ -105,7 +120,7 @@ function computeClusters(
         lon,
         points: [p],
         maxPriority: p.priority,
-        hasSelected: isSel,
+        hasSelected: false,
       });
     }
   }
@@ -153,11 +168,29 @@ function Controller({
     if (!selected || !flyKey) return;
     const p = points.find((x) => x.uniKey === selected);
     if (!p) return;
+
+    // Immediately close any open popup on another marker so Leaflet does not autoPan back
+    map.closePopup();
+    // Invalidate size to ensure target coordinates center correctly in dynamic pane layout
+    map.invalidateSize();
+
     const [dy, dx] = jitter(p.uniKey, p.approx);
-    // Comfortable zoom between 7 and 8 (doesn't jump wildly into street level)
-    const targetZoom = Math.min(Math.max(map.getZoom(), 7), 8);
-    map.flyTo([p.lat + dy, p.lon + dx], targetZoom, { duration: 0.5 });
-    const t = setTimeout(() => markers.current?.get(selected)?.openPopup(), 550);
+    // Smooth zoom between 8 and 10 to see the city and surrounding context
+    const currentZoom = map.getZoom();
+    const targetZoom = Math.min(Math.max(currentZoom, 8), 10);
+
+    map.flyTo([p.lat + dy, p.lon + dx], targetZoom, {
+      duration: 0.45,
+      easeLinearity: 0.25,
+    });
+
+    const t = setTimeout(() => {
+      const marker = markers.current?.get(selected);
+      if (marker) {
+        marker.openPopup();
+      }
+    }, 480);
+
     return () => clearTimeout(t);
   }, [flyKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -240,7 +273,7 @@ function ClusteredMarkersLayer({
                 <span className="font-semibold">{flag(p.country)} {p.name}</span>
                 <span className="text-slate-400 text-xs ml-1">({p.agreements.length} agreements)</span>
               </Tooltip>
-              <Popup minWidth={240} maxWidth={320}>
+              <Popup minWidth={240} maxWidth={320} autoPanPadding={[50, 50]}>
                 <div className="text-sm">
                   <div className="font-semibold text-slate-900 dark:text-slate-100">
                     {flag(p.country)} {p.name}
@@ -379,7 +412,7 @@ function ClusteredMarkersLayer({
             </Tooltip>
 
             {map.getZoom() >= 14 && (
-              <Popup minWidth={240} maxWidth={320}>
+              <Popup minWidth={240} maxWidth={320} autoPanPadding={[50, 50]}>
                 <div className="text-sm">
                   <div className="font-semibold text-slate-900 dark:text-slate-100 mb-1 border-b border-slate-200 dark:border-slate-700 pb-1 text-xs">
                     {count} Universities at this location

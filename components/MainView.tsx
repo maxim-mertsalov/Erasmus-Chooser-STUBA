@@ -84,6 +84,7 @@ export function MainView(props: {
   const [selectedUni, setSelectedUni] = useState<string | null>(null);
   const [selectedRow, setSelectedRow] = useState<string | null>(null);
   const [detailUni, setDetailUni] = useState<string | null>(null);
+  const [isDetailFullscreen, setIsDetailFullscreen] = useState(false);
   const [pickUni, setPickUni] = useState<string | null>(null);
   const [flyKey, setFlyKey] = useState(0);
 
@@ -97,6 +98,17 @@ export function MainView(props: {
 
   const tableRef = useRef<HTMLDivElement>(null);
   const [now] = useState(() => Date.now());
+
+  useEffect(() => {
+    if (!detailUni || !isDetailFullscreen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsDetailFullscreen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [detailUni, isDetailFullscreen]);
 
   // 1) Base set = setup filters (faculties / programs / active).
   const base = useMemo(
@@ -276,6 +288,16 @@ export function MainView(props: {
     };
   }, [geoEnabled, visibleUniKeysHash]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Close detail panel on Escape key
+  useEffect(() => {
+    if (!detailUni) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setDetailUni(null);
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [detailUni]);
+
   // Selection handlers
   const scrollToRow = (rowId: string) =>
     requestAnimationFrame(() =>
@@ -451,28 +473,56 @@ export function MainView(props: {
 
             {/* University Details Drawer / Modal */}
             {detailGroup && (
-              <div className="fixed inset-0 z-[1200] md:absolute md:inset-y-0 md:left-auto md:right-0 md:z-20 md:w-full md:max-w-md">
-                <DetailPanel
-                  key={detailGroup.uniKey}
-                  uni={detailGroup}
-                  state={state}
-                  store={store}
-                  selectedRow={selectedRow}
-                  onSelectRow={(id) => {
-                    setSelectedRow(id);
-                    scrollToRow(id);
-                  }}
-                  onClose={() => setDetailUni(null)}
-                  onStartPick={() => {
-                    setPickUni(detailGroup.uniKey);
-                    if (isMobile) {
-                      uiStoreActions.setMobileTab("map");
+              <div
+                className={
+                  isDetailFullscreen
+                    ? "fixed inset-0 z-[1300] flex items-center justify-center p-2 sm:p-5 bg-slate-900/60 backdrop-blur-xs"
+                    : "fixed inset-0 z-[1200] flex justify-end bg-slate-900/40 backdrop-blur-xs md:bg-transparent md:backdrop-blur-none md:absolute md:inset-y-0 md:left-auto md:right-0 md:z-20 md:w-full md:max-w-md"
+                }
+                onClick={(e) => {
+                  if (e.target === e.currentTarget) {
+                    setDetailUni(null);
+                    setIsDetailFullscreen(false);
+                  }
+                }}
+              >
+                <div
+                  className={
+                    isDetailFullscreen
+                      ? "relative flex flex-col h-[94vh] w-full max-w-5xl rounded-2xl bg-white shadow-2xl dark:bg-slate-900 overflow-hidden border border-slate-200 dark:border-slate-800"
+                      : "h-full w-full max-w-md"
+                  }
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <DetailPanel
+                    key={detailGroup.uniKey}
+                    uni={detailGroup}
+                    state={state}
+                    store={store}
+                    selectedRow={selectedRow}
+                    isFullscreen={isDetailFullscreen}
+                    isMobile={isMobile}
+                    onToggleFullscreen={isMobile ? undefined : () => setIsDetailFullscreen((v) => !v)}
+                    onSelectRow={(id) => {
+                      setSelectedRow(id);
+                      scrollToRow(id);
+                    }}
+                    onClose={() => {
                       setDetailUni(null);
-                    } else {
-                      uiStoreActions.setDesktopMap(true);
-                    }
-                  }}
-                />
+                      setIsDetailFullscreen(false);
+                    }}
+                    onStartPick={() => {
+                      setPickUni(detailGroup.uniKey);
+                      setIsDetailFullscreen(false);
+                      if (isMobile) {
+                        uiStoreActions.setMobileTab("map");
+                        setDetailUni(null);
+                      } else {
+                        uiStoreActions.setDesktopMap(true);
+                      }
+                    }}
+                  />
+                </div>
               </div>
             )}
           </div>

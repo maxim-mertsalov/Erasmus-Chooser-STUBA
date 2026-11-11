@@ -81,15 +81,20 @@ export function StartScreen(props: {
       )}
 
       {props.resumeLabel && (
-        <div className="flex items-center gap-1.5">
-          <button className={b("secondary", "flex-1 justify-between py-3")} disabled={disabled} onClick={props.onResume}>
-            <span className="inline-flex items-center gap-2">
+        <div className="flex items-stretch gap-1.5">
+          <button
+            className={b("secondary", "min-w-0 flex-1 justify-between py-3")}
+            disabled={disabled}
+            onClick={props.onResume}
+            title={`Continue with ${props.resumeLabel}`}
+          >
+            <span className="inline-flex min-w-0 items-center gap-2">
               <RotateCcw className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
-              <span>
-                Continue with <b>{props.resumeLabel}</b>
+              <span className="truncate text-left">
+                Continue with <b className="font-semibold">{props.resumeLabel}</b>
               </span>
             </span>
-            <ArrowRight className="h-4 w-4 shrink-0 text-slate-400" strokeWidth={1.75} />
+            <ArrowRight className="ml-2 h-4 w-4 shrink-0 text-slate-400" strokeWidth={1.75} />
           </button>
           {props.onClearResume && (
             <button
@@ -97,7 +102,10 @@ export function StartScreen(props: {
               onClick={props.onClearResume}
               disabled={disabled}
               title="Forget this session"
-              className="rounded-lg border border-slate-200 bg-white p-3 text-slate-400 shadow-sm hover:border-slate-300 hover:text-rose-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-500 dark:hover:text-rose-400"
+              className={b(
+                "secondary",
+                "shrink-0 px-3.5 text-slate-400 hover:border-rose-300 hover:text-rose-600 dark:border-slate-800 dark:text-slate-500 dark:hover:border-rose-900/60 dark:hover:text-rose-400",
+              )}
             >
               <X className="h-4 w-4" />
             </button>
