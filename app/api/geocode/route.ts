@@ -78,24 +78,36 @@ async function photon(q: string, cc: string, placesOnly: boolean): Promise<GeoRe
     .slice(0, 5);
 }
 
+const HIT_CACHE_HEADERS = {
+  "Cache-Control": "public, max-age=86400, s-maxage=2592000, stale-while-revalidate=604800",
+};
+const EMPTY_CACHE_HEADERS = {
+  "Cache-Control": "public, max-age=3600, s-maxage=86400",
+};
+
 export async function GET(req: NextRequest) {
   const sp = req.nextUrl.searchParams;
-  const q = (sp.get("q") ?? "").trim().slice(0, 200);
-  const cc = (sp.get("cc") ?? "").trim().slice(0, 2);
+  const q = (sp.get("q") ?? "").replace(/\s+/g, " ").trim().slice(0, 200);
+  const cc = (sp.get("cc") ?? "").trim().toUpperCase().slice(0, 2);
   const provider = sp.get("provider") === "photon" ? "photon" : "nominatim";
   const places = sp.get("places") === "1";
-  if (!q) return Response.json({ results: [] });
+  if (!q) return Response.json({ results: [] }, { headers: EMPTY_CACHE_HEADERS });
 
   const cacheKey = `${provider}|${cc}|${places}|${q.toLowerCase()}`;
   const hit = cache.get(cacheKey);
-  if (hit) return Response.json({ results: hit, cached: true });
+  if (hit) {
+    return Response.json({ results: hit, cached: true }, { headers: hit.length ? HIT_CACHE_HEADERS : EMPTY_CACHE_HEADERS });
+  }
 
   try {
     const results = await schedule(provider, () => (provider === "photon" ? photon(q, cc, places) : nominatim(q, cc)));
     if (cache.size > 5000) cache.clear();
     cache.set(cacheKey, results);
-    return Response.json({ results });
+    return Response.json({ results }, { headers: results.length ? HIT_CACHE_HEADERS : EMPTY_CACHE_HEADERS });
   } catch (e) {
-    return Response.json({ results: [], error: (e as Error).message }, { status: 502 });
+    return Response.json(
+      { results: [], error: (e as Error).message },
+      { status: 502, headers: { "Cache-Control": "no-store" } },
+    );
   }
 }

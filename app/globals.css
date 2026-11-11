@@ -13,6 +13,11 @@ body {
   font-family: inherit;
 }
 
+.custom-cluster-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
 @media (prefers-color-scheme: dark) {
   .leaflet-container {
     background: #0f172a !important;

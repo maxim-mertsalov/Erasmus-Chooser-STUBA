@@ -1,0 +1,4046 @@
+{
+  "aalborg universitet|dk": {
+    "lat": 57.0147,
+    "lon": 9.9839,
+    "label": "Aalborg University, Aalborg, Denmark",
+    "score": 100
+  },
+  "aalborg university|dk": {
+    "lat": 57.0147,
+    "lon": 9.9839,
+    "label": "Aalborg University, Denmark",
+    "score": 100
+  },
+  "aalto university|fi": {
+    "lat": 60.1868,
+    "lon": 24.8282,
+    "label": "Aalto University, Espoo, Finland",
+    "score": 100
+  },
+  "aalto yliopisto|fi": {
+    "lat": 60.1867,
+    "lon": 24.8283,
+    "label": "Aalto University, Espoo/Helsinki, Finland",
+    "score": 100
+  },
+  "aarhus universitet|dk": {
+    "lat": 56.1681,
+    "lon": 10.2039,
+    "label": "Aarhus University, Aarhus, Denmark",
+    "score": 100
+  },
+  "aarhus university|dk": {
+    "lat": 56.1678,
+    "lon": 10.2039,
+    "label": "Aarhus University, Denmark",
+    "score": 100
+  },
+  "academy of arts architecture and design in prague umprum|cz": {
+    "lat": 50.0894,
+    "lon": 14.4153,
+    "label": "Academy of Arts, Architecture and Design in Prague (UMPRUM), Czech Republic",
+    "score": 100
+  },
+  "academy of arts architecture and design in prague|cz": {
+    "lat": 50.0894,
+    "lon": 14.4153,
+    "label": "Academy of Arts, Architecture and Design in Prague (UMPRUM), Czech Republic",
+    "score": 100
+  },
+  "adam mickiewicz university in poznan faculty of chemistry|pl": {
+    "lat": 52.4672,
+    "lon": 16.9261,
+    "label": "Adam Mickiewicz University in Poznań (Faculty of Chemistry), Poland",
+    "score": 100
+  },
+  "adam mickiewicz university in poznan|pl": {
+    "lat": 52.4672,
+    "lon": 16.9261,
+    "label": "Adam Mickiewicz University in Poznań (Faculty of Chemistry), Poland",
+    "score": 100
+  },
+  "agh akademia gorniczo hutnicza|pl": {
+    "lat": 50.0658,
+    "lon": 19.9189,
+    "label": "AGH University of Krakow, Kraków, Poland",
+    "score": 100
+  },
+  "agh university of krakow|pl": {
+    "lat": 50.0664,
+    "lon": 19.9197,
+    "label": "AGH University of Krakow, Poland",
+    "score": 100
+  },
+  "agh university of science and technology|pl": {
+    "lat": 50.0664,
+    "lon": 19.9197,
+    "label": "AGH University of Krakow, Poland",
+    "score": 100
+  },
+  "agroparistech institute des sciences du vivant et de l environnement|fr": {
+    "lat": 48.7144,
+    "lon": 2.1983,
+    "label": "AgroParisTech, Palaiseau, France",
+    "score": 100
+  },
+  "agroparistech|fr": {
+    "lat": 48.7144,
+    "lon": 2.1983,
+    "label": "AgroParisTech, Palaiseau, France",
+    "score": 100
+  },
+  "akademia kujawsko pomorska|pl": {
+    "lat": 53.1186,
+    "lon": 18.0264,
+    "label": "Kujawy and Pomorze University in Bydgoszcz, Poland",
+    "score": 100
+  },
+  "aktobe regional university named after k zhubanov|kz": {
+    "lat": 50.2986,
+    "lon": 57.1558,
+    "label": "K. Zhubanov Aktobe Regional University, Aktobe, Kazakhstan",
+    "score": 100
+  },
+  "alma mater studiorum universita di bologna|it": {
+    "lat": 44.4968,
+    "lon": 11.3524,
+    "label": "University of Bologna, Italy",
+    "score": 100
+  },
+  "alma mater studiorum|it": {
+    "lat": 44.4967,
+    "lon": 11.3528,
+    "label": "University of Bologna, Bologna, Italy",
+    "score": 100
+  },
+  "architekturzentrum wien|at": {
+    "lat": 48.2036,
+    "lon": 16.3586,
+    "label": "Architekturzentrum Wien (Az W), Vienna, Austria",
+    "score": 100
+  },
+  "aristotle university of thessaloniki|gr": {
+    "lat": 40.6322,
+    "lon": 22.9602,
+    "label": "Aristotle University of Thessaloniki, Greece",
+    "score": 100
+  },
+  "association des fondateurs et protecteurs de l institut catholique delyon|fr": {
+    "lat": 45.7483,
+    "lon": 4.8272,
+    "label": "UCLy (Université Catholique de Lyon), Lyon, France",
+    "score": 100
+  },
+  "az wien|at": {
+    "lat": 48.2036,
+    "lon": 16.3586,
+    "label": "Architekturzentrum Wien (Az W), Vienna, Austria",
+    "score": 100
+  },
+  "baltic university programme rogow|pl": {
+    "lat": 51.8192,
+    "lon": 19.8897,
+    "label": "Baltic University Programme / SGGW Rogów, Rogów, Poland",
+    "score": 100
+  },
+  "bialystok university of technology|pl": {
+    "lat": 53.1169,
+    "lon": 23.1494,
+    "label": "Bialystok University of Technology, Białystok, Poland",
+    "score": 100
+  },
+  "bme|hu": {
+    "lat": 47.4811,
+    "lon": 19.0558,
+    "label": "Budapest University of Technology and Economics, Budapest, Hungary",
+    "score": 100
+  },
+  "bogazici universitesi|tr": {
+    "lat": 41.0847,
+    "lon": 29.0511,
+    "label": "Boğaziçi University, Istanbul, Turkey",
+    "score": 100
+  },
+  "bogazici university|tr": {
+    "lat": 41.0858,
+    "lon": 29.0514,
+    "label": "Boğaziçi University, Istanbul, Turkey",
+    "score": 100
+  },
+  "boku vienna|at": {
+    "lat": 48.2367,
+    "lon": 16.3378,
+    "label": "University of Natural Resources and Life Sciences (BOKU), Vienna, Austria",
+    "score": 100
+  },
+  "boku wien|at": {
+    "lat": 48.2367,
+    "lon": 16.3378,
+    "label": "BOKU Wien, Vienna, Austria",
+    "score": 100
+  },
+  "brno university of technology|cz": {
+    "lat": 49.2244,
+    "lon": 16.5768,
+    "label": "Brno University of Technology, Czechia",
+    "score": 100
+  },
+  "budapest university of technology and economics|hu": {
+    "lat": 47.4813,
+    "lon": 19.0558,
+    "label": "Budapest University of Technology and Economics, Hungary",
+    "score": 100
+  },
+  "budapesti muszaki es gazdasagtudomanyi egyetem|hu": {
+    "lat": 47.4811,
+    "lon": 19.0558,
+    "label": "Budapest University of Technology and Economics, Budapest, Hungary",
+    "score": 100
+  },
+  "bursa technical university faculty of architecture and design|tr": {
+    "lat": 40.1878,
+    "lon": 29.1286,
+    "label": "Bursa Technical University, Bursa, Turkey",
+    "score": 100
+  },
+  "bursa technical university faculty of engineering and natural sciences|tr": {
+    "lat": 40.1878,
+    "lon": 29.1286,
+    "label": "Bursa Technical University, Bursa, Turkey",
+    "score": 100
+  },
+  "bursa technical university|tr": {
+    "lat": 40.1878,
+    "lon": 29.1286,
+    "label": "Bursa Technical University, Bursa, Turkey",
+    "score": 100
+  },
+  "bursa teknik universitesi|tr": {
+    "lat": 40.1878,
+    "lon": 29.1286,
+    "label": "Bursa Technical University, Bursa, Turkey",
+    "score": 100
+  },
+  "but brno|cz": {
+    "lat": 49.2244,
+    "lon": 16.5778,
+    "label": "Brno University of Technology, Brno, Czech Republic",
+    "score": 100
+  },
+  "centrale supelec|fr": {
+    "lat": 48.7088,
+    "lon": 2.1643,
+    "label": "CentraleSupélec, Gif-sur-Yvette, France",
+    "score": 100
+  },
+  "centralesupelec|fr": {
+    "lat": 48.7103,
+    "lon": 2.1644,
+    "label": "CentraleSupélec, Gif-sur-Yvette, France",
+    "score": 100
+  },
+  "centre de recherche public gabriel lippmann belvaux|lu": {
+    "lat": 49.5015,
+    "lon": 5.9267,
+    "label": "CRP Gabriel Lippmann (LIST), Belvaux, Luxembourg",
+    "score": 100
+  },
+  "centre de recherche public gabriel lippmann|lu": {
+    "lat": 49.5015,
+    "lon": 5.9267,
+    "label": "CRP Gabriel Lippmann (LIST), Belvaux, Luxembourg",
+    "score": 100
+  },
+  "cepl rogow|pl": {
+    "lat": 51.8192,
+    "lon": 19.8897,
+    "label": "Baltic University Programme / SGGW Rogów, Rogów, Poland",
+    "score": 100
+  },
+  "ceske vysoke uceni technicke v praze|cz": {
+    "lat": 50.1033,
+    "lon": 14.3912,
+    "label": "Czech Technical University in Prague, Czechia",
+    "score": 100
+  },
+  "chalmers tekniska hogskola|se": {
+    "lat": 57.6897,
+    "lon": 11.9781,
+    "label": "Chalmers University of Technology, Gothenburg, Sweden",
+    "score": 100
+  },
+  "chalmers university of technology|se": {
+    "lat": 57.6898,
+    "lon": 11.9733,
+    "label": "Chalmers University of Technology, Gothenburg, Sweden",
+    "score": 100
+  },
+  "charles university|cz": {
+    "lat": 50.0888,
+    "lon": 14.4168,
+    "label": "Charles University, Prague, Czechia",
+    "score": 100
+  },
+  "chulalongkorn university bangkok faculty of engineering|th": {
+    "lat": 13.7367,
+    "lon": 100.5331,
+    "label": "Chulalongkorn University, Bangkok, Thailand",
+    "score": 100
+  },
+  "chulalongkorn university|th": {
+    "lat": 13.7367,
+    "lon": 100.5331,
+    "label": "Chulalongkorn University, Bangkok, Thailand",
+    "score": 100
+  },
+  "cita kadk|dk": {
+    "lat": 55.6811,
+    "lon": 12.6044,
+    "label": "CITA / Royal Danish Academy (KADK), Copenhagen, Denmark",
+    "score": 100
+  },
+  "cnr spin|it": {
+    "lat": 44.4036,
+    "lon": 8.9589,
+    "label": "CNR-SPIN, Genoa, Italy",
+    "score": 100
+  },
+  "comenius university in bratislava|sk": {
+    "lat": 48.1408,
+    "lon": 17.1158,
+    "label": "Comenius University in Bratislava, Bratislava, Slovakia",
+    "score": 100
+  },
+  "comtes fht a s|cz": {
+    "lat": 49.6586,
+    "lon": 13.2842,
+    "label": "COMTES FHT, Dobřany, Czech Republic",
+    "score": 100
+  },
+  "comtes fht|cz": {
+    "lat": 49.6586,
+    "lon": 13.2842,
+    "label": "COMTES FHT, Dobřany, Czech Republic",
+    "score": 100
+  },
+  "consiglio nazionale delle ricerche instituto superconduttori materiali innovativi e dispositivi|it": {
+    "lat": 44.4036,
+    "lon": 8.9589,
+    "label": "CNR-SPIN, Genoa, Italy",
+    "score": 100
+  },
+  "cracow university of technology|pl": {
+    "lat": 50.0717,
+    "lon": 19.9439,
+    "label": "Cracow University of Technology, Kraków, Poland",
+    "score": 100
+  },
+  "crp gabriel lippmann|lu": {
+    "lat": 49.5015,
+    "lon": 5.9267,
+    "label": "CRP Gabriel Lippmann (LIST), Belvaux, Luxembourg",
+    "score": 100
+  },
+  "ctu prague|cz": {
+    "lat": 50.1039,
+    "lon": 14.3917,
+    "label": "Czech Technical University in Prague, Prague, Czech Republic",
+    "score": 100
+  },
+  "cvut v praze|cz": {
+    "lat": 50.1039,
+    "lon": 14.3917,
+    "label": "Czech Technical University in Prague, Prague, Czech Republic",
+    "score": 100
+  },
+  "cyprus university of technology|cy": {
+    "lat": 34.6756,
+    "lon": 33.0436,
+    "label": "Cyprus University of Technology, Limassol, Cyprus",
+    "score": 100
+  },
+  "czech technical university in prague|cz": {
+    "lat": 50.1033,
+    "lon": 14.3912,
+    "label": "Czech Technical University in Prague, Czechia",
+    "score": 100
+  },
+  "danmarks tekniske universitet|dk": {
+    "lat": 55.7867,
+    "lon": 12.5239,
+    "label": "Technical University of Denmark (DTU), Kongens Lyngby, Denmark",
+    "score": 100
+  },
+  "danube university krems austria|at": {
+    "lat": 48.4086,
+    "lon": 15.5861,
+    "label": "Danube University Krems, Krems an der Donau, Austria",
+    "score": 100
+  },
+  "danube university krems|at": {
+    "lat": 48.4086,
+    "lon": 15.5861,
+    "label": "Danube University Krems, Krems an der Donau, Austria",
+    "score": 100
+  },
+  "darmstadt university of applied sciences|de": {
+    "lat": 49.8661,
+    "lon": 8.6389,
+    "label": "Hochschule Darmstadt, Darmstadt, Germany",
+    "score": 100
+  },
+  "debreceni egyetem|hu": {
+    "lat": 47.5539,
+    "lon": 21.6219,
+    "label": "University of Debrecen, Debrecen, Hungary",
+    "score": 100
+  },
+  "delft university of technology|nl": {
+    "lat": 51.9989,
+    "lon": 4.3735,
+    "label": "TU Delft, Netherlands",
+    "score": 100
+  },
+  "donau universitat krems|at": {
+    "lat": 48.4086,
+    "lon": 15.5861,
+    "label": "Danube University Krems, Krems an der Donau, Austria",
+    "score": 100
+  },
+  "dtu|dk": {
+    "lat": 55.7867,
+    "lon": 12.5239,
+    "label": "Technical University of Denmark (DTU), Kongens Lyngby, Denmark",
+    "score": 100
+  },
+  "ecole polytechnique de montreal|ca": {
+    "lat": 45.4981,
+    "lon": -73.6144,
+    "label": "Polytechnique Montréal, Montreal, Canada",
+    "score": 100
+  },
+  "ecole polytechnique federale de lausanne|ch": {
+    "lat": 46.5191,
+    "lon": 6.5668,
+    "label": "EPFL, Lausanne, Switzerland",
+    "score": 100
+  },
+  "ecole polytechnique|fr": {
+    "lat": 48.7131,
+    "lon": 2.2094,
+    "label": "École Polytechnique, Palaiseau, France",
+    "score": 100
+  },
+  "eindhoven university of technology|nl": {
+    "lat": 51.4485,
+    "lon": 5.4883,
+    "label": "TU Eindhoven, Netherlands",
+    "score": 100
+  },
+  "elte|hu": {
+    "lat": 47.4914,
+    "lon": 19.0583,
+    "label": "Eötvös Loránd University, Budapest, Hungary",
+    "score": 100
+  },
+  "ensaia nancy|fr": {
+    "lat": 48.6517,
+    "lon": 6.1583,
+    "label": "ENSAIA - Université de Lorraine, Vandœuvre-lès-Nancy, France",
+    "score": 100
+  },
+  "ensic nancy|fr": {
+    "lat": 48.6961,
+    "lon": 6.1844,
+    "label": "ENSIC - Université de Lorraine, Nancy, France",
+    "score": 100
+  },
+  "eotvos lorand tudomanyegyetem|hu": {
+    "lat": 47.4914,
+    "lon": 19.0583,
+    "label": "Eötvös Loránd University, Budapest, Hungary",
+    "score": 100
+  },
+  "eotvos lorand university|hu": {
+    "lat": 47.4914,
+    "lon": 19.0583,
+    "label": "Eötvös Loránd University, Budapest, Hungary",
+    "score": 100
+  },
+  "epfl|ch": {
+    "lat": 46.5197,
+    "lon": 6.5656,
+    "label": "EPFL, Lausanne, Switzerland",
+    "score": 100
+  },
+  "erciyes university|tr": {
+    "lat": 38.7088,
+    "lon": 35.5342,
+    "label": "Erciyes University, Kayseri, Turkey",
+    "score": 100
+  },
+  "eth zurich|ch": {
+    "lat": 47.3763,
+    "lon": 8.548,
+    "label": "ETH Zurich, Switzerland",
+    "score": 100
+  },
+  "ethniko metsovio polytechneio|gr": {
+    "lat": 37.9778,
+    "lon": 23.7831,
+    "label": "National Technical University of Athens, Athens, Greece",
+    "score": 100
+  },
+  "etsii bejar universidad de salamanca|es": {
+    "lat": 40.3831,
+    "lon": -5.7686,
+    "label": "Universidad de Salamanca (ETSII Béjar), Béjar/Salamanca, Spain",
+    "score": 100
+  },
+  "f toulous15 f lyon17 f lille51|fr": {
+    "lat": 45.7239,
+    "lon": 4.8344,
+    "label": "France Agro³ (ISARA Lyon / ENSAT / ISA), Lyon, France",
+    "score": 100
+  },
+  "fachhochschule burgenland gmbh|at": {
+    "lat": 47.8398,
+    "lon": 16.5298,
+    "label": "FH Burgenland, Eisenstadt, Austria",
+    "score": 100
+  },
+  "facultatea de inginerie din hunedoara|ro": {
+    "lat": 45.7533,
+    "lon": 22.9097,
+    "label": "Politehnica University Timișoara (Faculty of Engineering Hunedoara), Romania",
+    "score": 100
+  },
+  "faculty for management novi sad|rs": {
+    "lat": 45.2267,
+    "lon": 19.8439,
+    "label": "Faculty for Management (FAM), Sremska Kamenica / Novi Sad, Serbia",
+    "score": 100
+  },
+  "faculty of economics and management of university of zielona gora|pl": {
+    "lat": 51.9356,
+    "lon": 15.5186,
+    "label": "University of Zielona Góra (Faculty of Economics and Management), Poland",
+    "score": 100
+  },
+  "faculty of engineering hunedoara|ro": {
+    "lat": 45.7533,
+    "lon": 22.9097,
+    "label": "Politehnica University Timișoara (Faculty of Engineering Hunedoara), Romania",
+    "score": 100
+  },
+  "faculty of information technologies and telecommunication fitt of north caucasian state technical university ncstu russia|ru": {
+    "lat": 45.0433,
+    "lon": 41.9167,
+    "label": "North-Caucasus Federal University (NCSTU), Stavropol, Russia",
+    "score": 100
+  },
+  "faculty of mechanical engineering university of ljubljana|si": {
+    "lat": 46.0469,
+    "lon": 14.4989,
+    "label": "University of Ljubljana (Faculty of Mechanical Engineering), Ljubljana, Slovenia",
+    "score": 100
+  },
+  "faculty of physics university of bucharest|ro": {
+    "lat": 44.3475,
+    "lon": 26.0306,
+    "label": "University of Bucharest (Faculty of Physics), Măgurele/Bucharest, Romania",
+    "score": 100
+  },
+  "fakulta aplikovanej informatiky a robototechniky ugatu ufa|ru": {
+    "lat": 54.7247,
+    "lon": 55.9431,
+    "label": "Ufa State Aviation Technical University (UGATU), Ufa, Russia",
+    "score": 100
+  },
+  "fakulta ekonomiky manazmentu a financii ugatu ufa|ru": {
+    "lat": 54.7247,
+    "lon": 55.9431,
+    "label": "Ufa State Aviation Technical University (UGATU), Ufa, Russia",
+    "score": 100
+  },
+  "fakulta matematiky fyziky a informatiky uk|sk": {
+    "lat": 48.1519,
+    "lon": 17.0706,
+    "label": "Univerzita Komenského v Bratislave (FMFI UK), Bratislava, Slovakia",
+    "score": 100
+  },
+  "fakultet za menadzment novi sad|rs": {
+    "lat": 45.2267,
+    "lon": 19.8439,
+    "label": "Faculty for Management (FAM), Sremska Kamenica / Novi Sad, Serbia",
+    "score": 100
+  },
+  "fakulteta za strojnistvo univerze v ljubljani|si": {
+    "lat": 46.0469,
+    "lon": 14.4989,
+    "label": "University of Ljubljana (Faculty of Mechanical Engineering), Ljubljana, Slovenia",
+    "score": 100
+  },
+  "fau erlangen|de": {
+    "lat": 49.5978,
+    "lon": 11.0044,
+    "label": "Friedrich-Alexander-Universität Erlangen-Nürnberg, Erlangen, Germany",
+    "score": 100
+  },
+  "federal university of technology owerri|ne": {
+    "lat": 5.3889,
+    "lon": 6.9917,
+    "label": "Federal University of Technology Owerri (FUTO), Owerri, Nigeria",
+    "score": 100
+  },
+  "federal university of technology owerri|ng": {
+    "lat": 5.3889,
+    "lon": 6.9917,
+    "label": "Federal University of Technology Owerri (FUTO), Owerri, Nigeria",
+    "score": 100
+  },
+  "feup|pt": {
+    "lat": 41.1781,
+    "lon": -8.5956,
+    "label": "Universidade do Porto (FEUP), Porto, Portugal",
+    "score": 100
+  },
+  "fmfi uk|sk": {
+    "lat": 48.1519,
+    "lon": 17.0706,
+    "label": "Univerzita Komenského v Bratislave (FMFI UK), Bratislava, Slovakia",
+    "score": 100
+  },
+  "france agro3|fr": {
+    "lat": 45.7239,
+    "lon": 4.8344,
+    "label": "France Agro³ (ISARA Lyon / ENSAT / ISA), Lyon, France",
+    "score": 100
+  },
+  "francisk skorina gomel state university|by": {
+    "lat": 52.4439,
+    "lon": 31.0028,
+    "label": "Francisk Skorina Gomel State University, Gomel, Belarus",
+    "score": 100
+  },
+  "friedrich alexander universitat erlangen institu und poliklinik fur arbeits sozial und umweltmedizin|de": {
+    "lat": 49.5981,
+    "lon": 11.0094,
+    "label": "FAU Erlangen-Nürnberg (Occupational Medicine), Erlangen, Germany",
+    "score": 100
+  },
+  "friedrich alexander universitat erlangen nurnberg institut fur arbeits sozial und umweltmedizin|de": {
+    "lat": 49.5981,
+    "lon": 11.0094,
+    "label": "FAU Erlangen-Nürnberg (Occupational Medicine), Erlangen, Germany",
+    "score": 100
+  },
+  "friedrich alexander universitat erlangen nurnberg|de": {
+    "lat": 49.5978,
+    "lon": 11.0044,
+    "label": "Friedrich-Alexander-Universität Erlangen-Nürnberg, Erlangen, Germany",
+    "score": 100
+  },
+  "futo owerri|ne": {
+    "lat": 5.3889,
+    "lon": 6.9917,
+    "label": "Federal University of Technology Owerri (FUTO), Owerri, Nigeria",
+    "score": 100
+  },
+  "futo owerri|ng": {
+    "lat": 5.3889,
+    "lon": 6.9917,
+    "label": "Federal University of Technology Owerri (FUTO), Owerri, Nigeria",
+    "score": 100
+  },
+  "gdansk university of technology|pl": {
+    "lat": 54.3717,
+    "lon": 18.6186,
+    "label": "Gdańsk University of Technology, Gdańsk, Poland",
+    "score": 100
+  },
+  "ghent university|be": {
+    "lat": 51.0474,
+    "lon": 3.7258,
+    "label": "Ghent University, Belgium",
+    "score": 100
+  },
+  "gomel state university|by": {
+    "lat": 52.4439,
+    "lon": 31.0028,
+    "label": "Francisk Skorina Gomel State University, Gomel, Belarus",
+    "score": 100
+  },
+  "graz university of technology|at": {
+    "lat": 47.0694,
+    "lon": 15.4503,
+    "label": "TU Graz, Graz, Austria",
+    "score": 100
+  },
+  "grenoble inp|fr": {
+    "lat": 45.1925,
+    "lon": 5.7169,
+    "label": "Grenoble Institute of Engineering, France",
+    "score": 100
+  },
+  "haskoli islands|is": {
+    "lat": 64.1408,
+    "lon": -21.9497,
+    "label": "University of Iceland, Reykjavik, Iceland",
+    "score": 100
+  },
+  "helsingin yliopisto|fi": {
+    "lat": 60.1706,
+    "lon": 24.9517,
+    "label": "University of Helsinki, Helsinki, Finland",
+    "score": 100
+  },
+  "higher education institution klaipedos valstybine kolegija klaipeda state university of applied sciences|lt": {
+    "lat": 55.7275,
+    "lon": 21.1667,
+    "label": "Klaipeda State University of Applied Sciences, Klaipėda, Lithuania",
+    "score": 100
+  },
+  "hochschule 21 gemeinnutzige gmbh|de": {
+    "lat": 53.4739,
+    "lon": 9.7042,
+    "label": "hochschule 21, Buxtehude, Germany",
+    "score": 100
+  },
+  "hochschule 21|de": {
+    "lat": 53.4739,
+    "lon": 9.7042,
+    "label": "hochschule 21, Buxtehude, Germany",
+    "score": 100
+  },
+  "hochschule amberg weiden hochschule fur angewandte wissenschaften|de": {
+    "lat": 49.4447,
+    "lon": 11.8489,
+    "label": "OTH Amberg-Weiden, Amberg, Germany",
+    "score": 100
+  },
+  "hochschule amberg weiden|de": {
+    "lat": 49.4447,
+    "lon": 11.8489,
+    "label": "OTH Amberg-Weiden, Amberg, Germany",
+    "score": 100
+  },
+  "hochschule anhalt|de": {
+    "lat": 51.7483,
+    "lon": 11.9764,
+    "label": "Anhalt University of Applied Sciences, Germany",
+    "score": 100
+  },
+  "hochschule darmstadt|de": {
+    "lat": 49.8661,
+    "lon": 8.6389,
+    "label": "Hochschule Darmstadt, Darmstadt, Germany",
+    "score": 100
+  },
+  "hochschule fur technik wirtschaft und kultur leipzig|de": {
+    "lat": 51.3139,
+    "lon": 12.3739,
+    "label": "HTWK Leipzig, Leipzig, Germany",
+    "score": 100
+  },
+  "hochschule mannheim faculty of mechanical engineering|de": {
+    "lat": 49.4694,
+    "lon": 8.4828,
+    "label": "Hochschule Mannheim, Mannheim, Germany",
+    "score": 100
+  },
+  "hochschule mannheim|de": {
+    "lat": 49.4694,
+    "lon": 8.4828,
+    "label": "Hochschule Mannheim, Mannheim, Germany",
+    "score": 100
+  },
+  "hochschule munchen|de": {
+    "lat": 48.1539,
+    "lon": 11.5539,
+    "label": "Munich University of Applied Sciences, Munich, Germany",
+    "score": 100
+  },
+  "hs21 buxtehude|de": {
+    "lat": 53.4739,
+    "lon": 9.7042,
+    "label": "hochschule 21, Buxtehude, Germany",
+    "score": 100
+  },
+  "htwk leipzig|de": {
+    "lat": 51.3139,
+    "lon": 12.3739,
+    "label": "HTWK Leipzig, Leipzig, Germany",
+    "score": 100
+  },
+  "icbt campus|lk": {
+    "lat": 6.8928,
+    "lon": 79.8556,
+    "label": "ICBT Campus, Colombo, Sri Lanka",
+    "score": 100
+  },
+  "imperial college london|gb": {
+    "lat": 51.4988,
+    "lon": -0.1749,
+    "label": "Imperial College London, London, UK",
+    "score": 100
+  },
+  "incdfm magurele|ro": {
+    "lat": 44.3486,
+    "lon": 26.0294,
+    "label": "National Institute of Materials Physics (INCDFM), Măgurele, Romania",
+    "score": 100
+  },
+  "industrial university of tyumen institute of civil engineering automative and transport|ru": {
+    "lat": 57.1644,
+    "lon": 65.5236,
+    "label": "Industrial University of Tyumen, Tyumen, Russia",
+    "score": 100
+  },
+  "industrial university of tyumen|ru": {
+    "lat": 57.1644,
+    "lon": 65.5236,
+    "label": "Industrial University of Tyumen, Tyumen, Russia",
+    "score": 100
+  },
+  "inha university in tashkent school of computer science and engineering|uz": {
+    "lat": 41.3386,
+    "lon": 69.3347,
+    "label": "Inha University in Tashkent, Tashkent, Uzbekistan",
+    "score": 100
+  },
+  "inha university in tashkent|uz": {
+    "lat": 41.3386,
+    "lon": 69.3347,
+    "label": "Inha University in Tashkent, Tashkent, Uzbekistan",
+    "score": 100
+  },
+  "insa lyon|fr": {
+    "lat": 45.7828,
+    "lon": 4.8725,
+    "label": "INSA Lyon, Villeurbanne/Lyon, France",
+    "score": 100
+  },
+  "insa toulouse|fr": {
+    "lat": 43.5706,
+    "lon": 1.4678,
+    "label": "INSA Toulouse, Toulouse, France",
+    "score": 100
+  },
+  "institucia vzdelavania gomelska statna univerzita franciska skariny|by": {
+    "lat": 52.4439,
+    "lon": 31.0028,
+    "label": "Francisk Skorina Gomel State University, Gomel, Belarus",
+    "score": 100
+  },
+  "institut catholique de lyon|fr": {
+    "lat": 45.7483,
+    "lon": 4.8272,
+    "label": "UCLy (Université Catholique de Lyon), Lyon, France",
+    "score": 100
+  },
+  "institut ekonomiky a riadenia fgbou vpo ufimska statna letecka technicka univerzita usltu v ufe|ru": {
+    "lat": 54.7247,
+    "lon": 55.9431,
+    "label": "Ufa State Aviation Technical University (UGATU), Ufa, Russia",
+    "score": 100
+  },
+  "institut national des sciences appliquees de lyon|fr": {
+    "lat": 45.7828,
+    "lon": 4.8789,
+    "label": "INSA Lyon, Villeurbanne, France",
+    "score": 100
+  },
+  "institut national des sciences appliquees de toulouse|fr": {
+    "lat": 43.5706,
+    "lon": 1.4678,
+    "label": "INSA Toulouse, Toulouse, France",
+    "score": 100
+  },
+  "institut national des telecommunications|fr": {
+    "lat": 48.6256,
+    "lon": 2.4428,
+    "label": "Télécom SudParis (ex-INT), Évry, France",
+    "score": 100
+  },
+  "institut polytechnique de grenoble|fr": {
+    "lat": 45.1931,
+    "lon": 5.7144,
+    "label": "Grenoble INP, Grenoble, France",
+    "score": 100
+  },
+  "institut royal du patrimoine artistique bruxelles|be": {
+    "lat": 50.8419,
+    "lon": 4.3928,
+    "label": "Royal Institute for Cultural Heritage (KIK-IRPA), Brussels, Belgium",
+    "score": 100
+  },
+  "institut superieur de l automobile et des transports|fr": {
+    "lat": 46.9997,
+    "lon": 3.1611,
+    "label": "ISAT Nevers (Université de Bourgogne), Nevers, France",
+    "score": 100
+  },
+  "institute of technology and business in ceske budejovice|cz": {
+    "lat": 48.9953,
+    "lon": 14.4981,
+    "label": "Institute of Technology and Business in České Budějovice (VŠTE), Czech Republic",
+    "score": 100
+  },
+  "institute of technology tralee business and tourism department|ie": {
+    "lat": 52.2736,
+    "lon": -9.6678,
+    "label": "Institute of Technology Tralee (MTU Kerry), Tralee, Ireland",
+    "score": 100
+  },
+  "institute of technology tralee|ie": {
+    "lat": 52.2736,
+    "lon": -9.6678,
+    "label": "Institute of Technology Tralee (MTU Kerry), Tralee, Ireland",
+    "score": 100
+  },
+  "instituto politecnico de gestao e tecnologia|pt": {
+    "lat": 41.1306,
+    "lon": -8.6239,
+    "label": "ISPGAYA (Instituto Politécnico de Gestão e Tecnologia), Vila Nova de Gaia, Portugal",
+    "score": 100
+  },
+  "instituto superior politecnico gaya|pt": {
+    "lat": 41.1306,
+    "lon": -8.6239,
+    "label": "ISPGAYA (Instituto Politécnico de Gestão e Tecnologia), Vila Nova de Gaia, Portugal",
+    "score": 100
+  },
+  "instituto superior tecnico|pt": {
+    "lat": 38.7369,
+    "lon": -9.1389,
+    "label": "Universidade de Lisboa (IST), Lisbon, Portugal",
+    "score": 100
+  },
+  "instituto tecnologico de santo domingo|do": {
+    "lat": 18.4878,
+    "lon": -69.9628,
+    "label": "INTEC, Santo Domingo, Dominican Republic",
+    "score": 100
+  },
+  "intec santo domingo|do": {
+    "lat": 18.4878,
+    "lon": -69.9619,
+    "label": "INTEC, Santo Domingo, Dominican Republic",
+    "score": 100
+  },
+  "intec|do": {
+    "lat": 18.4878,
+    "lon": -69.9619,
+    "label": "INTEC, Santo Domingo, Dominican Republic",
+    "score": 100
+  },
+  "international college of business and technology icbt|lk": {
+    "lat": 6.8928,
+    "lon": 79.8556,
+    "label": "ICBT Campus, Colombo, Sri Lanka",
+    "score": 100
+  },
+  "ioer dresden|de": {
+    "lat": 51.0289,
+    "lon": 13.7547,
+    "label": "Leibniz Institute of Ecological Urban and Regional Development (IÖR), Dresden, Germany",
+    "score": 100
+  },
+  "isat nevers|fr": {
+    "lat": 46.9997,
+    "lon": 3.1611,
+    "label": "ISAT Nevers (Université de Bourgogne), Nevers, France",
+    "score": 100
+  },
+  "ispgaya|pt": {
+    "lat": 41.1306,
+    "lon": -8.6239,
+    "label": "ISPGAYA (Instituto Politécnico de Gestão e Tecnologia), Vila Nova de Gaia, Portugal",
+    "score": 100
+  },
+  "istanbul technical university|tr": {
+    "lat": 41.1054,
+    "lon": 29.0234,
+    "label": "Istanbul Technical University, Turkey",
+    "score": 100
+  },
+  "istanbul teknik universitesi|tr": {
+    "lat": 41.1056,
+    "lon": 29.0239,
+    "label": "Istanbul Technical University, Istanbul, Turkey",
+    "score": 100
+  },
+  "istituto superconduttori materiali innovativi e dispositivi|it": {
+    "lat": 44.4036,
+    "lon": 8.9589,
+    "label": "CNR-SPIN, Genoa, Italy",
+    "score": 100
+  },
+  "itmo university|ru": {
+    "lat": 59.9572,
+    "lon": 30.3081,
+    "label": "ITMO University, Saint Petersburg, Russia",
+    "score": 100
+  },
+  "itu|tr": {
+    "lat": 41.1056,
+    "lon": 29.0239,
+    "label": "Istanbul Technical University, Istanbul, Turkey",
+    "score": 100
+  },
+  "izhevsk state technical university|ru": {
+    "lat": 56.8686,
+    "lon": 53.1539,
+    "label": "Kalashnikov Izhevsk State Technical University, Izhevsk, Russia",
+    "score": 100
+  },
+  "jade university of applied sciences|de": {
+    "lat": 53.5385,
+    "lon": 8.0934,
+    "label": "Jade Hochschule, Wilhelmshaven, Germany",
+    "score": 100
+  },
+  "jku linz|at": {
+    "lat": 48.3372,
+    "lon": 14.3183,
+    "label": "Johannes Kepler Universität Linz, Linz, Austria",
+    "score": 100
+  },
+  "johannes kepler universitat linz|at": {
+    "lat": 48.3372,
+    "lon": 14.3183,
+    "label": "Johannes Kepler Universität Linz, Linz, Austria",
+    "score": 100
+  },
+  "john von neumann university gamf faculty of engineering and computer science|hu": {
+    "lat": 46.9011,
+    "lon": 19.6678,
+    "label": "John von Neumann University (GAMF), Kecskemét, Hungary",
+    "score": 100
+  },
+  "john von neumann university|hu": {
+    "lat": 46.9011,
+    "lon": 19.6678,
+    "label": "John von Neumann University (GAMF), Kecskemét, Hungary",
+    "score": 100
+  },
+  "josip juraj strossmayer university of osijek faculty of chemical engineering|hr": {
+    "lat": 45.5606,
+    "lon": 18.6961,
+    "label": "Josip Juraj Strossmayer University of Osijek, Osijek, Croatia",
+    "score": 100
+  },
+  "josip juraj strossmayer university of osijek faculty of food technology|hr": {
+    "lat": 45.5606,
+    "lon": 18.6961,
+    "label": "Josip Juraj Strossmayer University of Osijek, Osijek, Croatia",
+    "score": 100
+  },
+  "josip juraj strossmayer university of osijek faculty of mechanical engineering in slavonski brod|hr": {
+    "lat": 45.1575,
+    "lon": 18.0139,
+    "label": "University of Slavonski Brod / Mechanical Engineering, Slavonski Brod, Croatia",
+    "score": 100
+  },
+  "josip juraj strossmayer university of osijek|hr": {
+    "lat": 45.5606,
+    "lon": 18.6961,
+    "label": "Josip Juraj Strossmayer University of Osijek, Osijek, Croatia",
+    "score": 100
+  },
+  "julius maximilians universitat fakultat fur chemie und pharmazie|de": {
+    "lat": 49.7828,
+    "lon": 9.9722,
+    "label": "Julius-Maximilians-Universität Würzburg, Würzburg, Germany",
+    "score": 100
+  },
+  "julius maximilians universitat wurzburg|de": {
+    "lat": 49.7828,
+    "lon": 9.9722,
+    "label": "Julius-Maximilians-Universität Würzburg, Würzburg, Germany",
+    "score": 100
+  },
+  "kadk|dk": {
+    "lat": 55.6811,
+    "lon": 12.6044,
+    "label": "CITA / Royal Danish Academy (KADK), Copenhagen, Denmark",
+    "score": 100
+  },
+  "kaist|kr": {
+    "lat": 36.3722,
+    "lon": 127.3603,
+    "label": "KAIST, Daejeon, South Korea",
+    "score": 100
+  },
+  "kalashnikov izhevsk state technical university|ru": {
+    "lat": 56.8686,
+    "lon": 53.1539,
+    "label": "Kalashnikov Izhevsk State Technical University, Izhevsk, Russia",
+    "score": 100
+  },
+  "karlsruhe institute of technology|de": {
+    "lat": 49.0094,
+    "lon": 8.4117,
+    "label": "KIT, Karlsruhe, Germany",
+    "score": 100
+  },
+  "karlsruher institut fur technologie|de": {
+    "lat": 49.0069,
+    "lon": 8.4037,
+    "label": "Karlsruhe Institute of Technology (KIT), Karlsruhe, Germany",
+    "score": 100
+  },
+  "katholieke universiteit leuven|be": {
+    "lat": 50.8778,
+    "lon": 4.7003,
+    "label": "KU Leuven, Belgium",
+    "score": 100
+  },
+  "kaunas university of technology faculty of chemical technology|lt": {
+    "lat": 54.9039,
+    "lon": 23.9578,
+    "label": "Kaunas University of Technology (Faculty of Chemical Technology), Kaunas, Lithuania",
+    "score": 100
+  },
+  "kaunas university of technology|lt": {
+    "lat": 54.9039,
+    "lon": 23.9578,
+    "label": "Kaunas University of Technology, Kaunas, Lithuania",
+    "score": 100
+  },
+  "kauno technologijos universitetas|lt": {
+    "lat": 54.9039,
+    "lon": 23.9578,
+    "label": "Kaunas University of Technology, Kaunas, Lithuania",
+    "score": 100
+  },
+  "kazakh national research technical university named after k i satpaev|kz": {
+    "lat": 43.2364,
+    "lon": 76.9317,
+    "label": "Satbayev University, Almaty, Kazakhstan",
+    "score": 100
+  },
+  "kecskemet college faculty of mechanical engineering and automation|hu": {
+    "lat": 46.9011,
+    "lon": 19.6678,
+    "label": "John von Neumann University (GAMF), Kecskemét, Hungary",
+    "score": 100
+  },
+  "kecskemet college|hu": {
+    "lat": 46.9011,
+    "lon": 19.6678,
+    "label": "John von Neumann University (GAMF), Kecskemét, Hungary",
+    "score": 100
+  },
+  "kik irpa|be": {
+    "lat": 50.8419,
+    "lon": 4.3928,
+    "label": "Royal Institute for Cultural Heritage (KIK-IRPA), Brussels, Belgium",
+    "score": 100
+  },
+  "kirikkale universitesi|tr": {
+    "lat": 39.8739,
+    "lon": 33.4478,
+    "label": "Kırıkkale University, Kırıkkale, Turkey",
+    "score": 100
+  },
+  "kirikkale university|tr": {
+    "lat": 39.8739,
+    "lon": 33.4478,
+    "label": "Kırıkkale University, Kırıkkale, Turkey",
+    "score": 100
+  },
+  "kit karlsruhe|de": {
+    "lat": 49.0069,
+    "lon": 8.4037,
+    "label": "Karlsruhe Institute of Technology (KIT), Karlsruhe, Germany",
+    "score": 100
+  },
+  "klaipeda state university of applied sciences|lt": {
+    "lat": 55.7275,
+    "lon": 21.1667,
+    "label": "Klaipeda State University of Applied Sciences, Klaipėda, Lithuania",
+    "score": 100
+  },
+  "klaipedos valstybine kolegija|lt": {
+    "lat": 55.7275,
+    "lon": 21.1667,
+    "label": "Klaipeda State University of Applied Sciences, Klaipėda, Lithuania",
+    "score": 100
+  },
+  "kocaeli university|tr": {
+    "lat": 40.8222,
+    "lon": 29.9213,
+    "label": "Kocaeli University, Turkey",
+    "score": 100
+  },
+  "korea advanced institute of science and technology|kr": {
+    "lat": 36.3722,
+    "lon": 127.3603,
+    "label": "KAIST, Daejeon, South Korea",
+    "score": 100
+  },
+  "korea university|kr": {
+    "lat": 37.5908,
+    "lon": 127.0278,
+    "label": "Korea University, Seoul, South Korea",
+    "score": 100
+  },
+  "kth royal institute of technology|se": {
+    "lat": 59.3498,
+    "lon": 18.0707,
+    "label": "KTH Royal Institute of Technology, Stockholm, Sweden",
+    "score": 100
+  },
+  "kth|se": {
+    "lat": 59.3497,
+    "lon": 18.0706,
+    "label": "KTH Royal Institute of Technology, Stockholm, Sweden",
+    "score": 100
+  },
+  "kto karatay universitesi|tr": {
+    "lat": 37.8686,
+    "lon": 32.5317,
+    "label": "KTO Karatay University, Konya, Turkey",
+    "score": 100
+  },
+  "kto karatay university school of health science nutrition and dietetics|tr": {
+    "lat": 37.8686,
+    "lon": 32.5317,
+    "label": "KTO Karatay University, Konya, Turkey",
+    "score": 100
+  },
+  "kto karatay university|tr": {
+    "lat": 37.8686,
+    "lon": 32.5317,
+    "label": "KTO Karatay University, Konya, Turkey",
+    "score": 100
+  },
+  "ktu|lt": {
+    "lat": 54.9039,
+    "lon": 23.9578,
+    "label": "Kaunas University of Technology, Kaunas, Lithuania",
+    "score": 100
+  },
+  "ku leuven|be": {
+    "lat": 50.8778,
+    "lon": 4.7003,
+    "label": "KU Leuven, Leuven, Belgium",
+    "score": 100
+  },
+  "kujawsko pomorska szkola wyzsza w bydgoszczy|pl": {
+    "lat": 53.1186,
+    "lon": 18.0264,
+    "label": "Kujawy and Pomorze University in Bydgoszcz, Poland",
+    "score": 100
+  },
+  "kujawy and pomorze university in bydgoszcz|pl": {
+    "lat": 53.1186,
+    "lon": 18.0264,
+    "label": "Kujawy and Pomorze University in Bydgoszcz, Poland",
+    "score": 100
+  },
+  "kumoh national institute of technology|kr": {
+    "lat": 36.1458,
+    "lon": 128.3932,
+    "label": "Kumoh National Institute of Technology, Gumi, South Korea",
+    "score": 100
+  },
+  "kungliga tekniska hogskolan|se": {
+    "lat": 59.3497,
+    "lon": 18.0706,
+    "label": "KTH Royal Institute of Technology, Stockholm, Sweden",
+    "score": 100
+  },
+  "kyoto university|jp": {
+    "lat": 35.0262,
+    "lon": 135.7808,
+    "label": "Kyoto University, Kyoto, Japan",
+    "score": 100
+  },
+  "lappeenranta lahti university of technology|fi": {
+    "lat": 61.0506,
+    "lon": 28.0917,
+    "label": "LUT University, Lappeenranta, Finland",
+    "score": 100
+  },
+  "latvia university of life sciences and technologies|lv": {
+    "lat": 56.6553,
+    "lon": 23.7328,
+    "label": "Latvia University of Life Sciences and Technologies (LBTU), Jelgava, Latvia",
+    "score": 100
+  },
+  "latvijas biozinatnu un tehnologiju universitate|lv": {
+    "lat": 56.6553,
+    "lon": 23.7328,
+    "label": "Latvia University of Life Sciences and Technologies (LBTU), Jelgava, Latvia",
+    "score": 100
+  },
+  "latvijas universitate|lv": {
+    "lat": 56.9506,
+    "lon": 24.1164,
+    "label": "University of Latvia, Riga, Latvia",
+    "score": 100
+  },
+  "lbtu jelgava|lv": {
+    "lat": 56.6553,
+    "lon": 23.7328,
+    "label": "Latvia University of Life Sciences and Technologies (LBTU), Jelgava, Latvia",
+    "score": 100
+  },
+  "leibniz institut fur okologische raumentwicklung|de": {
+    "lat": 51.0289,
+    "lon": 13.7547,
+    "label": "Leibniz Institute of Ecological Urban and Regional Development (IÖR), Dresden, Germany",
+    "score": 100
+  },
+  "leibniz institute of ecological urban and regional development|de": {
+    "lat": 51.0289,
+    "lon": 13.7547,
+    "label": "Leibniz Institute of Ecological Urban and Regional Development (IÖR), Dresden, Germany",
+    "score": 100
+  },
+  "leibniz universitat hannover|de": {
+    "lat": 52.3824,
+    "lon": 9.7183,
+    "label": "Leibniz University Hannover, Germany",
+    "score": 100
+  },
+  "leibniz university hannover|de": {
+    "lat": 52.3822,
+    "lon": 9.7178,
+    "label": "Leibniz Universität Hannover, Hannover, Germany",
+    "score": 100
+  },
+  "leipzig university of applied sciences hochschule fur technik wirtschaft und kultur|de": {
+    "lat": 51.3139,
+    "lon": 12.3739,
+    "label": "HTWK Leipzig, Leipzig, Germany",
+    "score": 100
+  },
+  "lesny zaklad doswiadczalny w rogowie|pl": {
+    "lat": 51.8192,
+    "lon": 19.8897,
+    "label": "Baltic University Programme / SGGW Rogów, Rogów, Poland",
+    "score": 100
+  },
+  "linkoping university|se": {
+    "lat": 58.3978,
+    "lon": 15.5786,
+    "label": "Linköping University, Linköping, Sweden",
+    "score": 100
+  },
+  "linkopings universitet|se": {
+    "lat": 58.3978,
+    "lon": 15.5786,
+    "label": "Linköping University, Linköping, Sweden",
+    "score": 100
+  },
+  "lodz university of technology|pl": {
+    "lat": 51.7483,
+    "lon": 19.4539,
+    "label": "Lodz University of Technology, Łódź, Poland",
+    "score": 100
+  },
+  "lublin university of technology|pl": {
+    "lat": 51.2356,
+    "lon": 22.5489,
+    "label": "Lublin University of Technology, Lublin, Poland",
+    "score": 100
+  },
+  "lund university|se": {
+    "lat": 55.7118,
+    "lon": 13.1972,
+    "label": "Lund University, Sweden",
+    "score": 100
+  },
+  "lunds universitet|se": {
+    "lat": 55.7119,
+    "lon": 13.1978,
+    "label": "Lund University, Lund, Sweden",
+    "score": 100
+  },
+  "lut university|fi": {
+    "lat": 61.0506,
+    "lon": 28.0917,
+    "label": "LUT University, Lappeenranta, Finland",
+    "score": 100
+  },
+  "lviv polytechnic national university|ua": {
+    "lat": 49.8354,
+    "lon": 24.0144,
+    "label": "Lviv Polytechnic National University, Ukraine",
+    "score": 100
+  },
+  "masaryk university faculty of science|cz": {
+    "lat": 49.2047,
+    "lon": 16.5986,
+    "label": "Masaryk University (Faculty of Science), Brno, Czech Republic",
+    "score": 100
+  },
+  "masaryk university|cz": {
+    "lat": 49.1989,
+    "lon": 16.6044,
+    "label": "Masaryk University, Brno, Czechia",
+    "score": 100
+  },
+  "mcgill university|ca": {
+    "lat": 45.5048,
+    "lon": -73.5772,
+    "label": "McGill University, Montreal, Canada",
+    "score": 100
+  },
+  "medimurje university of applied sciences in cakovec|hr": {
+    "lat": 46.3931,
+    "lon": 16.4414,
+    "label": "Međimurje University of Applied Sciences in Čakovec, Croatia",
+    "score": 100
+  },
+  "medimursko veleuciliste u cakovcu|hr": {
+    "lat": 46.3931,
+    "lon": 16.4414,
+    "label": "Međimurje University of Applied Sciences in Čakovec, Croatia",
+    "score": 100
+  },
+  "mendel university in brno|cz": {
+    "lat": 49.2103,
+    "lon": 16.6167,
+    "label": "Mendel University in Brno, Brno, Czech Republic",
+    "score": 100
+  },
+  "mendelova univerzita v brne|cz": {
+    "lat": 49.2103,
+    "lon": 16.6167,
+    "label": "Mendel University in Brno, Brno, Czech Republic",
+    "score": 100
+  },
+  "metu|tr": {
+    "lat": 39.8911,
+    "lon": 32.7839,
+    "label": "Middle East Technical University, Ankara, Turkey",
+    "score": 100
+  },
+  "middle east technical university|tr": {
+    "lat": 39.8914,
+    "lon": 32.7844,
+    "label": "METU, Ankara, Turkey",
+    "score": 100
+  },
+  "military university of technology faculty of civil engineering and geodesy warszaw|pl": {
+    "lat": 52.2536,
+    "lon": 20.9003,
+    "label": "Military University of Technology (WAT), Warsaw, Poland",
+    "score": 100
+  },
+  "military university of technology|pl": {
+    "lat": 52.2536,
+    "lon": 20.9003,
+    "label": "Military University of Technology (WAT), Warsaw, Poland",
+    "score": 100
+  },
+  "montanuniversitaet leoben|at": {
+    "lat": 47.3843,
+    "lon": 15.0934,
+    "label": "Montanuniversität Leoben, Austria",
+    "score": 100
+  },
+  "montanuniversitat leoben|at": {
+    "lat": 47.3843,
+    "lon": 15.0934,
+    "label": "Montanuniversität Leoben, Austria",
+    "score": 100
+  },
+  "moscow power engineering institute|ru": {
+    "lat": 55.7553,
+    "lon": 37.7083,
+    "label": "Moscow Power Engineering Institute (MPEI), Moscow, Russia",
+    "score": 100
+  },
+  "moskovsky energeticky institut|ru": {
+    "lat": 55.7553,
+    "lon": 37.7083,
+    "label": "Moscow Power Engineering Institute (MPEI), Moscow, Russia",
+    "score": 100
+  },
+  "munich university of applied sciences|de": {
+    "lat": 48.1539,
+    "lon": 11.5539,
+    "label": "Munich University of Applied Sciences, Munich, Germany",
+    "score": 100
+  },
+  "munster technological university kerry|ie": {
+    "lat": 52.2736,
+    "lon": -9.6678,
+    "label": "Institute of Technology Tralee (MTU Kerry), Tralee, Ireland",
+    "score": 100
+  },
+  "national institute of r d for material physics|ro": {
+    "lat": 44.3486,
+    "lon": 26.0294,
+    "label": "National Institute of Materials Physics (INCDFM), Măgurele, Romania",
+    "score": 100
+  },
+  "national institute of r d for materials physics|ro": {
+    "lat": 44.3486,
+    "lon": 26.0294,
+    "label": "National Institute of Materials Physics (INCDFM), Măgurele, Romania",
+    "score": 100
+  },
+  "national metallurgical academy of ukraine|ua": {
+    "lat": 48.4528,
+    "lon": 35.0617,
+    "label": "National Metallurgical Academy of Ukraine, Dnipro, Ukraine",
+    "score": 100
+  },
+  "national research university mpei|ru": {
+    "lat": 55.7553,
+    "lon": 37.7083,
+    "label": "Moscow Power Engineering Institute (MPEI), Moscow, Russia",
+    "score": 100
+  },
+  "national taiwan university|tw": {
+    "lat": 25.0173,
+    "lon": 121.5398,
+    "label": "National Taiwan University, Taipei, Taiwan",
+    "score": 100
+  },
+  "national technical university of athens|gr": {
+    "lat": 37.9782,
+    "lon": 23.7828,
+    "label": "NTUA, Athens, Greece",
+    "score": 100
+  },
+  "national technical university of ukraine igor sikorsky kyiv polytechnic institute|ua": {
+    "lat": 50.4491,
+    "lon": 30.4578,
+    "label": "Igor Sikorsky Kyiv Polytechnic Institute, Ukraine",
+    "score": 100
+  },
+  "national tsing hua university|tw": {
+    "lat": 24.7936,
+    "lon": 120.9931,
+    "label": "National Tsing Hua University, Hsinchu, Taiwan",
+    "score": 100
+  },
+  "national university of science and technology politehnica bucharest|ro": {
+    "lat": 44.4386,
+    "lon": 26.0514,
+    "label": "National University of Science and Technology Politehnica Bucharest, Bucharest, Romania",
+    "score": 100
+  },
+  "north caucasian state technical university|ru": {
+    "lat": 45.0433,
+    "lon": 41.9167,
+    "label": "North-Caucasus Federal University (NCSTU), Stavropol, Russia",
+    "score": 100
+  },
+  "north caucasus federal university|ru": {
+    "lat": 45.0433,
+    "lon": 41.9167,
+    "label": "North-Caucasus Federal University (NCSTU), Stavropol, Russia",
+    "score": 100
+  },
+  "norwegian university of science and technology|no": {
+    "lat": 63.4184,
+    "lon": 10.4021,
+    "label": "NTNU, Trondheim, Norway",
+    "score": 100
+  },
+  "nova university lisbon|pt": {
+    "lat": 38.7336,
+    "lon": -9.1603,
+    "label": "Universidade NOVA de Lisboa, Lisbon, Portugal",
+    "score": 100
+  },
+  "nthu|tw": {
+    "lat": 24.7936,
+    "lon": 120.9931,
+    "label": "National Tsing Hua University, Hsinchu, Taiwan",
+    "score": 100
+  },
+  "ntnu trondheim|no": {
+    "lat": 63.4189,
+    "lon": 10.4028,
+    "label": "NTNU, Trondheim, Norway",
+    "score": 100
+  },
+  "ntnu|no": {
+    "lat": 63.4189,
+    "lon": 10.4028,
+    "label": "NTNU, Trondheim, Norway",
+    "score": 100
+  },
+  "ntua athens|gr": {
+    "lat": 37.9778,
+    "lon": 23.7831,
+    "label": "National Technical University of Athens, Athens, Greece",
+    "score": 100
+  },
+  "ntu|tw": {
+    "lat": 25.0173,
+    "lon": 121.5398,
+    "label": "National Taiwan University, Taipei, Taiwan",
+    "score": 100
+  },
+  "o m beketov national university of urban economy in kharkiv|ua": {
+    "lat": 50.0033,
+    "lon": 36.2392,
+    "label": "O.M. Beketov NUUE, Kharkiv, Ukraine",
+    "score": 100
+  },
+  "obuda university|hu": {
+    "lat": 47.5338,
+    "lon": 19.0346,
+    "label": "Óbuda University, Budapest, Hungary",
+    "score": 100
+  },
+  "ochanomizu university human life and environmental sciences|jp": {
+    "lat": 35.7183,
+    "lon": 139.7317,
+    "label": "Ochanomizu University, Tokyo, Japan",
+    "score": 100
+  },
+  "ochanomizu university|jp": {
+    "lat": 35.7183,
+    "lon": 139.7317,
+    "label": "Ochanomizu University, Tokyo, Japan",
+    "score": 100
+  },
+  "odaba odesa|ua": {
+    "lat": 46.4819,
+    "lon": 30.7189,
+    "label": "Odesa State Academy of Civil Engineering and Architecture, Odesa, Ukraine",
+    "score": 100
+  },
+  "odesa state academy of civil engineering and architecture|ua": {
+    "lat": 46.4819,
+    "lon": 30.7189,
+    "label": "Odesa State Academy of Civil Engineering and Architecture, Odesa, Ukraine",
+    "score": 100
+  },
+  "odessa state academy of civil engineering and architecture|ua": {
+    "lat": 46.4746,
+    "lon": 30.7183,
+    "label": "OSACEA, Odesa, Ukraine",
+    "score": 100
+  },
+  "omsk state agrarian university named after p a stolypin|ru": {
+    "lat": 55.0294,
+    "lon": 73.3242,
+    "label": "Omsk State Agrarian University, Omsk, Russia",
+    "score": 100
+  },
+  "omsk state agrarian university|ru": {
+    "lat": 55.0294,
+    "lon": 73.3242,
+    "label": "Omsk State Agrarian University, Omsk, Russia",
+    "score": 100
+  },
+  "orta dogu teknik universitesi|tr": {
+    "lat": 39.8911,
+    "lon": 32.7839,
+    "label": "Middle East Technical University, Ankara, Turkey",
+    "score": 100
+  },
+  "oth amberg weiden|de": {
+    "lat": 49.4447,
+    "lon": 11.8489,
+    "label": "OTH Amberg-Weiden, Amberg, Germany",
+    "score": 100
+  },
+  "oulun yliopisto|fi": {
+    "lat": 65.0594,
+    "lon": 25.4664,
+    "label": "University of Oulu, Oulu, Finland",
+    "score": 100
+  },
+  "panstwowa akademia nauk stosowanych w jaroslawiu|pl": {
+    "lat": 50.0211,
+    "lon": 22.6744,
+    "label": "The Bronisław Markiewicz State University (PANS), Jarosław, Poland",
+    "score": 100
+  },
+  "paris lodron universitat salzburg|at": {
+    "lat": 47.7981,
+    "lon": 13.0442,
+    "label": "Universität Salzburg, Salzburg, Austria",
+    "score": 100
+  },
+  "paris saclay university|fr": {
+    "lat": 48.7089,
+    "lon": 2.1706,
+    "label": "Université Paris-Saclay, Orsay, France",
+    "score": 100
+  },
+  "paul sabatier university toulouse iii faculte des sciences et d ingenierie|fr": {
+    "lat": 43.5614,
+    "lon": 1.4686,
+    "label": "Université Toulouse III - Paul Sabatier, Toulouse, France",
+    "score": 100
+  },
+  "paul sabatier university toulouse iii faculty of computer science|fr": {
+    "lat": 43.5614,
+    "lon": 1.4686,
+    "label": "Université Toulouse III - Paul Sabatier, Toulouse, France",
+    "score": 100
+  },
+  "paul sabatier university toulouse iii|fr": {
+    "lat": 43.5614,
+    "lon": 1.4686,
+    "label": "Université Toulouse III - Paul Sabatier, Toulouse, France",
+    "score": 100
+  },
+  "pdaba dnipro|ua": {
+    "lat": 48.4503,
+    "lon": 35.0594,
+    "label": "Prydniprovska State Academy of Civil Engineering and Architecture, Dnipro, Ukraine",
+    "score": 100
+  },
+  "pohang university of science and technology|kr": {
+    "lat": 36.0125,
+    "lon": 129.3247,
+    "label": "POSTECH, Pohang, South Korea",
+    "score": 100
+  },
+  "poliba|it": {
+    "lat": 41.1089,
+    "lon": 16.8814,
+    "label": "Politecnico di Bari, Bari, Italy",
+    "score": 100
+  },
+  "polimi|it": {
+    "lat": 45.4782,
+    "lon": 9.2272,
+    "label": "Politecnico di Milano, Milan, Italy",
+    "score": 100
+  },
+  "politechnico di torino|it": {
+    "lat": 45.063,
+    "lon": 7.6616,
+    "label": "Politecnico di Torino, Turin, Italy",
+    "score": 100
+  },
+  "politechnika bialostocka|pl": {
+    "lat": 53.1169,
+    "lon": 23.1494,
+    "label": "Bialystok University of Technology, Białystok, Poland",
+    "score": 100
+  },
+  "politechnika gdanska|pl": {
+    "lat": 54.3717,
+    "lon": 18.6186,
+    "label": "Gdańsk University of Technology, Poland",
+    "score": 100
+  },
+  "politechnika krakowska|pl": {
+    "lat": 50.0722,
+    "lon": 19.9439,
+    "label": "Cracow University of Technology, Poland",
+    "score": 100
+  },
+  "politechnika lodzka|pl": {
+    "lat": 51.7483,
+    "lon": 19.4533,
+    "label": "Lodz University of Technology, Poland",
+    "score": 100
+  },
+  "politechnika lubelska|pl": {
+    "lat": 51.2356,
+    "lon": 22.5489,
+    "label": "Lublin University of Technology, Lublin, Poland",
+    "score": 100
+  },
+  "politechnika poznanska|pl": {
+    "lat": 52.4042,
+    "lon": 16.9498,
+    "label": "Poznan University of Technology, Poland",
+    "score": 100
+  },
+  "politechnika rzeszowska|pl": {
+    "lat": 50.0156,
+    "lon": 21.9867,
+    "label": "Rzeszow University of Technology, Rzeszów, Poland",
+    "score": 100
+  },
+  "politechnika slaska|pl": {
+    "lat": 50.2941,
+    "lon": 18.6756,
+    "label": "Silesian University of Technology, Gliwice, Poland",
+    "score": 100
+  },
+  "politechnika warszawska|pl": {
+    "lat": 52.2205,
+    "lon": 21.0104,
+    "label": "Warsaw University of Technology, Poland",
+    "score": 100
+  },
+  "politechnika wroc awska|pl": {
+    "lat": 51.1073,
+    "lon": 17.0607,
+    "label": "Wrocław University of Science and Technology, Poland",
+    "score": 100
+  },
+  "politechnika wroclawska|pl": {
+    "lat": 51.1078,
+    "lon": 17.0619,
+    "label": "Wrocław University of Science and Technology, Wrocław, Poland",
+    "score": 100
+  },
+  "politecnico di bari|it": {
+    "lat": 41.1089,
+    "lon": 16.8814,
+    "label": "Politecnico di Bari, Bari, Italy",
+    "score": 100
+  },
+  "politecnico di milano|it": {
+    "lat": 45.478,
+    "lon": 9.2272,
+    "label": "Politecnico di Milano, Milan, Italy",
+    "score": 100
+  },
+  "politecnico di torino|it": {
+    "lat": 45.063,
+    "lon": 7.6616,
+    "label": "Politecnico di Torino, Turin, Italy",
+    "score": 100
+  },
+  "politehnica university of bucharest|ro": {
+    "lat": 44.4385,
+    "lon": 26.0509,
+    "label": "National University of Science and Technology POLITEHNICA Bucharest, Romania",
+    "score": 100
+  },
+  "politehnica university of timisoara|ro": {
+    "lat": 45.7537,
+    "lon": 21.2257,
+    "label": "Politehnica University of Timișoara, Romania",
+    "score": 100
+  },
+  "polito|it": {
+    "lat": 45.0633,
+    "lon": 7.6617,
+    "label": "Politecnico di Torino, Turin, Italy",
+    "score": 100
+  },
+  "polytech lille|fr": {
+    "lat": 50.6074,
+    "lon": 3.1367,
+    "label": "Polytech Lille, France",
+    "score": 100
+  },
+  "polytechneio kritis|gr": {
+    "lat": 35.5306,
+    "lon": 24.0686,
+    "label": "Technical University of Crete, Chania, Crete, Greece",
+    "score": 100
+  },
+  "polytechnique montreal|ca": {
+    "lat": 45.4981,
+    "lon": -73.6144,
+    "label": "Polytechnique Montréal, Montreal, Canada",
+    "score": 100
+  },
+  "polytechnique paris|fr": {
+    "lat": 48.7131,
+    "lon": 2.2094,
+    "label": "École Polytechnique, Palaiseau, France",
+    "score": 100
+  },
+  "postech|kr": {
+    "lat": 36.0125,
+    "lon": 129.3247,
+    "label": "POSTECH, Pohang, South Korea",
+    "score": 100
+  },
+  "poznan university of technology faculty of mechanical engineering and management|pl": {
+    "lat": 52.4042,
+    "lon": 16.9506,
+    "label": "Poznan University of Technology (Politechnika Poznańska), Poland",
+    "score": 100
+  },
+  "poznan university of technology|pl": {
+    "lat": 52.4042,
+    "lon": 16.9506,
+    "label": "Poznań University of Technology, Poznań, Poland",
+    "score": 100
+  },
+  "pph burgenland|at": {
+    "lat": 47.8394,
+    "lon": 16.5381,
+    "label": "PPH Burgenland, Eisenstadt, Austria",
+    "score": 100
+  },
+  "prirodovedecka fakulta masarykovy univerzity|cz": {
+    "lat": 49.2047,
+    "lon": 16.5986,
+    "label": "Masaryk University (Faculty of Science), Brno, Czech Republic",
+    "score": 100
+  },
+  "prirodovedecka fakulta ustav fyzikalni elektroniky|cz": {
+    "lat": 49.2047,
+    "lon": 16.5986,
+    "label": "Masaryk University (Faculty of Science), Brno, Czech Republic",
+    "score": 100
+  },
+  "private padagogische hochschule burgenland|at": {
+    "lat": 47.8394,
+    "lon": 16.5381,
+    "label": "PPH Burgenland, Eisenstadt, Austria",
+    "score": 100
+  },
+  "prydniprovska state academy of civil engineering and architecture|ua": {
+    "lat": 48.4552,
+    "lon": 35.0617,
+    "label": "PSACEA, Dnipro, Ukraine",
+    "score": 100
+  },
+  "pwste jaroslaw|pl": {
+    "lat": 50.0211,
+    "lon": 22.6744,
+    "label": "The Bronisław Markiewicz State University (PANS), Jarosław, Poland",
+    "score": 100
+  },
+  "pwsz sulechow|pl": {
+    "lat": 52.0833,
+    "lon": 15.6267,
+    "label": "PWSZ Sulechów (University of Zielona Góra branch), Sulechów, Poland",
+    "score": 100
+  },
+  "rheinisch westfalische technische hochschule aachen|de": {
+    "lat": 50.7782,
+    "lon": 6.0607,
+    "label": "RWTH Aachen University, Aachen, Germany",
+    "score": 100
+  },
+  "riga technical university|lv": {
+    "lat": 56.9531,
+    "lon": 24.0863,
+    "label": "Riga Technical University, Latvia",
+    "score": 100
+  },
+  "rigas tehniska universitate|lv": {
+    "lat": 56.9531,
+    "lon": 24.0858,
+    "label": "Riga Technical University, Riga, Latvia",
+    "score": 100
+  },
+  "royal danish academy of fine arts schools of architecture design and conservation|dk": {
+    "lat": 55.6811,
+    "lon": 12.6044,
+    "label": "CITA / Royal Danish Academy (KADK), Copenhagen, Denmark",
+    "score": 100
+  },
+  "royal institute for cultural heritage|be": {
+    "lat": 50.8419,
+    "lon": 4.3928,
+    "label": "Royal Institute for Cultural Heritage (KIK-IRPA), Brussels, Belgium",
+    "score": 100
+  },
+  "rtu|lv": {
+    "lat": 56.9531,
+    "lon": 24.0858,
+    "label": "Riga Technical University, Riga, Latvia",
+    "score": 100
+  },
+  "ruhr universitat bochum|de": {
+    "lat": 51.4444,
+    "lon": 7.2611,
+    "label": "Ruhr University Bochum, Germany",
+    "score": 100
+  },
+  "rwth aachen university|de": {
+    "lat": 50.7785,
+    "lon": 6.0608,
+    "label": "RWTH Aachen University, Germany",
+    "score": 100
+  },
+  "rwth aachen|de": {
+    "lat": 50.7782,
+    "lon": 6.0607,
+    "label": "RWTH Aachen University, Aachen, Germany",
+    "score": 100
+  },
+  "rzeszow university of technology|pl": {
+    "lat": 50.0156,
+    "lon": 21.9867,
+    "label": "Rzeszow University of Technology, Rzeszów, Poland",
+    "score": 100
+  },
+  "saint petersburg national research university itmo|ru": {
+    "lat": 59.9572,
+    "lon": 30.3081,
+    "label": "ITMO University, Saint Petersburg, Russia",
+    "score": 100
+  },
+  "sapienza universita di roma|it": {
+    "lat": 41.9031,
+    "lon": 12.5161,
+    "label": "Sapienza Università di Roma, Rome, Italy",
+    "score": 100
+  },
+  "sapienza university of rome|it": {
+    "lat": 41.9031,
+    "lon": 12.5161,
+    "label": "Sapienza Università di Roma, Rome, Italy",
+    "score": 100
+  },
+  "saratov state technical university|ru": {
+    "lat": 51.5286,
+    "lon": 45.9758,
+    "label": "Yuri Gagarin State Technical University of Saratov, Saratov, Russia",
+    "score": 100
+  },
+  "satbayev university|kz": {
+    "lat": 43.2364,
+    "lon": 76.9317,
+    "label": "Satbayev University, Almaty, Kazakhstan",
+    "score": 100
+  },
+  "saxion hogeschool|nl": {
+    "lat": 52.2211,
+    "lon": 6.8872,
+    "label": "Saxion University of Applied Sciences, Enschede, Netherlands",
+    "score": 100
+  },
+  "saxion university of applied sciences school of governance law and urban development|nl": {
+    "lat": 52.2211,
+    "lon": 6.8872,
+    "label": "Saxion University of Applied Sciences, Enschede, Netherlands",
+    "score": 100
+  },
+  "saxion university of applied sciences|nl": {
+    "lat": 52.2211,
+    "lon": 6.8872,
+    "label": "Saxion University of Applied Sciences, Enschede, Netherlands",
+    "score": 100
+  },
+  "seoul national university|kr": {
+    "lat": 37.4599,
+    "lon": 126.9519,
+    "label": "Seoul National University, Seoul, South Korea",
+    "score": 100
+  },
+  "sggw warszawa|pl": {
+    "lat": 52.1619,
+    "lon": 21.0467,
+    "label": "Warsaw University of Life Sciences (SGGW), Warsaw, Poland",
+    "score": 100
+  },
+  "sigma clermont|fr": {
+    "lat": 45.7592,
+    "lon": 3.1118,
+    "label": "SIGMA Clermont, France",
+    "score": 100
+  },
+  "silesian university of technology|pl": {
+    "lat": 50.2941,
+    "lon": 18.6756,
+    "label": "Silesian University of Technology, Gliwice, Poland",
+    "score": 100
+  },
+  "slovak university of agriculture in nitra|sk": {
+    "lat": 48.3056,
+    "lon": 18.0931,
+    "label": "Slovak University of Agriculture in Nitra, Nitra, Slovakia",
+    "score": 100
+  },
+  "slovak university of technology in bratislava|sk": {
+    "lat": 48.1517,
+    "lon": 17.1147,
+    "label": "Slovak University of Technology in Bratislava, Bratislava, Slovakia",
+    "score": 100
+  },
+  "slovenska polnohospodarska univerzita v nitre|sk": {
+    "lat": 48.3056,
+    "lon": 18.0931,
+    "label": "Slovak University of Agriculture in Nitra, Nitra, Slovakia",
+    "score": 100
+  },
+  "slovenska technicka univerzita v bratislave|sk": {
+    "lat": 48.1517,
+    "lon": 17.1147,
+    "label": "STU Bratislava, Slovakia",
+    "score": 100
+  },
+  "sofia university st kliment ohridski|bg": {
+    "lat": 42.6936,
+    "lon": 23.3347,
+    "label": "Sofia University, Sofia, Bulgaria",
+    "score": 100
+  },
+  "sofia university|bg": {
+    "lat": 42.6936,
+    "lon": 23.3347,
+    "label": "Sofia University, Sofia, Bulgaria",
+    "score": 100
+  },
+  "sorbonne universite|fr": {
+    "lat": 48.8472,
+    "lon": 2.3556,
+    "label": "Sorbonne Université, Paris, France",
+    "score": 100
+  },
+  "sorbonne university|fr": {
+    "lat": 48.8472,
+    "lon": 2.3556,
+    "label": "Sorbonne Université, Paris, France",
+    "score": 100
+  },
+  "spu nitra|sk": {
+    "lat": 48.3056,
+    "lon": 18.0931,
+    "label": "Slovak University of Agriculture in Nitra, Nitra, Slovakia",
+    "score": 100
+  },
+  "stiftung private padagogische hochschule burgenland|at": {
+    "lat": 47.8394,
+    "lon": 16.5381,
+    "label": "PPH Burgenland, Eisenstadt, Austria",
+    "score": 100
+  },
+  "strojnicka fakulta univerzity v ljubljane|si": {
+    "lat": 46.0469,
+    "lon": 14.4989,
+    "label": "University of Ljubljana (Faculty of Mechanical Engineering), Ljubljana, Slovenia",
+    "score": 100
+  },
+  "stu bratislava|sk": {
+    "lat": 48.1517,
+    "lon": 17.1147,
+    "label": "Slovak University of Technology in Bratislava, Bratislava, Slovakia",
+    "score": 100
+  },
+  "sumy state university faculty of electronics and information technologies|ua": {
+    "lat": 50.8917,
+    "lon": 34.8439,
+    "label": "Sumy State University, Sumy, Ukraine",
+    "score": 100
+  },
+  "sumy state university|ua": {
+    "lat": 50.8917,
+    "lon": 34.8439,
+    "label": "Sumy State University, Sumy, Ukraine",
+    "score": 100
+  },
+  "sveuciliste josipa jurja strossmayera u osijeku|hr": {
+    "lat": 45.5606,
+    "lon": 18.6961,
+    "label": "Josip Juraj Strossmayer University of Osijek, Osijek, Croatia",
+    "score": 100
+  },
+  "sveuciliste u rijeci|hr": {
+    "lat": 45.3275,
+    "lon": 14.4447,
+    "label": "University of Rijeka, Rijeka, Croatia",
+    "score": 100
+  },
+  "sveuciliste u slavonskom brodu|hr": {
+    "lat": 45.1575,
+    "lon": 18.0139,
+    "label": "University of Slavonski Brod / Mechanical Engineering, Slavonski Brod, Croatia",
+    "score": 100
+  },
+  "sveuciliste u splitu|hr": {
+    "lat": 43.5119,
+    "lon": 16.4697,
+    "label": "University of Split, Split, Croatia",
+    "score": 100
+  },
+  "sveuciliste u zagrebu|hr": {
+    "lat": 45.8117,
+    "lon": 15.9692,
+    "label": "University of Zagreb, Zagreb, Croatia",
+    "score": 100
+  },
+  "swiss federal institute of technology zurich|ch": {
+    "lat": 47.3762,
+    "lon": 8.5481,
+    "label": "ETH Zurich, Zurich, Switzerland",
+    "score": 100
+  },
+  "szechenyi istvan egyetem|hu": {
+    "lat": 47.6939,
+    "lon": 17.6272,
+    "label": "Széchenyi István University, Győr, Hungary",
+    "score": 100
+  },
+  "szechenyi istvan university|hu": {
+    "lat": 47.6939,
+    "lon": 17.6272,
+    "label": "Széchenyi István University, Győr, Hungary",
+    "score": 100
+  },
+  "szegedi tudomanyegyetem|hu": {
+    "lat": 46.2519,
+    "lon": 20.1444,
+    "label": "University of Szeged, Szeged, Hungary",
+    "score": 100
+  },
+  "szkola glowna gospodarstwa wiejskiego w warszawie|pl": {
+    "lat": 52.1619,
+    "lon": 21.0467,
+    "label": "Warsaw University of Life Sciences (SGGW), Warsaw, Poland",
+    "score": 100
+  },
+  "tallinn university of technology|ee": {
+    "lat": 59.3957,
+    "lon": 24.6718,
+    "label": "TalTech, Tallinn, Estonia",
+    "score": 100
+  },
+  "tallinna tehnikaulikool|ee": {
+    "lat": 59.3956,
+    "lon": 24.6719,
+    "label": "Tallinn University of Technology (TalTech), Tallinn, Estonia",
+    "score": 100
+  },
+  "taltech|ee": {
+    "lat": 59.3956,
+    "lon": 24.6719,
+    "label": "Tallinn University of Technology (TalTech), Tallinn, Estonia",
+    "score": 100
+  },
+  "tampere university|fi": {
+    "lat": 61.4498,
+    "lon": 23.8596,
+    "label": "Tampere University, Finland",
+    "score": 100
+  },
+  "tampereen yliopisto|fi": {
+    "lat": 61.4939,
+    "lon": 23.7789,
+    "label": "Tampere University, Tampere, Finland",
+    "score": 100
+  },
+  "taras shevchenko national university of kyiv|ua": {
+    "lat": 50.4419,
+    "lon": 30.5113,
+    "label": "Taras Shevchenko National University of Kyiv, Ukraine",
+    "score": 100
+  },
+  "tartu ulikool|ee": {
+    "lat": 58.3808,
+    "lon": 26.7197,
+    "label": "University of Tartu, Tartu, Estonia",
+    "score": 100
+  },
+  "tashkent chemical technological institute|uz": {
+    "lat": 41.3217,
+    "lon": 69.2556,
+    "label": "Tashkent Chemical-Technological Institute, Tashkent, Uzbekistan",
+    "score": 100
+  },
+  "technical university in zvolen|sk": {
+    "lat": 48.5739,
+    "lon": 19.1239,
+    "label": "Technical University in Zvolen, Zvolen, Slovakia",
+    "score": 100
+  },
+  "technical university of cluj napoca|ro": {
+    "lat": 46.7766,
+    "lon": 23.5976,
+    "label": "Technical University of Cluj-Napoca, Romania",
+    "score": 100
+  },
+  "technical university of crete school of environmental engineeering|gr": {
+    "lat": 35.5306,
+    "lon": 24.0686,
+    "label": "Technical University of Crete, Chania, Crete, Greece",
+    "score": 100
+  },
+  "technical university of crete|gr": {
+    "lat": 35.5306,
+    "lon": 24.0686,
+    "label": "Technical University of Crete, Chania, Crete, Greece",
+    "score": 100
+  },
+  "technical university of denmark|dk": {
+    "lat": 55.7858,
+    "lon": 12.5222,
+    "label": "DTU, Lyngby, Denmark",
+    "score": 100
+  },
+  "technical university of gabrovo faculty of electrical engineering and electronics|bg": {
+    "lat": 42.8683,
+    "lon": 25.3189,
+    "label": "Technical University of Gabrovo, Gabrovo, Bulgaria",
+    "score": 100
+  },
+  "technical university of gabrovo|bg": {
+    "lat": 42.8683,
+    "lon": 25.3189,
+    "label": "Technical University of Gabrovo, Gabrovo, Bulgaria",
+    "score": 100
+  },
+  "technical university of kosice|sk": {
+    "lat": 48.7303,
+    "lon": 21.2458,
+    "label": "Technical University of Košice, Košice, Slovakia",
+    "score": 100
+  },
+  "technical university of liberec|cz": {
+    "lat": 50.7739,
+    "lon": 15.0747,
+    "label": "Technical University of Liberec, Liberec, Czech Republic",
+    "score": 100
+  },
+  "technical university of sofia|bg": {
+    "lat": 42.6575,
+    "lon": 23.3556,
+    "label": "Technical University of Sofia, Sofia, Bulgaria",
+    "score": 100
+  },
+  "technicka univerzita ostrava|cz": {
+    "lat": 49.8306,
+    "lon": 18.1627,
+    "label": "VŠB - Technical University of Ostrava, Czechia",
+    "score": 100
+  },
+  "technicka univerzita v kosiciach|sk": {
+    "lat": 48.7308,
+    "lon": 21.2458,
+    "label": "Technical University of Košice, Slovakia",
+    "score": 100
+  },
+  "technicka univerzita v liberci|cz": {
+    "lat": 50.7738,
+    "lon": 15.0745,
+    "label": "Technical University of Liberec, Czechia",
+    "score": 100
+  },
+  "technicka univerzita vo zvolene|sk": {
+    "lat": 48.5739,
+    "lon": 19.1239,
+    "label": "Technical University in Zvolen, Zvolen, Slovakia",
+    "score": 100
+  },
+  "technische universitaet darmstadt|de": {
+    "lat": 49.8778,
+    "lon": 8.6548,
+    "label": "TU Darmstadt, Germany",
+    "score": 100
+  },
+  "technische universitaet graz|at": {
+    "lat": 47.0691,
+    "lon": 15.4505,
+    "label": "TU Graz, Austria",
+    "score": 100
+  },
+  "technische universitaet muenchen|de": {
+    "lat": 48.1497,
+    "lon": 11.5679,
+    "label": "Technical University of Munich, Germany",
+    "score": 100
+  },
+  "technische universitaet wien|at": {
+    "lat": 48.1989,
+    "lon": 16.3699,
+    "label": "TU Wien, Vienna, Austria",
+    "score": 100
+  },
+  "technische universitat bergakademie freiberg|de": {
+    "lat": 50.9181,
+    "lon": 13.3411,
+    "label": "TU Bergakademie Freiberg, Freiberg, Germany",
+    "score": 100
+  },
+  "technische universitat berlin|de": {
+    "lat": 52.5125,
+    "lon": 13.3269,
+    "label": "TU Berlin, Germany",
+    "score": 100
+  },
+  "technische universitat braunschweig|de": {
+    "lat": 52.2742,
+    "lon": 10.5283,
+    "label": "TU Braunschweig, Braunschweig, Germany",
+    "score": 100
+  },
+  "technische universitat darmstadt|de": {
+    "lat": 49.8778,
+    "lon": 8.6548,
+    "label": "TU Darmstadt, Germany",
+    "score": 100
+  },
+  "technische universitat dortmund faculty of biochemical and chemical engineering|de": {
+    "lat": 51.4925,
+    "lon": 7.4144,
+    "label": "TU Dortmund University, Dortmund, Germany",
+    "score": 100
+  },
+  "technische universitat dortmund faculty of spatial planning|de": {
+    "lat": 51.4925,
+    "lon": 7.4144,
+    "label": "TU Dortmund University, Dortmund, Germany",
+    "score": 100
+  },
+  "technische universitat dortmund|de": {
+    "lat": 51.4925,
+    "lon": 7.4144,
+    "label": "TU Dortmund University, Dortmund, Germany",
+    "score": 100
+  },
+  "technische universitat dresden|de": {
+    "lat": 51.0281,
+    "lon": 13.7265,
+    "label": "TU Dresden, Germany",
+    "score": 100
+  },
+  "technische universitat graz|at": {
+    "lat": 47.0691,
+    "lon": 15.4505,
+    "label": "TU Graz, Austria",
+    "score": 100
+  },
+  "technische universitat hamburg|de": {
+    "lat": 53.4614,
+    "lon": 9.9694,
+    "label": "Hamburg University of Technology, Hamburg, Germany",
+    "score": 100
+  },
+  "technische universitat ilmenau faculty of electrical engineering and information technology|de": {
+    "lat": 50.6811,
+    "lon": 10.9328,
+    "label": "TU Ilmenau, Ilmenau, Germany",
+    "score": 100
+  },
+  "technische universitat ilmenau|de": {
+    "lat": 50.6836,
+    "lon": 10.9322,
+    "label": "TU Ilmenau, Germany",
+    "score": 100
+  },
+  "technische universitat munchen|de": {
+    "lat": 48.1497,
+    "lon": 11.5679,
+    "label": "Technical University of Munich, Germany",
+    "score": 100
+  },
+  "technische universitat wien|at": {
+    "lat": 48.1989,
+    "lon": 16.3699,
+    "label": "TU Wien, Vienna, Austria",
+    "score": 100
+  },
+  "technische universiteit delft|nl": {
+    "lat": 52.0028,
+    "lon": 4.3703,
+    "label": "Delft University of Technology, Delft, Netherlands",
+    "score": 100
+  },
+  "telecom sudparis|fr": {
+    "lat": 48.6256,
+    "lon": 2.4428,
+    "label": "Télécom SudParis (ex-INT), Évry, France",
+    "score": 100
+  },
+  "tennessee tech university center for energy systems research|us": {
+    "lat": 36.1772,
+    "lon": -85.5089,
+    "label": "Tennessee Technological University, Cookeville, TN, USA",
+    "score": 100
+  },
+  "tennessee tech university|us": {
+    "lat": 36.1772,
+    "lon": -85.5089,
+    "label": "Tennessee Technological University, Cookeville, TN, USA",
+    "score": 100
+  },
+  "tennessee technological university|us": {
+    "lat": 36.1772,
+    "lon": -85.5089,
+    "label": "Tennessee Technological University, Cookeville, TN, USA",
+    "score": 100
+  },
+  "ternopil ivan puluj national technical university|ua": {
+    "lat": 49.5519,
+    "lon": 25.5997,
+    "label": "Ternopil Ivan Puluj National Technical University, Ternopil, Ukraine",
+    "score": 100
+  },
+  "the bronislaw markiewicz state higher school of technology and economics in jaroslaw|pl": {
+    "lat": 50.0211,
+    "lon": 22.6744,
+    "label": "The Bronisław Markiewicz State University (PANS), Jarosław, Poland",
+    "score": 100
+  },
+  "the national research university of information technologies mechanics and optics|ru": {
+    "lat": 59.9572,
+    "lon": 30.3081,
+    "label": "ITMO University, Saint Petersburg, Russia",
+    "score": 100
+  },
+  "the university of tokyo|jp": {
+    "lat": 35.7128,
+    "lon": 139.7619,
+    "label": "The University of Tokyo, Tokyo, Japan",
+    "score": 100
+  },
+  "tkti tashkent|uz": {
+    "lat": 41.3217,
+    "lon": 69.2556,
+    "label": "Tashkent Chemical-Technological Institute, Tashkent, Uzbekistan",
+    "score": 100
+  },
+  "tokyo institute of technology|jp": {
+    "lat": 35.6053,
+    "lon": 139.6836,
+    "label": "Tokyo Institute of Technology, Tokyo, Japan",
+    "score": 100
+  },
+  "tokyo tech|jp": {
+    "lat": 35.6053,
+    "lon": 139.6836,
+    "label": "Tokyo Institute of Technology, Tokyo, Japan",
+    "score": 100
+  },
+  "tomas bata university in zlin|cz": {
+    "lat": 49.2225,
+    "lon": 17.6667,
+    "label": "Tomas Bata University in Zlín, Zlín, Czech Republic",
+    "score": 100
+  },
+  "transilvania university of brasov|ro": {
+    "lat": 45.6548,
+    "lon": 25.6033,
+    "label": "Transilvania University of Brașov, Romania",
+    "score": 100
+  },
+  "trinity college dublin|ie": {
+    "lat": 53.3438,
+    "lon": -6.2546,
+    "label": "Trinity College Dublin, Ireland",
+    "score": 100
+  },
+  "tu berlin|de": {
+    "lat": 52.5125,
+    "lon": 13.3269,
+    "label": "Technische Universität Berlin, Berlin, Germany",
+    "score": 100
+  },
+  "tu braunschweig|de": {
+    "lat": 52.2742,
+    "lon": 10.5283,
+    "label": "TU Braunschweig, Braunschweig, Germany",
+    "score": 100
+  },
+  "tu darmstadt|de": {
+    "lat": 49.8778,
+    "lon": 8.6569,
+    "label": "Technische Universität Darmstadt, Darmstadt, Germany",
+    "score": 100
+  },
+  "tu delft|nl": {
+    "lat": 52.0028,
+    "lon": 4.3703,
+    "label": "Delft University of Technology, Delft, Netherlands",
+    "score": 100
+  },
+  "tu dortmund|de": {
+    "lat": 51.4925,
+    "lon": 7.4144,
+    "label": "TU Dortmund University, Dortmund, Germany",
+    "score": 100
+  },
+  "tu dresden|de": {
+    "lat": 51.0283,
+    "lon": 13.7297,
+    "label": "Technische Universität Dresden, Dresden, Germany",
+    "score": 100
+  },
+  "tu eindhoven|nl": {
+    "lat": 51.4486,
+    "lon": 5.4908,
+    "label": "Eindhoven University of Technology, Eindhoven, Netherlands",
+    "score": 100
+  },
+  "tu freiberg|de": {
+    "lat": 50.9181,
+    "lon": 13.3411,
+    "label": "TU Bergakademie Freiberg, Freiberg, Germany",
+    "score": 100
+  },
+  "tu graz|at": {
+    "lat": 47.0694,
+    "lon": 15.4503,
+    "label": "TU Graz, Graz, Austria",
+    "score": 100
+  },
+  "tu hamburg|de": {
+    "lat": 53.4614,
+    "lon": 9.9694,
+    "label": "Hamburg University of Technology, Hamburg, Germany",
+    "score": 100
+  },
+  "tu ilmenau|de": {
+    "lat": 50.6811,
+    "lon": 10.9328,
+    "label": "TU Ilmenau, Ilmenau, Germany",
+    "score": 100
+  },
+  "tu sofia|bg": {
+    "lat": 42.6575,
+    "lon": 23.3556,
+    "label": "Technical University of Sofia, Sofia, Bulgaria",
+    "score": 100
+  },
+  "tu wien|at": {
+    "lat": 48.1989,
+    "lon": 16.3699,
+    "label": "TU Wien, Vienna, Austria",
+    "score": 100
+  },
+  "tue|nl": {
+    "lat": 51.4486,
+    "lon": 5.4908,
+    "label": "Eindhoven University of Technology, Eindhoven, Netherlands",
+    "score": 100
+  },
+  "tuhh|de": {
+    "lat": 53.4614,
+    "lon": 9.9694,
+    "label": "Hamburg University of Technology, Hamburg, Germany",
+    "score": 100
+  },
+  "tuke kosice|sk": {
+    "lat": 48.7303,
+    "lon": 21.2458,
+    "label": "Technical University of Košice, Košice, Slovakia",
+    "score": 100
+  },
+  "tyumen industrial university|ru": {
+    "lat": 57.1644,
+    "lon": 65.5236,
+    "label": "Industrial University of Tyumen, Tyumen, Russia",
+    "score": 100
+  },
+  "uaceg sofia|bg": {
+    "lat": 42.6842,
+    "lon": 23.3325,
+    "label": "University of Architecture, Civil Engineering and Geodesy (UACEG), Sofia, Bulgaria",
+    "score": 100
+  },
+  "ubc|ca": {
+    "lat": 49.2606,
+    "lon": -123.246,
+    "label": "University of British Columbia, Vancouver, Canada",
+    "score": 100
+  },
+  "uc berkeley|us": {
+    "lat": 37.8708,
+    "lon": -122.2547,
+    "label": "UC Berkeley (IURD), Berkeley, CA, USA",
+    "score": 100
+  },
+  "uc3m|es": {
+    "lat": 40.3325,
+    "lon": -3.7667,
+    "label": "Universidad Carlos III de Madrid, Getafe, Spain",
+    "score": 100
+  },
+  "ucd dublin|ie": {
+    "lat": 53.3069,
+    "lon": -6.2228,
+    "label": "University College Dublin, Dublin, Ireland",
+    "score": 100
+  },
+  "uci havana|cu": {
+    "lat": 22.9881,
+    "lon": -82.4644,
+    "label": "Universidad de las Ciencias Informáticas (UCI), Havana, Cuba",
+    "score": 100
+  },
+  "uclouvain|be": {
+    "lat": 50.6694,
+    "lon": 4.6139,
+    "label": "UCLouvain, Louvain-la-Neuve, Belgium",
+    "score": 100
+  },
+  "uclv santa clara|cu": {
+    "lat": 22.4189,
+    "lon": -79.9022,
+    "label": "Universidad Central 'Marta Abreu' de Las Villas (UCLV), Santa Clara, Cuba",
+    "score": 100
+  },
+  "ucly|fr": {
+    "lat": 45.7483,
+    "lon": 4.8272,
+    "label": "UCLy (Université Catholique de Lyon), Lyon, France",
+    "score": 100
+  },
+  "ucl|gb": {
+    "lat": 51.5246,
+    "lon": -0.134,
+    "label": "University College London (UCL), London, UK",
+    "score": 100
+  },
+  "ufa state aviation technical university faculty of computer science and robotics|ru": {
+    "lat": 54.7247,
+    "lon": 55.9431,
+    "label": "Ufa State Aviation Technical University (UGATU), Ufa, Russia",
+    "score": 100
+  },
+  "ufa state aviation technical university faculty of economics and management|ru": {
+    "lat": 54.7247,
+    "lon": 55.9431,
+    "label": "Ufa State Aviation Technical University (UGATU), Ufa, Russia",
+    "score": 100
+  },
+  "ufa state aviation technical university|ru": {
+    "lat": 54.7247,
+    "lon": 55.9431,
+    "label": "Ufa State Aviation Technical University (UGATU), Ufa, Russia",
+    "score": 100
+  },
+  "ugatu ufa|ru": {
+    "lat": 54.7247,
+    "lon": 55.9431,
+    "label": "Ufa State Aviation Technical University (UGATU), Ufa, Russia",
+    "score": 100
+  },
+  "ukrainian engineering pedagogics academy|ua": {
+    "lat": 49.9886,
+    "lon": 36.2308,
+    "label": "Ukrainian Engineering Pedagogics Academy, Kharkiv, Ukraine",
+    "score": 100
+  },
+  "ukrainian state university of chemical technology dnipropetrovsk|ua": {
+    "lat": 48.4489,
+    "lon": 35.0642,
+    "label": "Ukrainian State University of Chemical Technology, Dnipro, Ukraine",
+    "score": 100
+  },
+  "ukrainian state university of chemical technology|ua": {
+    "lat": 48.4489,
+    "lon": 35.0642,
+    "label": "Ukrainian State University of Chemical Technology, Dnipro, Ukraine",
+    "score": 100
+  },
+  "ukrajinska inziniersko pedagogicka akademia|ua": {
+    "lat": 49.9886,
+    "lon": 36.2308,
+    "label": "Ukrainian Engineering Pedagogics Academy, Kharkiv, Ukraine",
+    "score": 100
+  },
+  "ulb|be": {
+    "lat": 50.8128,
+    "lon": 4.3814,
+    "label": "Université libre de Bruxelles, Brussels, Belgium",
+    "score": 100
+  },
+  "umprum|cz": {
+    "lat": 50.0894,
+    "lon": 14.4153,
+    "label": "Academy of Arts, Architecture and Design in Prague (UMPRUM), Czech Republic",
+    "score": 100
+  },
+  "unicaen|fr": {
+    "lat": 49.1889,
+    "lon": -0.3644,
+    "label": "Université de Caen Normandie, Caen, France",
+    "score": 100
+  },
+  "universidad carlos iii de madrid|es": {
+    "lat": 40.3323,
+    "lon": -3.7661,
+    "label": "Universidad Carlos III de Madrid, Getafe, Spain",
+    "score": 100
+  },
+  "universidad central marta abreu de las villas facultad de ingenieria mecanica e industrial|cu": {
+    "lat": 22.4189,
+    "lon": -79.9022,
+    "label": "Universidad Central 'Marta Abreu' de Las Villas (UCLV), Santa Clara, Cuba",
+    "score": 100
+  },
+  "universidad central marta abreu de las villas|cu": {
+    "lat": 22.4189,
+    "lon": -79.9022,
+    "label": "Universidad Central 'Marta Abreu' de Las Villas (UCLV), Santa Clara, Cuba",
+    "score": 100
+  },
+  "universidad de deusto|es": {
+    "lat": 43.2711,
+    "lon": -2.9378,
+    "label": "University of Deusto (Faculty of Engineering), Bilbao, Spain",
+    "score": 100
+  },
+  "universidad de granada|es": {
+    "lat": 37.1852,
+    "lon": -3.6041,
+    "label": "Universidad de Granada, Spain",
+    "score": 100
+  },
+  "universidad de las ciencias informaticas|cu": {
+    "lat": 22.9881,
+    "lon": -82.4644,
+    "label": "Universidad de las Ciencias Informáticas (UCI), Havana, Cuba",
+    "score": 100
+  },
+  "universidad de malaga|es": {
+    "lat": 36.7167,
+    "lon": -4.4719,
+    "label": "Universidad de Málaga, Málaga, Spain",
+    "score": 100
+  },
+  "universidad de salamanca e t s i i de bejar|es": {
+    "lat": 40.3831,
+    "lon": -5.7686,
+    "label": "Universidad de Salamanca (ETSII Béjar), Béjar/Salamanca, Spain",
+    "score": 100
+  },
+  "universidad de sevilla|es": {
+    "lat": 37.3804,
+    "lon": -5.9914,
+    "label": "Universidad de Sevilla, Spain",
+    "score": 100
+  },
+  "universidad de zaragoza|es": {
+    "lat": 41.6425,
+    "lon": -0.8998,
+    "label": "Universidad de Zaragoza, Spain",
+    "score": 100
+  },
+  "universidad del pais vasco|es": {
+    "lat": 43.3308,
+    "lon": -2.9696,
+    "label": "Universidad del País Vasco (UPV/EHU), Bilbao, Spain",
+    "score": 100
+  },
+  "universidad politecnica de cartagena|es": {
+    "lat": 37.6039,
+    "lon": -0.9822,
+    "label": "UPCT, Cartagena, Spain",
+    "score": 100
+  },
+  "universidad politecnica de madrid|es": {
+    "lat": 40.4502,
+    "lon": -3.7279,
+    "label": "Universidad Politécnica de Madrid, Spain",
+    "score": 100
+  },
+  "universidad publica de navarra|es": {
+    "lat": 42.8005,
+    "lon": -1.6366,
+    "label": "Public University of Navarre, Pamplona, Spain",
+    "score": 100
+  },
+  "universidade de aveiro|pt": {
+    "lat": 40.6305,
+    "lon": -8.6575,
+    "label": "University of Aveiro, Portugal",
+    "score": 100
+  },
+  "universidade de coimbra|pt": {
+    "lat": 40.2076,
+    "lon": -8.4264,
+    "label": "University of Coimbra, Portugal",
+    "score": 100
+  },
+  "universidade de lisboa|pt": {
+    "lat": 38.7533,
+    "lon": -9.1561,
+    "label": "University of Lisbon, Portugal",
+    "score": 100
+  },
+  "universidade do minho|pt": {
+    "lat": 41.5608,
+    "lon": -8.3974,
+    "label": "Universidade do Minho, Braga, Portugal",
+    "score": 100
+  },
+  "universidade do porto|pt": {
+    "lat": 41.1496,
+    "lon": -8.618,
+    "label": "University of Porto, Portugal",
+    "score": 100
+  },
+  "universidade nova de lisboa|pt": {
+    "lat": 38.7341,
+    "lon": -9.1594,
+    "label": "NOVA University Lisbon, Portugal",
+    "score": 100
+  },
+  "universita degli studi di firenze|it": {
+    "lat": 43.7785,
+    "lon": 11.2589,
+    "label": "University of Florence, Italy",
+    "score": 100
+  },
+  "universita degli studi di genova|it": {
+    "lat": 44.4144,
+    "lon": 8.9272,
+    "label": "University of Genoa, Italy",
+    "score": 100
+  },
+  "universita degli studi di napoli federico ii|it": {
+    "lat": 40.8469,
+    "lon": 14.2583,
+    "label": "Università di Napoli Federico II, Naples, Italy",
+    "score": 100
+  },
+  "universita degli studi di padova|it": {
+    "lat": 45.4069,
+    "lon": 11.8778,
+    "label": "University of Padua, Italy",
+    "score": 100
+  },
+  "universita degli studi di pisa|it": {
+    "lat": 43.7198,
+    "lon": 10.4019,
+    "label": "University of Pisa, Italy",
+    "score": 100
+  },
+  "universita degli studi di roma la sapienza|it": {
+    "lat": 41.9038,
+    "lon": 12.5152,
+    "label": "Sapienza University of Rome, Italy",
+    "score": 100
+  },
+  "universita di bologna|it": {
+    "lat": 44.4967,
+    "lon": 11.3528,
+    "label": "University of Bologna, Bologna, Italy",
+    "score": 100
+  },
+  "universita di camerino|it": {
+    "lat": 43.1367,
+    "lon": 13.0683,
+    "label": "University of Camerino, Camerino, Italy",
+    "score": 100
+  },
+  "universita di pisa|it": {
+    "lat": 43.7167,
+    "lon": 10.3986,
+    "label": "Università di Pisa, Pisa, Italy",
+    "score": 100
+  },
+  "universitat fur bodenkultur wien|at": {
+    "lat": 48.2367,
+    "lon": 16.3378,
+    "label": "BOKU Wien, Vienna, Austria",
+    "score": 100
+  },
+  "universitat leipzig faculty of chemistry and mineralogy|de": {
+    "lat": 51.3325,
+    "lon": 12.3889,
+    "label": "Universität Leipzig (Faculty of Chemistry), Leipzig, Germany",
+    "score": 100
+  },
+  "universitat leipzig|de": {
+    "lat": 51.3325,
+    "lon": 12.3889,
+    "label": "Universität Leipzig (Faculty of Chemistry), Leipzig, Germany",
+    "score": 100
+  },
+  "universitat liechtenstein institut fur architektur und raumentwicklung|li": {
+    "lat": 47.1517,
+    "lon": 9.5358,
+    "label": "University of Liechtenstein, Vaduz, Liechtenstein",
+    "score": 100
+  },
+  "universitat liechtenstein|li": {
+    "lat": 47.1517,
+    "lon": 9.5358,
+    "label": "University of Liechtenstein, Vaduz, Liechtenstein",
+    "score": 100
+  },
+  "universitat politecnica de catalunya|es": {
+    "lat": 41.3879,
+    "lon": 2.1132,
+    "label": "Polytechnic University of Catalonia, Barcelona, Spain",
+    "score": 100
+  },
+  "universitat politecnica de valencia|es": {
+    "lat": 39.4816,
+    "lon": -0.3473,
+    "label": "Universitat Politècnica de València, Spain",
+    "score": 100
+  },
+  "universitat salzburg|at": {
+    "lat": 47.7981,
+    "lon": 13.0442,
+    "label": "Universität Salzburg, Salzburg, Austria",
+    "score": 100
+  },
+  "universitat stuttgart|de": {
+    "lat": 48.7823,
+    "lon": 9.1772,
+    "label": "University of Stuttgart, Germany",
+    "score": 100
+  },
+  "universitat wien|at": {
+    "lat": 48.2132,
+    "lon": 16.3601,
+    "label": "Universität Wien, Vienna, Austria",
+    "score": 100
+  },
+  "universitat wurzburg|de": {
+    "lat": 49.7828,
+    "lon": 9.9722,
+    "label": "Julius-Maximilians-Universität Würzburg, Würzburg, Germany",
+    "score": 100
+  },
+  "universitat zurich|ch": {
+    "lat": 47.3744,
+    "lon": 8.5492,
+    "label": "University of Zurich, Zurich, Switzerland",
+    "score": 100
+  },
+  "universitatea din bucuresti facultatea de fizica|ro": {
+    "lat": 44.3475,
+    "lon": 26.0306,
+    "label": "University of Bucharest (Faculty of Physics), Măgurele/Bucharest, Romania",
+    "score": 100
+  },
+  "universitatea politehnica timisoara faculty of engineering hunedoara|ro": {
+    "lat": 45.7533,
+    "lon": 22.9097,
+    "label": "Politehnica University Timișoara (Faculty of Engineering Hunedoara), Romania",
+    "score": 100
+  },
+  "universite catholique de lille|fr": {
+    "lat": 50.6334,
+    "lon": 3.0456,
+    "label": "Université Catholique de Lille, France",
+    "score": 100
+  },
+  "universite catholique de louvain|be": {
+    "lat": 50.6681,
+    "lon": 4.6144,
+    "label": "UCLouvain, Louvain-la-Neuve, Belgium",
+    "score": 100
+  },
+  "universite de bordeaux|fr": {
+    "lat": 44.8078,
+    "lon": -0.5968,
+    "label": "University of Bordeaux, France",
+    "score": 100
+  },
+  "universite de bourgogne isat|fr": {
+    "lat": 46.9997,
+    "lon": 3.1611,
+    "label": "ISAT Nevers (Université de Bourgogne), Nevers, France",
+    "score": 100
+  },
+  "universite de caen normandie|fr": {
+    "lat": 49.1889,
+    "lon": -0.3644,
+    "label": "Université de Caen Normandie, Caen, France",
+    "score": 100
+  },
+  "universite de lille|fr": {
+    "lat": 50.6094,
+    "lon": 3.1367,
+    "label": "Université de Lille, Villeneuve-d'Ascq/Lille, France",
+    "score": 100
+  },
+  "universite de strasbourg|fr": {
+    "lat": 48.5802,
+    "lon": 7.7654,
+    "label": "University of Strasbourg, France",
+    "score": 100
+  },
+  "universite du luxembourg|lu": {
+    "lat": 49.5036,
+    "lon": 5.9481,
+    "label": "University of Luxembourg, Esch-sur-Alzette, Luxembourg",
+    "score": 100
+  },
+  "universite libre de bruxelles|be": {
+    "lat": 50.8132,
+    "lon": 4.3822,
+    "label": "ULB, Brussels, Belgium",
+    "score": 100
+  },
+  "universite paris saclay|fr": {
+    "lat": 48.7099,
+    "lon": 2.1691,
+    "label": "Université Paris-Saclay, France",
+    "score": 100
+  },
+  "universite toulouse iii paul sabatier|fr": {
+    "lat": 43.5614,
+    "lon": 1.4686,
+    "label": "Université Toulouse III - Paul Sabatier, Toulouse, France",
+    "score": 100
+  },
+  "universiteit gent|be": {
+    "lat": 51.0478,
+    "lon": 3.7256,
+    "label": "Ghent University, Ghent, Belgium",
+    "score": 100
+  },
+  "universiteit twente|nl": {
+    "lat": 52.2411,
+    "lon": 6.8528,
+    "label": "University of Twente, Enschede, Netherlands",
+    "score": 100
+  },
+  "universiteit utrecht|nl": {
+    "lat": 52.0869,
+    "lon": 5.1764,
+    "label": "Utrecht University, Utrecht, Netherlands",
+    "score": 100
+  },
+  "universiteit van amsterdam|nl": {
+    "lat": 52.3558,
+    "lon": 4.9547,
+    "label": "University of Amsterdam, Amsterdam, Netherlands",
+    "score": 100
+  },
+  "universitetet i bergen|no": {
+    "lat": 60.3886,
+    "lon": 5.3228,
+    "label": "University of Bergen, Bergen, Norway",
+    "score": 100
+  },
+  "universitetet i oslo|no": {
+    "lat": 59.9389,
+    "lon": 10.7225,
+    "label": "University of Oslo, Oslo, Norway",
+    "score": 100
+  },
+  "university college dublin|ie": {
+    "lat": 53.3069,
+    "lon": -6.2228,
+    "label": "University College Dublin, Dublin, Ireland",
+    "score": 100
+  },
+  "university college london|gb": {
+    "lat": 51.5246,
+    "lon": -0.134,
+    "label": "University College London (UCL), London, UK",
+    "score": 100
+  },
+  "university of alberta faculty of argicultural life and environmental sciences|ca": {
+    "lat": 53.5232,
+    "lon": -113.5263,
+    "label": "University of Alberta, Edmonton, Canada",
+    "score": 100
+  },
+  "university of alberta|ca": {
+    "lat": 53.5232,
+    "lon": -113.5263,
+    "label": "University of Alberta, Edmonton, Canada",
+    "score": 100
+  },
+  "university of amsterdam|nl": {
+    "lat": 52.3558,
+    "lon": 4.9547,
+    "label": "University of Amsterdam, Amsterdam, Netherlands",
+    "score": 100
+  },
+  "university of applied sciences slavonski brod college of slavonski brod|hr": {
+    "lat": 45.1575,
+    "lon": 18.0139,
+    "label": "University of Slavonski Brod / Mechanical Engineering, Slavonski Brod, Croatia",
+    "score": 100
+  },
+  "university of architecture civil engineering and geodesy sofia|bg": {
+    "lat": 42.6842,
+    "lon": 23.3325,
+    "label": "University of Architecture, Civil Engineering and Geodesy (UACEG), Sofia, Bulgaria",
+    "score": 100
+  },
+  "university of aveiro|pt": {
+    "lat": 40.6308,
+    "lon": -8.6575,
+    "label": "Universidade de Aveiro, Aveiro, Portugal",
+    "score": 100
+  },
+  "university of belgrade|rs": {
+    "lat": 44.8193,
+    "lon": 20.4578,
+    "label": "University of Belgrade, Serbia",
+    "score": 100
+  },
+  "university of bergen department of informatics|no": {
+    "lat": 60.3803,
+    "lon": 5.3328,
+    "label": "University of Bergen (Department of Informatics), Bergen, Norway",
+    "score": 100
+  },
+  "university of bergen|no": {
+    "lat": 60.3888,
+    "lon": 5.3214,
+    "label": "University of Bergen, Norway",
+    "score": 100
+  },
+  "university of bologna|it": {
+    "lat": 44.4967,
+    "lon": 11.3528,
+    "label": "University of Bologna, Bologna, Italy",
+    "score": 100
+  },
+  "university of bordeaux|fr": {
+    "lat": 44.8078,
+    "lon": -0.6047,
+    "label": "Université de Bordeaux, Bordeaux/Talence, France",
+    "score": 100
+  },
+  "university of british columbia|ca": {
+    "lat": 49.2606,
+    "lon": -123.246,
+    "label": "University of British Columbia, Vancouver, Canada",
+    "score": 100
+  },
+  "university of bucharest faculty of physics|ro": {
+    "lat": 44.3475,
+    "lon": 26.0306,
+    "label": "University of Bucharest (Faculty of Physics), Măgurele/Bucharest, Romania",
+    "score": 100
+  },
+  "university of caen normandy|fr": {
+    "lat": 49.1889,
+    "lon": -0.3644,
+    "label": "Université de Caen Normandie, Caen, France",
+    "score": 100
+  },
+  "university of california berkeley institute of urban and regional development|us": {
+    "lat": 37.8708,
+    "lon": -122.2547,
+    "label": "UC Berkeley (IURD), Berkeley, CA, USA",
+    "score": 100
+  },
+  "university of california berkeley|us": {
+    "lat": 37.8708,
+    "lon": -122.2547,
+    "label": "UC Berkeley (IURD), Berkeley, CA, USA",
+    "score": 100
+  },
+  "university of cambridge|gb": {
+    "lat": 52.2043,
+    "lon": 0.1149,
+    "label": "University of Cambridge, Cambridge, UK",
+    "score": 100
+  },
+  "university of camerino department of mathematics and applications|it": {
+    "lat": 43.1367,
+    "lon": 13.0683,
+    "label": "University of Camerino, Camerino, Italy",
+    "score": 100
+  },
+  "university of camerino|it": {
+    "lat": 43.1367,
+    "lon": 13.0683,
+    "label": "University of Camerino, Camerino, Italy",
+    "score": 100
+  },
+  "university of coimbra|pt": {
+    "lat": 40.2075,
+    "lon": -8.4261,
+    "label": "Universidade de Coimbra, Coimbra, Portugal",
+    "score": 100
+  },
+  "university of cyprus|cy": {
+    "lat": 35.1458,
+    "lon": 33.4097,
+    "label": "University of Cyprus, Nicosia, Cyprus",
+    "score": 100
+  },
+  "university of debrecen|hu": {
+    "lat": 47.5539,
+    "lon": 21.6219,
+    "label": "University of Debrecen, Debrecen, Hungary",
+    "score": 100
+  },
+  "university of deusto faculty of engineering bilbao|es": {
+    "lat": 43.2711,
+    "lon": -2.9378,
+    "label": "University of Deusto (Faculty of Engineering), Bilbao, Spain",
+    "score": 100
+  },
+  "university of deusto|es": {
+    "lat": 43.2711,
+    "lon": -2.9378,
+    "label": "University of Deusto (Faculty of Engineering), Bilbao, Spain",
+    "score": 100
+  },
+  "university of dublin|ie": {
+    "lat": 53.3438,
+    "lon": -6.2546,
+    "label": "Trinity College Dublin, Dublin, Ireland",
+    "score": 100
+  },
+  "university of dundee school of life sciences|gb": {
+    "lat": 56.4586,
+    "lon": -2.9811,
+    "label": "University of Dundee (School of Life Sciences), Dundee, UK",
+    "score": 100
+  },
+  "university of dundee scool of life science|gb": {
+    "lat": 56.4586,
+    "lon": -2.9811,
+    "label": "University of Dundee (School of Life Sciences), Dundee, UK",
+    "score": 100
+  },
+  "university of dundee|gb": {
+    "lat": 56.4586,
+    "lon": -2.9811,
+    "label": "University of Dundee (School of Life Sciences), Dundee, UK",
+    "score": 100
+  },
+  "university of edinburgh|gb": {
+    "lat": 55.9427,
+    "lon": -3.1873,
+    "label": "University of Edinburgh, Edinburgh, UK",
+    "score": 100
+  },
+  "university of florence|it": {
+    "lat": 43.7775,
+    "lon": 11.2603,
+    "label": "Università degli Studi di Firenze, Florence, Italy",
+    "score": 100
+  },
+  "university of food technologies plovdiv|bg": {
+    "lat": 42.1506,
+    "lon": 24.7331,
+    "label": "University of Food Technologies, Plovdiv, Bulgaria",
+    "score": 100
+  },
+  "university of granada|es": {
+    "lat": 37.1844,
+    "lon": -3.6006,
+    "label": "Universidad de Granada, Granada, Spain",
+    "score": 100
+  },
+  "university of helsinki|fi": {
+    "lat": 60.1706,
+    "lon": 24.9517,
+    "label": "University of Helsinki, Helsinki, Finland",
+    "score": 100
+  },
+  "university of iceland|is": {
+    "lat": 64.1408,
+    "lon": -21.9497,
+    "label": "University of Iceland, Reykjavik, Iceland",
+    "score": 100
+  },
+  "university of innsbruck|at": {
+    "lat": 47.2632,
+    "lon": 11.3842,
+    "label": "University of Innsbruck, Austria",
+    "score": 100
+  },
+  "university of latvia|lv": {
+    "lat": 56.9506,
+    "lon": 24.1164,
+    "label": "University of Latvia, Riga, Latvia",
+    "score": 100
+  },
+  "university of leoben|at": {
+    "lat": 47.3844,
+    "lon": 15.0931,
+    "label": "Montanuniversität Leoben, Leoben, Austria",
+    "score": 100
+  },
+  "university of liechtenstein|li": {
+    "lat": 47.1517,
+    "lon": 9.5358,
+    "label": "University of Liechtenstein, Vaduz, Liechtenstein",
+    "score": 100
+  },
+  "university of lille|fr": {
+    "lat": 50.6094,
+    "lon": 3.1415,
+    "label": "University of Lille, France",
+    "score": 100
+  },
+  "university of lisbon|pt": {
+    "lat": 38.7369,
+    "lon": -9.1389,
+    "label": "Universidade de Lisboa (IST), Lisbon, Portugal",
+    "score": 100
+  },
+  "university of ljubljana|si": {
+    "lat": 46.0494,
+    "lon": 14.5041,
+    "label": "University of Ljubljana, Slovenia",
+    "score": 100
+  },
+  "university of loraine ensaia|fr": {
+    "lat": 48.6517,
+    "lon": 6.1583,
+    "label": "ENSAIA - Université de Lorraine, Vandœuvre-lès-Nancy, France",
+    "score": 100
+  },
+  "university of loraine ensic|fr": {
+    "lat": 48.6961,
+    "lon": 6.1844,
+    "label": "ENSIC - Université de Lorraine, Nancy, France",
+    "score": 100
+  },
+  "university of lorraine ensaia|fr": {
+    "lat": 48.6517,
+    "lon": 6.1583,
+    "label": "ENSAIA - Université de Lorraine, Vandœuvre-lès-Nancy, France",
+    "score": 100
+  },
+  "university of lorraine ensic|fr": {
+    "lat": 48.6961,
+    "lon": 6.1844,
+    "label": "ENSIC - Université de Lorraine, Nancy, France",
+    "score": 100
+  },
+  "university of luxembourg|lu": {
+    "lat": 49.5036,
+    "lon": 5.9481,
+    "label": "University of Luxembourg, Esch-sur-Alzette, Luxembourg",
+    "score": 100
+  },
+  "university of malaga|es": {
+    "lat": 36.7167,
+    "lon": -4.4719,
+    "label": "Universidad de Málaga, Málaga, Spain",
+    "score": 100
+  },
+  "university of malta|mt": {
+    "lat": 35.9025,
+    "lon": 14.4842,
+    "label": "University of Malta, Msida, Malta",
+    "score": 100
+  },
+  "university of manchester|gb": {
+    "lat": 53.4668,
+    "lon": -2.2339,
+    "label": "University of Manchester, Manchester, UK",
+    "score": 100
+  },
+  "university of maribor|si": {
+    "lat": 46.5595,
+    "lon": 15.6444,
+    "label": "University of Maribor, Slovenia",
+    "score": 100
+  },
+  "university of minho|pt": {
+    "lat": 41.5614,
+    "lon": -8.3975,
+    "label": "Universidade do Minho, Braga/Guimarães, Portugal",
+    "score": 100
+  },
+  "university of naples federico ii|it": {
+    "lat": 40.8469,
+    "lon": 14.2583,
+    "label": "Università di Napoli Federico II, Naples, Italy",
+    "score": 100
+  },
+  "university of natural resources and life sciences vienna boku|at": {
+    "lat": 48.2367,
+    "lon": 16.3378,
+    "label": "University of Natural Resources and Life Sciences (BOKU), Vienna, Austria",
+    "score": 100
+  },
+  "university of natural resources and life sciences|at": {
+    "lat": 48.2367,
+    "lon": 16.3378,
+    "label": "BOKU Wien, Vienna, Austria",
+    "score": 100
+  },
+  "university of nis|rs": {
+    "lat": 43.3228,
+    "lon": 21.8953,
+    "label": "University of Niš, Serbia",
+    "score": 100
+  },
+  "university of novi sad|rs": {
+    "lat": 45.2422,
+    "lon": 19.8519,
+    "label": "University of Novi Sad, Serbia",
+    "score": 100
+  },
+  "university of oslo|no": {
+    "lat": 59.9399,
+    "lon": 10.7214,
+    "label": "University of Oslo, Norway",
+    "score": 100
+  },
+  "university of oulu|fi": {
+    "lat": 65.0594,
+    "lon": 25.4664,
+    "label": "University of Oulu, Oulu, Finland",
+    "score": 100
+  },
+  "university of oxford|gb": {
+    "lat": 51.7548,
+    "lon": -1.2544,
+    "label": "University of Oxford, Oxford, UK",
+    "score": 100
+  },
+  "university of padova|it": {
+    "lat": 45.4069,
+    "lon": 11.8778,
+    "label": "Università degli Studi di Padova, Padua, Italy",
+    "score": 100
+  },
+  "university of pardubice|cz": {
+    "lat": 50.0487,
+    "lon": 15.7675,
+    "label": "University of Pardubice, Czechia",
+    "score": 100
+  },
+  "university of patras|gr": {
+    "lat": 38.2891,
+    "lon": 21.7876,
+    "label": "University of Patras, Greece",
+    "score": 100
+  },
+  "university of pennsylvania stuart weitzman school of design|us": {
+    "lat": 39.9522,
+    "lon": -75.1931,
+    "label": "University of Pennsylvania (Weitzman School of Design), Philadelphia, PA, USA",
+    "score": 100
+  },
+  "university of pennsylvania|us": {
+    "lat": 39.9522,
+    "lon": -75.1931,
+    "label": "University of Pennsylvania (Weitzman School of Design), Philadelphia, PA, USA",
+    "score": 100
+  },
+  "university of pisa|it": {
+    "lat": 43.7167,
+    "lon": 10.3986,
+    "label": "Università di Pisa, Pisa, Italy",
+    "score": 100
+  },
+  "university of porto|pt": {
+    "lat": 41.1781,
+    "lon": -8.5956,
+    "label": "Universidade do Porto (FEUP), Porto, Portugal",
+    "score": 100
+  },
+  "university of prishtina|rs": {
+    "lat": 42.6567,
+    "lon": 21.1683,
+    "label": "University of Prishtina, Pristina",
+    "score": 100
+  },
+  "university of queensland water management centre|au": {
+    "lat": -27.4975,
+    "lon": 153.0131,
+    "label": "The University of Queensland (AWMC), Brisbane, Australia",
+    "score": 100
+  },
+  "university of queensland|au": {
+    "lat": -27.4975,
+    "lon": 153.0131,
+    "label": "The University of Queensland (AWMC), Brisbane, Australia",
+    "score": 100
+  },
+  "university of rijeka|hr": {
+    "lat": 45.3271,
+    "lon": 14.4682,
+    "label": "University of Rijeka, Croatia",
+    "score": 100
+  },
+  "university of salzburg department of geography and geology|at": {
+    "lat": 47.7889,
+    "lon": 13.0606,
+    "label": "University of Salzburg (Geography and Geology), Salzburg, Austria",
+    "score": 100
+  },
+  "university of salzburg|at": {
+    "lat": 47.7889,
+    "lon": 13.0606,
+    "label": "University of Salzburg (Geography and Geology), Salzburg, Austria",
+    "score": 100
+  },
+  "university of seville|es": {
+    "lat": 37.3803,
+    "lon": -5.9914,
+    "label": "Universidad de Sevilla, Seville, Spain",
+    "score": 100
+  },
+  "university of split|hr": {
+    "lat": 43.5133,
+    "lon": 16.4674,
+    "label": "University of Split, Croatia",
+    "score": 100
+  },
+  "university of strasbourg|fr": {
+    "lat": 48.5803,
+    "lon": 7.7644,
+    "label": "Université de Strasbourg, Strasbourg, France",
+    "score": 100
+  },
+  "university of stuttgart|de": {
+    "lat": 48.7475,
+    "lon": 9.1065,
+    "label": "Universität Stuttgart, Stuttgart, Germany",
+    "score": 100
+  },
+  "university of szeged|hu": {
+    "lat": 46.2519,
+    "lon": 20.1444,
+    "label": "University of Szeged, Szeged, Hungary",
+    "score": 100
+  },
+  "university of tartu|ee": {
+    "lat": 58.3808,
+    "lon": 26.7197,
+    "label": "University of Tartu, Tartu, Estonia",
+    "score": 100
+  },
+  "university of the aegean department of information and communication systems engineering|gr": {
+    "lat": 37.7958,
+    "lon": 26.6975,
+    "label": "University of the Aegean (ICSD), Samos, Greece",
+    "score": 100
+  },
+  "university of the aegean|gr": {
+    "lat": 37.7958,
+    "lon": 26.6975,
+    "label": "University of the Aegean (ICSD), Samos, Greece",
+    "score": 100
+  },
+  "university of tokyo|jp": {
+    "lat": 35.7128,
+    "lon": 139.7619,
+    "label": "The University of Tokyo, Tokyo, Japan",
+    "score": 100
+  },
+  "university of toronto|ca": {
+    "lat": 43.6629,
+    "lon": -79.3957,
+    "label": "University of Toronto, Toronto, Canada",
+    "score": 100
+  },
+  "university of twente|nl": {
+    "lat": 52.2413,
+    "lon": 6.8528,
+    "label": "University of Twente, Enschede, Netherlands",
+    "score": 100
+  },
+  "university of vienna|at": {
+    "lat": 48.2132,
+    "lon": 16.3601,
+    "label": "Universität Wien, Vienna, Austria",
+    "score": 100
+  },
+  "university of warmia and mazury in olsztyn faculty of environmental management and agriculture|pl": {
+    "lat": 53.7583,
+    "lon": 20.4578,
+    "label": "University of Warmia and Mazury in Olsztyn, Poland",
+    "score": 100
+  },
+  "university of warmia and mazury in olsztyn|pl": {
+    "lat": 53.7583,
+    "lon": 20.4578,
+    "label": "University of Warmia and Mazury in Olsztyn, Poland",
+    "score": 100
+  },
+  "university of waterloo|ca": {
+    "lat": 43.4723,
+    "lon": -80.5449,
+    "label": "University of Waterloo, Waterloo, Canada",
+    "score": 100
+  },
+  "university of west bohemia faculty of applied sciences|cz": {
+    "lat": 49.7264,
+    "lon": 13.3528,
+    "label": "University of West Bohemia (ZČU), Pilsen, Czech Republic",
+    "score": 100
+  },
+  "university of west bohemia faculty of mechanical engineering|cz": {
+    "lat": 49.7264,
+    "lon": 13.3528,
+    "label": "University of West Bohemia (ZČU), Pilsen, Czech Republic",
+    "score": 100
+  },
+  "university of west bohemia|cz": {
+    "lat": 49.7262,
+    "lon": 13.3514,
+    "label": "University of West Bohemia, Pilsen, Czechia",
+    "score": 100
+  },
+  "university of zagreb|hr": {
+    "lat": 45.8115,
+    "lon": 15.9682,
+    "label": "University of Zagreb, Croatia",
+    "score": 100
+  },
+  "university of zaragoza|es": {
+    "lat": 41.6425,
+    "lon": -0.8986,
+    "label": "Universidad de Zaragoza, Zaragoza, Spain",
+    "score": 100
+  },
+  "university of zielona gora faculty of economics and management|pl": {
+    "lat": 51.9356,
+    "lon": 15.5186,
+    "label": "University of Zielona Góra (Faculty of Economics and Management), Poland",
+    "score": 100
+  },
+  "university of zilina|sk": {
+    "lat": 49.2017,
+    "lon": 18.7561,
+    "label": "University of Žilina, Žilina, Slovakia",
+    "score": 100
+  },
+  "university of zurich|ch": {
+    "lat": 47.3744,
+    "lon": 8.5492,
+    "label": "University of Zurich, Zurich, Switzerland",
+    "score": 100
+  },
+  "univerza v ljubljani|si": {
+    "lat": 46.0489,
+    "lon": 14.5042,
+    "label": "University of Ljubljana, Ljubljana, Slovenia",
+    "score": 100
+  },
+  "univerza v mariboru|si": {
+    "lat": 46.5594,
+    "lon": 15.6447,
+    "label": "University of Maribor, Maribor, Slovenia",
+    "score": 100
+  },
+  "univerzita karlova|cz": {
+    "lat": 50.0888,
+    "lon": 14.4168,
+    "label": "Charles University, Prague, Czechia",
+    "score": 100
+  },
+  "univerzita komenskeho v bratislave fakulta matematiky fyziky a informatiky|sk": {
+    "lat": 48.1519,
+    "lon": 17.0706,
+    "label": "Univerzita Komenského v Bratislave (FMFI UK), Bratislava, Slovakia",
+    "score": 100
+  },
+  "univerzita komenskeho v bratislave|sk": {
+    "lat": 48.1408,
+    "lon": 17.1158,
+    "label": "Comenius University Bratislava, Slovakia",
+    "score": 100
+  },
+  "univerzita palackeho v olomouci|cz": {
+    "lat": 49.5939,
+    "lon": 17.2514,
+    "label": "Palacký University Olomouc, Czechia",
+    "score": 100
+  },
+  "univerzita pardubice|cz": {
+    "lat": 50.0469,
+    "lon": 15.7675,
+    "label": "University of Pardubice, Pardubice, Czech Republic",
+    "score": 100
+  },
+  "univerzita tomase bati ve zline|cz": {
+    "lat": 49.2225,
+    "lon": 17.6667,
+    "label": "Tomas Bata University in Zlín, Zlín, Czech Republic",
+    "score": 100
+  },
+  "univerzitet u beogradu|rs": {
+    "lat": 44.8197,
+    "lon": 20.4578,
+    "label": "University of Belgrade, Belgrade, Serbia",
+    "score": 100
+  },
+  "univerzitet u novom sadu|rs": {
+    "lat": 45.2447,
+    "lon": 19.8519,
+    "label": "University of Novi Sad, Novi Sad, Serbia",
+    "score": 100
+  },
+  "uniwersytet im adama mickiewicza w poznaniu|pl": {
+    "lat": 52.4672,
+    "lon": 16.9261,
+    "label": "Adam Mickiewicz University in Poznań (Faculty of Chemistry), Poland",
+    "score": 100
+  },
+  "uniwersytet przyrodniczy we wroclawiu|pl": {
+    "lat": 51.1122,
+    "lon": 17.0656,
+    "label": "Wrocław University of Environmental and Life Sciences, Wrocław, Poland",
+    "score": 100
+  },
+  "uniwersytet warminsko mazurski w olsztynie|pl": {
+    "lat": 53.7583,
+    "lon": 20.4578,
+    "label": "University of Warmia and Mazury in Olsztyn, Poland",
+    "score": 100
+  },
+  "uniwersytet zielonogorski|pl": {
+    "lat": 51.9356,
+    "lon": 15.5186,
+    "label": "University of Zielona Góra (Faculty of Economics and Management), Poland",
+    "score": 100
+  },
+  "uniza|sk": {
+    "lat": 49.2017,
+    "lon": 18.7561,
+    "label": "University of Žilina, Žilina, Slovakia",
+    "score": 100
+  },
+  "upb|ro": {
+    "lat": 44.4386,
+    "lon": 26.0514,
+    "label": "National University of Science and Technology Politehnica Bucharest, Bucharest, Romania",
+    "score": 100
+  },
+  "upc barcelona|es": {
+    "lat": 41.3888,
+    "lon": 2.1128,
+    "label": "Universitat Politècnica de Catalunya, Barcelona, Spain",
+    "score": 100
+  },
+  "upenn|us": {
+    "lat": 39.9522,
+    "lon": -75.1931,
+    "label": "University of Pennsylvania (Weitzman School of Design), Philadelphia, PA, USA",
+    "score": 100
+  },
+  "upm madrid|es": {
+    "lat": 40.4497,
+    "lon": -3.7286,
+    "label": "Universidad Politécnica de Madrid, Madrid, Spain",
+    "score": 100
+  },
+  "uppsala universitet|se": {
+    "lat": 59.8569,
+    "lon": 17.6289,
+    "label": "Uppsala University, Uppsala, Sweden",
+    "score": 100
+  },
+  "uppsala university|se": {
+    "lat": 59.8576,
+    "lon": 17.6288,
+    "label": "Uppsala University, Sweden",
+    "score": 100
+  },
+  "upt timisoara|ro": {
+    "lat": 45.7539,
+    "lon": 21.2289,
+    "label": "Politehnica University of Timișoara, Timișoara, Romania",
+    "score": 100
+  },
+  "upv ehu|es": {
+    "lat": 43.3308,
+    "lon": -2.9694,
+    "label": "Universidad del País Vasco (UPV/EHU), Leioa/Bilbao, Spain",
+    "score": 100
+  },
+  "upv valencia|es": {
+    "lat": 39.4811,
+    "lon": -0.3469,
+    "label": "Universitat Politècnica de València, Valencia, Spain",
+    "score": 100
+  },
+  "utcluj|ro": {
+    "lat": 46.7767,
+    "lon": 23.5858,
+    "label": "Technical University of Cluj-Napoca, Cluj-Napoca, Romania",
+    "score": 100
+  },
+  "utrecht university|nl": {
+    "lat": 52.0869,
+    "lon": 5.1764,
+    "label": "Utrecht University, Utrecht, Netherlands",
+    "score": 100
+  },
+  "varna free university|bg": {
+    "lat": 43.2599,
+    "lon": 28.0286,
+    "label": "Varna Free University, Bulgaria",
+    "score": 100
+  },
+  "vasil levski national military university|bg": {
+    "lat": 43.0886,
+    "lon": 25.6175,
+    "label": "Vasil Levski National Military University, Veliko Tarnovo, Bulgaria",
+    "score": 100
+  },
+  "vgtu|lt": {
+    "lat": 54.7225,
+    "lon": 25.3375,
+    "label": "Vilnius Gediminas Technical University, Vilnius, Lithuania",
+    "score": 100
+  },
+  "vienna university of technology|at": {
+    "lat": 48.1989,
+    "lon": 16.3699,
+    "label": "TU Wien, Vienna, Austria",
+    "score": 100
+  },
+  "vilnius gediminas technical university|lt": {
+    "lat": 54.7225,
+    "lon": 25.3378,
+    "label": "VILNIUS TECH, Lithuania",
+    "score": 100
+  },
+  "vilnius tech|lt": {
+    "lat": 54.7225,
+    "lon": 25.3375,
+    "label": "Vilnius Gediminas Technical University, Vilnius, Lithuania",
+    "score": 100
+  },
+  "visoka sola za proizvodno inzenirstvo|si": {
+    "lat": 46.2367,
+    "lon": 15.2678,
+    "label": "Visoka šola za proizvodno inženirstvo (VŠPI), Celje, Slovenia",
+    "score": 100
+  },
+  "vocational higher education school in sulechow|pl": {
+    "lat": 52.0833,
+    "lon": 15.6267,
+    "label": "PWSZ Sulechów (University of Zielona Góra branch), Sulechów, Poland",
+    "score": 100
+  },
+  "vrije universiteit brussel|be": {
+    "lat": 50.8222,
+    "lon": 4.3944,
+    "label": "VUB, Brussels, Belgium",
+    "score": 100
+  },
+  "vsb technical university of ostrava|cz": {
+    "lat": 49.8311,
+    "lon": 18.1611,
+    "label": "VŠB - Technical University of Ostrava, Ostrava, Czech Republic",
+    "score": 100
+  },
+  "vsb technicka univerzita ostrava|cz": {
+    "lat": 49.8311,
+    "lon": 18.1611,
+    "label": "VŠB - Technical University of Ostrava, Ostrava, Czech Republic",
+    "score": 100
+  },
+  "vspi celje|si": {
+    "lat": 46.2367,
+    "lon": 15.2678,
+    "label": "Visoka šola za proizvodno inženirstvo (VŠPI), Celje, Slovenia",
+    "score": 100
+  },
+  "vste ceske budejovice|cz": {
+    "lat": 48.9953,
+    "lon": 14.4981,
+    "label": "Institute of Technology and Business in České Budějovice (VŠTE), Czech Republic",
+    "score": 100
+  },
+  "vub|be": {
+    "lat": 50.8222,
+    "lon": 4.3947,
+    "label": "Vrije Universiteit Brussel, Brussels, Belgium",
+    "score": 100
+  },
+  "vut v brne|cz": {
+    "lat": 49.2244,
+    "lon": 16.5778,
+    "label": "Brno University of Technology, Brno, Czech Republic",
+    "score": 100
+  },
+  "vysoka skola technicka a ekonomicka v ceskych budejovicich|cz": {
+    "lat": 48.9953,
+    "lon": 14.4981,
+    "label": "Institute of Technology and Business in České Budějovice (VŠTE), Czech Republic",
+    "score": 100
+  },
+  "vysoka skola umeleckoprumyslova v praze|cz": {
+    "lat": 50.0894,
+    "lon": 14.4153,
+    "label": "Academy of Arts, Architecture and Design in Prague (UMPRUM), Czech Republic",
+    "score": 100
+  },
+  "vysoke uceni technicke brno|cz": {
+    "lat": 49.2244,
+    "lon": 16.5768,
+    "label": "VUT Brno, Czechia",
+    "score": 100
+  },
+  "vysoke uceni technicke v brne|cz": {
+    "lat": 49.2244,
+    "lon": 16.5778,
+    "label": "Brno University of Technology, Brno, Czech Republic",
+    "score": 100
+  },
+  "warsaw university of life sciences faculty of building and environmental science|pl": {
+    "lat": 52.1619,
+    "lon": 21.0467,
+    "label": "Warsaw University of Life Sciences (SGGW), Warsaw, Poland",
+    "score": 100
+  },
+  "warsaw university of life sciences|pl": {
+    "lat": 52.1619,
+    "lon": 21.0467,
+    "label": "Warsaw University of Life Sciences (SGGW), Warsaw, Poland",
+    "score": 100
+  },
+  "warsaw university of technology|pl": {
+    "lat": 52.2205,
+    "lon": 21.0104,
+    "label": "Warsaw University of Technology, Warsaw, Poland",
+    "score": 100
+  },
+  "wojskowa akademia techniczna|pl": {
+    "lat": 52.2536,
+    "lon": 20.9003,
+    "label": "Military University of Technology (WAT), Warsaw, Poland",
+    "score": 100
+  },
+  "wroclaw university of environmental and life sciences faculty of food science|pl": {
+    "lat": 51.1122,
+    "lon": 17.0656,
+    "label": "Wrocław University of Environmental and Life Sciences, Wrocław, Poland",
+    "score": 100
+  },
+  "wroclaw university of environmental and life sciences|pl": {
+    "lat": 51.1122,
+    "lon": 17.0656,
+    "label": "Wrocław University of Environmental and Life Sciences, Wrocław, Poland",
+    "score": 100
+  },
+  "wroclaw university of science and technology|pl": {
+    "lat": 51.1078,
+    "lon": 17.0619,
+    "label": "Wrocław University of Science and Technology, Wrocław, Poland",
+    "score": 100
+  },
+  "yildiz technical university|tr": {
+    "lat": 41.0259,
+    "lon": 28.8912,
+    "label": "Yıldız Technical University, Istanbul, Turkey",
+    "score": 100
+  },
+  "yildiz teknik universitesi|tr": {
+    "lat": 41.0186,
+    "lon": 28.8906,
+    "label": "Yıldız Technical University, Istanbul, Turkey",
+    "score": 100
+  },
+  "yonsei university|kr": {
+    "lat": 37.5658,
+    "lon": 126.9386,
+    "label": "Yonsei University, Seoul, South Korea",
+    "score": 100
+  },
+  "yuri gagarin state technical university of saratov|ru": {
+    "lat": 51.5286,
+    "lon": 45.9758,
+    "label": "Yuri Gagarin State Technical University of Saratov, Saratov, Russia",
+    "score": 100
+  },
+  "zapadoceska univerzita v plzni|cz": {
+    "lat": 49.7264,
+    "lon": 13.3528,
+    "label": "University of West Bohemia (ZČU), Pilsen, Czech Republic",
+    "score": 100
+  },
+  "zapodoceska univerzita v plzni|cz": {
+    "lat": 49.7264,
+    "lon": 13.3528,
+    "label": "University of West Bohemia, Pilsen, Czech Republic",
+    "score": 100
+  },
+  "zhubanov university|kz": {
+    "lat": 50.2986,
+    "lon": 57.1558,
+    "label": "K. Zhubanov Aktobe Regional University, Aktobe, Kazakhstan",
+    "score": 100
+  },
+  "zilinska univerzita v ziline|sk": {
+    "lat": 49.2045,
+    "lon": 18.7554,
+    "label": "University of Žilina, Slovakia",
+    "score": 100
+  }
+}

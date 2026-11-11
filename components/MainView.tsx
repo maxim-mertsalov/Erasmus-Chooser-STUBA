@@ -1,42 +1,37 @@
 "use client";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { Eye, Pause, Play } from "lucide-react";
+import { countryName } from "@/lib/countries";
+import { locateUniversity } from "@/lib/services/geocodingService";
+import { exportAgreementsCsv, exportNotesJson, parseImportFile } from "@/lib/services/exportService";
 import {
-  AlertTriangle,
-  Check,
-  ChevronDown,
-  ChevronUp,
-  Download,
-  ExternalLink,
-  Eye,
-  EyeOff,
-  Filter,
-  GraduationCap,
-  HardDrive,
-  HelpCircle,
-  Link2,
-  Map as MapIcon,
-  MapPin,
-  MessageSquareText,
-  MoreHorizontal,
-  MousePointerClick,
-  Pause,
-  Pencil,
-  Play,
-  Share2,
-  SlidersHorizontal,
-  Table2,
-  Upload,
-  X,
-} from "lucide-react";
-import { countryName, flag } from "@/lib/countries";
-import { autoLocate } from "@/lib/geocode";
-import type { RecordStore, StoreState } from "@/lib/store";
-import { defaultFilters, type Source } from "@/lib/session";
-import { NOTE_CATEGORIES, STATUSES, type Agreement, type Filters, type RowStatus } from "@/lib/types";
+  type GrantCategory,
+  getGrantForCountry,
+  loadGrantCategories,
+  saveGrantCategories,
+} from "@/lib/config/erasmusGrants";
+import type { RecordStore } from "@/lib/store";
+import type { Source } from "@/lib/session";
+import { NOTE_CATEGORIES, STATUSES, type Agreement, type Filters } from "@/lib/types";
 import { DetailPanel, type UniGroup } from "./DetailPanel";
 import type { MapPoint } from "./MapView";
-import { b, GITHUB_URL, GitHubIcon, inputCls, MultiSelect, Spinner, Stars } from "./ui";
+import { b, Spinner } from "./ui";
+import { useToast } from "./ui/Toast";
+import { useColumnVisibility } from "@/lib/hooks/useColumnVisibility";
+import { useComparison } from "@/lib/hooks/useComparison";
+import { usePagination } from "@/lib/hooks/usePagination";
+import { useUIStore } from "@/lib/stores/uiStore";
+import { TopBar } from "./main/TopBar";
+import { FilterBar } from "./main/FilterBar";
+import { AgreementsTable, type SortKey } from "./main/AgreementsTable";
+import { PaginationBar } from "./main/PaginationBar";
+import { SplitPane } from "./main/SplitPane";
+import { ComparisonFloatingBar } from "./main/ComparisonFloatingBar";
+import { ComparisonModal } from "./main/ComparisonModal";
+import { ExportModal } from "./main/ExportModal";
+import { BudgetEditorModal } from "./main/BudgetEditorModal";
+import { locState } from "./main/TableRow";
 
 const MOBILE_QUERY = "(max-width: 767px)";
 function subscribeMobile(cb: () => void) {
@@ -54,32 +49,6 @@ const MapView = dynamic(() => import("./MapView"), {
 
 export const orEmpty = (v: string) => v || "(empty)";
 
-type SortKey = "priority" | "uniName" | "country" | "faculty" | "program" | "validTo" | "language" | "status" | "notes" | "location";
-
-const COLUMNS: { key: SortKey; label: React.ReactNode; cls?: string }[] = [
-  { key: "priority", label: "Priority", cls: "w-24" },
-  { key: "uniName", label: "University" },
-  { key: "country", label: "Country", cls: "w-20" },
-  { key: "faculty", label: "Faculty", cls: "w-20" },
-  { key: "program", label: "Program", cls: "w-28" },
-  { key: "validTo", label: "Valid until", cls: "w-24" },
-  { key: "language", label: "Language", cls: "w-28" },
-  { key: "status", label: "Status", cls: "w-28" },
-  { key: "notes", label: "Notes / links", cls: "w-28" },
-  { key: "location", label: <MapPin className="mx-auto h-3.5 w-3.5" strokeWidth={1.75} />, cls: "w-10" },
-];
-
-type LocStatus = "exact" | "auto" | "unresolved" | "manual" | "missing";
-
-function locState(state: StoreState, uniKey: string): LocStatus {
-  const d = state.uni.get(uniKey);
-  if (d?.lat == null) return "missing";
-  if (d.geoSource === "manual") return "manual";
-  if (d.geoSource === "exact") return "exact";
-  if (d.geoSource === "auto") return "auto";
-  return "unresolved";
-}
-
 export function MainView(props: {
   agreements: Agreement[];
   store: RecordStore;
@@ -92,56 +61,42 @@ export function MainView(props: {
   onReconnect: () => void;
 }) {
   const { store, filters, setFilters } = props;
+  const { showToast } = useToast();
   const state = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
   const isMobile = useSyncExternalStore(subscribeMobile, getIsMobile, getIsMobileServer);
-  const [desktopTable, setDesktopTable] = useState(true);
-  const [desktopMap, setDesktopMap] = useState(true);
-  const [mobileTab, setMobileTab] = useState<"table" | "map">("table");
-  const showTable = isMobile ? mobileTab === "table" : desktopTable;
-  const showMap = isMobile ? mobileTab === "map" : desktopMap;
-  const [showFilters, setShowFilters] = useState(false);
-  const [openOnClick, setOpenOnClick] = useState(true);
-  const [splitPct, setSplitPct] = useState(50);
-  const [dragging, setDragging] = useState(false);
-  const splitRef = useRef<HTMLDivElement>(null);
+
+  const [ui, uiStoreActions] = useUIStore();
+  const showTable = isMobile ? ui.mobileTab === "table" : ui.desktopTable;
+  const showMap = isMobile ? ui.mobileTab === "map" : ui.desktopMap;
+
+  // Grants state: synchronizes with Google Sheets backend (state.grants) and localStorage fallback
+  const [grantCategories, setGrantCategories] = useState<GrantCategory[]>(
+    () => state.grants ?? loadGrantCategories(),
+  );
+
+  useEffect(() => {
+    if (state.grants && state.grants.length > 0) {
+      setGrantCategories(state.grants);
+    }
+  }, [state.grants]);
+
+  // Selection & Detail Panel State
   const [selectedUni, setSelectedUni] = useState<string | null>(null);
   const [selectedRow, setSelectedRow] = useState<string | null>(null);
   const [detailUni, setDetailUni] = useState<string | null>(null);
   const [pickUni, setPickUni] = useState<string | null>(null);
   const [flyKey, setFlyKey] = useState(0);
+
+  // Sorting, Columns, Comparison
   const [sort, setSort] = useState<{ key: SortKey; dir: 1 | -1 }>({ key: "priority", dir: -1 });
+  const comparison = useComparison(4);
+
+  // Geocoding queue state
   const [geoEnabled, setGeoEnabled] = useState(true);
   const [geo, setGeo] = useState({ done: 0, total: 0, current: "", error: "" });
+
   const tableRef = useRef<HTMLDivElement>(null);
-  const menuRef = useRef<HTMLDetailsElement>(null);
   const [now] = useState(() => Date.now());
-
-  useEffect(() => {
-    const close = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) menuRef.current.open = false;
-    };
-    document.addEventListener("mousedown", close);
-    return () => document.removeEventListener("mousedown", close);
-  }, []);
-
-  useEffect(() => {
-    if (!dragging) return;
-    const onMove = (e: PointerEvent) => {
-      const rect = splitRef.current?.getBoundingClientRect();
-      if (!rect || !rect.width) return;
-      const pct = ((e.clientX - rect.left) / rect.width) * 100;
-      setSplitPct(Math.min(80, Math.max(20, pct)));
-    };
-    const stop = () => setDragging(false);
-    window.addEventListener("pointermove", onMove);
-    window.addEventListener("pointerup", stop);
-    window.addEventListener("pointercancel", stop);
-    return () => {
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerup", stop);
-      window.removeEventListener("pointercancel", stop);
-    };
-  }, [dragging]);
 
   // 1) Base set = setup filters (faculties / programs / active).
   const base = useMemo(
@@ -155,19 +110,29 @@ export function MainView(props: {
     [props.agreements, filters.faculties, filters.programs, filters.onlyActive],
   );
 
-  // University groups (over the base set) – used for details, geocoding.
+  // Distinct faculties and programs options
+  const facOptions = useMemo(() => [...new Set(props.agreements.map((a) => orEmpty(a.faculty)))].sort(), [props.agreements]);
+  const progOptions = useMemo(() => [...new Set(props.agreements.map((a) => orEmpty(a.program)))].sort(), [props.agreements]);
+
+  // Column visibility hook with dynamic default hiding for single faculty or program
+  const { visibility, toggleColumn, resetColumns } = useColumnVisibility({
+    facultyCount: facOptions.length,
+    programCount: progOptions.length,
+  });
+
+  // University groups (over the base set)
   const groups = useMemo(() => {
     const m = new Map<string, UniGroup>();
     for (const a of base) {
       let g = m.get(a.uniKey);
       if (!g) m.set(a.uniKey, (g = { uniKey: a.uniKey, name: a.uniName, country: a.country, code: a.uniCode, agreements: [] }));
       g.agreements.push(a);
-      if (a.uniName && a.uniName.length < g.name.length) g.name = a.uniName; // shortest name is usually the cleanest
+      if (a.uniName && a.uniName.length < g.name.length) g.name = a.uniName;
     }
     return m;
   }, [base]);
 
-  // 2) Table filters (incl. custom fields).
+  // 2) Visible agreements (filtered)
   const visible = useMemo(() => {
     const q = filters.search.trim().toLowerCase();
     const lang = filters.language.trim().toLowerCase();
@@ -195,6 +160,7 @@ export function MainView(props: {
     });
   }, [base, filters, state, now]);
 
+  // 3) Sorted agreements
   const sorted = useMemo(() => {
     const val = (a: Agreement): string | number => {
       const rd = state.row.get(a.id) ?? {};
@@ -206,6 +172,8 @@ export function MainView(props: {
           return a.validToTs ?? 0;
         case "language":
           return ud.language ?? "";
+        case "budget":
+          return getGrantForCountry(a.country, grantCategories)?.monthlyAmount ?? 0;
         case "status":
           return STATUSES.findIndex((s) => s.value === (rd.status ?? ""));
         case "notes":
@@ -222,9 +190,12 @@ export function MainView(props: {
       const r = typeof a === "number" && typeof c === "number" ? a - c : String(a).localeCompare(String(c));
       return r * sort.dir || x.uniName.localeCompare(y.uniName);
     });
-  }, [visible, sort, state]);
+  }, [visible, sort, state, grantCategories]);
 
-  // Map points: universities that have at least one visible row and a location.
+  // 4) Pagination
+  const pagination = usePagination(sorted, 50);
+
+  // 5) Map points
   const { points, missing } = useMemo(() => {
     const byUni = new Map<string, Agreement[]>();
     visible.forEach((a) => (byUni.get(a.uniKey) ?? byUni.set(a.uniKey, []).get(a.uniKey)!).push(a));
@@ -255,8 +226,10 @@ export function MainView(props: {
     return { points: pts, missing: miss };
   }, [visible, state, groups]);
 
-  // Background auto-geocoding of universities without a location (free OSM services, ~1 req/s).
-  const groupKeys = useMemo(() => [...groups.keys()].join("|"), [groups]);
+  // Background auto-geocoding loop — only locates universities matching active filters
+  const visibleUniKeys = useMemo(() => new Set(visible.map((a) => a.uniKey)), [visible]);
+  const visibleUniKeysHash = useMemo(() => [...visibleUniKeys].sort().join("|"), [visibleUniKeys]);
+
   useEffect(() => {
     if (!geoEnabled) return;
     let cancelled = false;
@@ -265,7 +238,8 @@ export function MainView(props: {
       return !d || (d.lat == null && !d.geoSource);
     };
     (async () => {
-      const todo = [...groups.values()].filter((g) => needs(g.uniKey));
+      // Only process universities that are part of the visible/filtered set
+      const todo = [...groups.values()].filter((g) => visibleUniKeys.has(g.uniKey) && needs(g.uniKey));
       let done = 0;
       for (const g of todo) {
         if (cancelled) return;
@@ -274,8 +248,9 @@ export function MainView(props: {
           continue;
         }
         setGeo({ done, total: todo.length, current: g.name, error: "" });
+        const t0 = performance.now();
         try {
-          const r = await autoLocate(g.name, g.country, g.code);
+          const r = await locateUniversity(g.name, g.country, g.code);
           if (cancelled) return;
           store.setUni(
             g.uniKey,
@@ -286,26 +261,35 @@ export function MainView(props: {
           return;
         }
         done++;
+
+        // Polite pacing: if network request took time, wait ~1200ms to avoid locking UI or rate limits.
+        // If instant/cached, yield event loop briefly (25ms) so React remains smooth.
+        const elapsed = performance.now() - t0;
+        const delayMs = elapsed > 50 ? 1200 : 25;
+        await new Promise((res) => setTimeout(res, delayMs));
+        if (cancelled) return;
       }
       if (!cancelled) setGeo({ done: todo.length, total: todo.length, current: "", error: "" });
     })();
     return () => {
       cancelled = true;
     };
-  }, [geoEnabled, groupKeys]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [geoEnabled, visibleUniKeysHash]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Selection handlers
+  const scrollToRow = (rowId: string) =>
+    requestAnimationFrame(() =>
+      tableRef.current?.querySelector(`[data-row="${CSS.escape(rowId)}"]`)?.scrollIntoView({ block: "center", behavior: "smooth" }),
+    );
+
   const selectFromTable = (a: Agreement) => {
     const alreadySelected = selectedRow === a.id;
     setSelectedUni(a.uniKey);
     setSelectedRow(a.id);
     setFlyKey((k) => k + 1);
-    if (openOnClick || detailUni || alreadySelected) setDetailUni(a.uniKey);
+    if (ui.openOnClick || detailUni || alreadySelected) setDetailUni(a.uniKey);
   };
-  const scrollToRow = (rowId: string) =>
-    requestAnimationFrame(() =>
-      tableRef.current?.querySelector(`[data-row="${CSS.escape(rowId)}"]`)?.scrollIntoView({ block: "center", behavior: "smooth" }),
-    );
+
   const selectFromMap = (uniKey: string) => {
     setSelectedUni(uniKey);
     const first = sorted.find((a) => a.uniKey === uniKey);
@@ -313,26 +297,26 @@ export function MainView(props: {
     if (first) scrollToRow(first.id);
     if (detailUni) setDetailUni(uniKey);
   };
+
   const selectRowFromMap = (uniKey: string, rowId: string) => {
     setSelectedUni(uniKey);
     setSelectedRow(rowId);
     scrollToRow(rowId);
   };
 
+  // Filter Bar Data Options
   const countries = useMemo(() => {
     const m = new Map<string, number>();
     base.forEach((a) => m.set(a.country, (m.get(a.country) ?? 0) + 1));
     return [...m.entries()].sort((a, b) => countryName(a[0]).localeCompare(countryName(b[0])));
   }, [base]);
-  const facOptions = useMemo(() => [...new Set(props.agreements.map((a) => orEmpty(a.faculty)))].sort(), [props.agreements]);
-  const progOptions = useMemo(() => [...new Set(props.agreements.map((a) => orEmpty(a.program)))].sort(), [props.agreements]);
+
   const categories = useMemo(() => {
     const s = new Set(NOTE_CATEGORIES);
     state.notes.forEach((arr) => arr.forEach((n) => s.add(n.category)));
     return [...s];
   }, [state.notes]);
 
-  const f = (patch: Partial<Filters>) => setFilters({ ...filters, ...patch });
   const activeFilterCount =
     Number(!!filters.search) +
     filters.countries.length +
@@ -347,281 +331,64 @@ export function MainView(props: {
 
   const detailGroup = detailUni ? groups.get(detailUni) : undefined;
   const pickGroup = pickUni ? groups.get(pickUni) : undefined;
-  const ro = state.readOnly;
 
-  const exportJson = () => {
-    const blob = new Blob([JSON.stringify(store.exportAll(), null, 2)], { type: "application/json" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "erasmus-notes.json";
-    a.click();
+  // Actions
+  const handleExportJson = () => {
+    exportNotesJson(store.exportAll());
+    showToast("Notes exported to JSON file", "success");
   };
-  const importJson = async (file: File) => {
+
+  const handleExportCsv = () => {
+    exportAgreementsCsv(visible);
+    showToast(`Exported ${visible.length} agreements to CSV`, "success");
+  };
+
+  const handleSuperImport = async (file: File) => {
     try {
-      store.importAll(JSON.parse(await file.text()));
+      if (file.name.toLowerCase().endsWith(".json")) {
+        const records = await parseImportFile(file);
+        store.importAll(records);
+        showToast(`Imported ${records.length} records successfully!`, "success");
+        return;
+      }
+      showToast(`Spreadsheet "${file.name}" detected. To switch open files, use 'Close file' in the menu.`, "info", 5000);
     } catch (e) {
-      alert(`Import failed: ${(e as Error).message}`);
+      showToast(`Import failed: ${(e as Error).message}`, "error");
     }
   };
-  const shareLink = () => {
+
+  const handleShareLink = () => {
     if (props.source.kind !== "google") return;
     const url = `${location.origin}${location.pathname}?sheet=${props.source.spreadsheetId}`;
     void navigator.clipboard.writeText(url);
-    alert(
-      `Link copied:\n${url}\n\nYour friend also needs access to the file in Google Drive (Share → "Anyone with the link" → Editor or Viewer).`,
-    );
+    showToast(`Shareable link copied to clipboard!\nMake sure your friend has Drive access.`, "success", 5000);
   };
 
   return (
     <div className="flex h-screen flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-      {/* Top bar */}
-      <header className="flex items-center gap-2 border-b border-slate-200 bg-white px-2.5 py-2 sm:px-3 dark:border-slate-800 dark:bg-slate-900">
-        <button className={b("ghost", "shrink-0 px-2 text-indigo-600 dark:text-indigo-400")} onClick={props.onClose} title="Back to start">
-          <GraduationCap className="h-5 w-5" strokeWidth={1.75} />
-        </button>
-        <div className="min-w-0 flex-1 min-[580px]:flex-initial">
-          <div className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">
-            {props.source.kind === "google" ? props.source.title : props.source.fileName}
-          </div>
-          <div className="truncate text-xs text-slate-500 dark:text-slate-400">
-            {sorted.length}/{base.length}{" "}
-            <span className="hidden min-[580px]:inline">agreements · {groups.size} universities</span>
-          </div>
-        </div>
-        <div className="hidden min-[880px]:block">
-          <SyncBadge state={state} onRetry={() => store.retry()} onReconnect={props.onReconnect} />
-        </div>
-        <div className="ml-auto flex shrink-0 items-center gap-1.5">
-          {isMobile ? (
-            <button
-              type="button"
-              onClick={() => setMobileTab((t) => (t === "table" ? "map" : "table"))}
-              className="inline-flex h-[34px] overflow-hidden rounded-md border border-slate-300 text-sm font-medium dark:border-slate-700"
-              title="Switch between Table and Map"
-            >
-              <span
-                className={`inline-flex items-center gap-1.5 px-2.5 ${
-                  mobileTab === "table"
-                    ? "bg-indigo-600 text-white dark:bg-indigo-500"
-                    : "bg-white text-slate-700 dark:bg-slate-900 dark:text-slate-200"
-                }`}
-              >
-                <Table2 className="h-4 w-4 shrink-0" strokeWidth={1.75} />
-                <span className="hidden min-[580px]:inline">Table</span>
-              </span>
-              <span
-                className={`inline-flex items-center gap-1.5 border-l border-slate-300 px-2.5 dark:border-slate-700 ${
-                  mobileTab === "map"
-                    ? "bg-indigo-600 text-white dark:bg-indigo-500"
-                    : "bg-white text-slate-700 dark:bg-slate-900 dark:text-slate-200"
-                }`}
-              >
-                <MapIcon className="h-4 w-4 shrink-0" strokeWidth={1.75} />
-                <span className="hidden min-[580px]:inline">Map</span>
-              </span>
-            </button>
-          ) : (
-            <div className="inline-flex h-[34px] overflow-hidden rounded-md border border-slate-300 text-sm font-medium dark:border-slate-700">
-              <button
-                className={`inline-flex items-center gap-1.5 px-3 ${
-                  desktopTable
-                    ? "bg-indigo-600 text-white dark:bg-indigo-500"
-                    : "bg-white text-slate-700 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
-                }`}
-                onClick={() => (desktopTable && !desktopMap ? null : setDesktopTable(!desktopTable))}
-              >
-                <Table2 className="h-4 w-4 shrink-0" strokeWidth={1.75} />
-                <span>Table</span>
-              </button>
-              <button
-                className={`inline-flex items-center gap-1.5 border-l border-slate-300 px-3 dark:border-slate-700 ${
-                  desktopMap
-                    ? "bg-indigo-600 text-white dark:bg-indigo-500"
-                    : "bg-white text-slate-700 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
-                }`}
-                onClick={() => (desktopMap && !desktopTable ? null : setDesktopMap(!desktopMap))}
-              >
-                <MapIcon className="h-4 w-4 shrink-0" strokeWidth={1.75} />
-                <span>Map</span>
-              </button>
-            </div>
-          )}
-          <button
-            className={b(
-              "secondary",
-              `h-[34px] px-2.5 min-[580px]:px-3 ${
-                showFilters || activeFilterCount > 0
-                  ? "border-indigo-400 bg-indigo-50 text-indigo-700 dark:border-indigo-500 dark:bg-indigo-950/60 dark:text-indigo-300"
-                  : ""
-              }`,
-            )}
-            onClick={() => setShowFilters((v) => !v)}
-            title="Show or hide search and detailed filters"
-          >
-            <Filter className="h-4 w-4 shrink-0" strokeWidth={1.75} />
-            <span className="hidden min-[580px]:inline">Filters</span>
-            {activeFilterCount > 0 && (
-              <span className="rounded bg-indigo-600 px-1.5 text-xs text-white">{activeFilterCount}</span>
-            )}
-            {showFilters ? (
-              <ChevronUp className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
-            ) : (
-              <ChevronDown className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
-            )}
-          </button>
-          <div className="hidden items-center gap-1.5 min-[1110px]:flex">
-            <button className={b("secondary", "h-[34px]")} onClick={props.onEditSetup} title="Faculties & programs">
-              <SlidersHorizontal className="h-4 w-4 shrink-0" strokeWidth={1.75} />
-              <span>Faculties & programs</span>
-            </button>
-          </div>
-          {props.source.kind === "google" && (
-            <div className="hidden items-center gap-1.5 min-[880px]:flex">
-              <button className={b("secondary", "h-[34px]")} onClick={shareLink} title="Copy a link for friends">
-                <Share2 className="h-4 w-4 shrink-0" strokeWidth={1.75} />
-                <span>Share</span>
-              </button>
-            </div>
-          )}
-          <details ref={menuRef} className="relative">
-            <summary className={b("secondary", "h-[34px] cursor-pointer list-none px-2.5")} title="More actions">
-              <MoreHorizontal className="h-4 w-4 shrink-0" strokeWidth={1.75} />
-            </summary>
-            <div className="absolute right-0 z-[1100] mt-1 flex w-64 max-w-[calc(100vw-1rem)] flex-col rounded-md border border-slate-200 bg-white p-1 text-sm text-slate-700 shadow-lg dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
-              <div className="px-2 py-1.5 min-[880px]:hidden">
-                <SyncBadge state={state} onRetry={() => store.retry()} onReconnect={props.onReconnect} />
-              </div>
-              <div className="min-[1110px]:hidden">
-                <button
-                  className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800"
-                  onClick={() => {
-                    if (menuRef.current) menuRef.current.open = false;
-                    props.onEditSetup();
-                  }}
-                >
-                  <SlidersHorizontal className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
-                  <span>Faculties & programs</span>
-                </button>
-              </div>
-              {props.source.kind === "google" && (
-                <div className="min-[880px]:hidden">
-                  <button
-                    className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800"
-                    onClick={() => {
-                      if (menuRef.current) menuRef.current.open = false;
-                      shareLink();
-                    }}
-                  >
-                    <Share2 className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
-                    <span>Share link</span>
-                  </button>
-                </div>
-              )}
-              <div className="my-1 border-t border-slate-100 min-[1110px]:hidden dark:border-slate-800" />
-              <button
-                type="button"
-                role="switch"
-                aria-checked={openOnClick}
-                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800"
-                onClick={() => setOpenOnClick((v) => !v)}
-              >
-                <MousePointerClick className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
-                <span className="flex-1">Open details on click</span>
-                <span
-                  className={`inline-flex h-4 w-7 shrink-0 items-center rounded-full p-0.5 transition-colors ${
-                    openOnClick ? "bg-indigo-600 dark:bg-indigo-500" : "bg-slate-300 dark:bg-slate-700"
-                  }`}
-                >
-                  <span
-                    className={`h-3 w-3 rounded-full bg-white transition-transform ${
-                      openOnClick ? "translate-x-3" : "translate-x-0"
-                    }`}
-                  />
-                </span>
-              </button>
-              <div className="my-1 border-t border-slate-100 dark:border-slate-800" />
-              <button
-                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800"
-                onClick={() => {
-                  if (menuRef.current) menuRef.current.open = false;
-                  exportJson();
-                }}
-              >
-                <Download className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
-                <span>Export notes (JSON)</span>
-              </button>
-              {!ro && (
-                <label className="flex w-full cursor-pointer items-center gap-2.5 rounded px-2.5 py-1.5 hover:bg-slate-50 dark:hover:bg-slate-800">
-                  <Upload className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
-                  <span>Import notes (JSON)</span>
-                  <input
-                    type="file"
-                    accept=".json"
-                    className="hidden"
-                    onChange={(e) => {
-                      if (menuRef.current) menuRef.current.open = false;
-                      if (e.target.files?.[0]) void importJson(e.target.files[0]);
-                    }}
-                  />
-                </label>
-              )}
-              <button
-                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800"
-                onClick={() => {
-                  if (menuRef.current) menuRef.current.open = false;
-                  setGeoEnabled((v) => !v);
-                }}
-              >
-                {geoEnabled ? (
-                  <Pause className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
-                ) : (
-                  <Play className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
-                )}
-                <span>{geoEnabled ? "Pause auto-locating" : "Resume auto-locating"}</span>
-              </button>
-              {props.source.kind === "google" && (
-                <a
-                  className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 hover:bg-slate-50 dark:hover:bg-slate-800"
-                  target="_blank"
-                  rel="noreferrer"
-                  href={`https://docs.google.com/spreadsheets/d/${props.source.spreadsheetId}/edit`}
-                  onClick={() => {
-                    if (menuRef.current) menuRef.current.open = false;
-                  }}
-                >
-                  <ExternalLink className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
-                  <span>Open in Google Sheets</span>
-                </a>
-              )}
-              <a
-                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 hover:bg-slate-50 dark:hover:bg-slate-800"
-                target="_blank"
-                rel="noreferrer"
-                href={GITHUB_URL}
-                onClick={() => {
-                  if (menuRef.current) menuRef.current.open = false;
-                }}
-              >
-                <GitHubIcon className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" />
-                <span>Open on GitHub</span>
-              </a>
-              <div className="my-1 border-t border-slate-100 dark:border-slate-800" />
-              <button
-                className="flex w-full items-center gap-2.5 rounded px-2.5 py-1.5 text-left text-rose-600 hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-950/50"
-                onClick={() => {
-                  if (menuRef.current) menuRef.current.open = false;
-                  props.onClose();
-                }}
-              >
-                <X className="h-4 w-4 shrink-0" strokeWidth={1.75} />
-                <span>Close file</span>
-              </button>
-            </div>
-          </details>
-        </div>
-      </header>
+      {/* Top Header */}
+      <TopBar
+        source={props.source}
+        state={state}
+        sortedCount={sorted.length}
+        baseCount={base.length}
+        uniCount={groups.size}
+        isMobile={isMobile}
+        activeFilterCount={activeFilterCount}
+        columnVisibility={visibility}
+        onToggleColumn={toggleColumn}
+        onResetColumns={resetColumns}
+        onEditSetup={props.onEditSetup}
+        onOpenBudgetEditor={() => uiStoreActions.setIsBudgetEditorOpen(true)}
+        onShareLink={props.source.kind === "google" ? handleShareLink : undefined}
+        onOpenExport={() => uiStoreActions.setIsExportModalOpen(true)}
+        onSuperImport={handleSuperImport}
+        onRetrySync={() => store.retry()}
+        onReconnect={props.onReconnect}
+        onClose={props.onClose}
+      />
 
-      {ro && (
+      {state.readOnly && (
         <div className="flex items-center gap-2 bg-amber-50 px-3 py-1.5 text-sm text-amber-900 dark:bg-amber-950/60 dark:text-amber-200">
           <Eye className="h-4 w-4 shrink-0" strokeWidth={1.75} />
           <span>View-only access: your changes are not saved.</span>
@@ -631,259 +398,58 @@ export function MainView(props: {
         </div>
       )}
 
-      {/* Filter bar */}
-      {showFilters && (
-        <div className="flex max-h-[45vh] flex-wrap items-center gap-1.5 overflow-y-auto border-b border-slate-200 bg-slate-50 px-3 py-2 sm:max-h-none sm:overflow-visible dark:border-slate-800 dark:bg-slate-900/70">
-          <input
-            className={`${inputCls} w-full sm:w-56`}
-            placeholder="Search name, city, notes…"
-            value={filters.search}
-            onChange={(e) => f({ search: e.target.value })}
-          />
-          <MultiSelect
-            label="Faculty"
-            options={facOptions.map((v) => ({ value: v, label: v }))}
-            selected={filters.faculties}
-            onChange={(v) => f({ faculties: v })}
-          />
-          <MultiSelect
-            label="Program"
-            options={progOptions.map((v) => ({ value: v, label: v }))}
-            selected={filters.programs}
-            onChange={(v) => f({ programs: v })}
-          />
-          <MultiSelect
-            label="Country"
-            options={countries.map(([c, n]) => ({ value: c, label: `${flag(c)} ${countryName(c)}`, count: n }))}
-            selected={filters.countries}
-            onChange={(v) => f({ countries: v })}
-          />
-          <MultiSelect
-            label="Status"
-            options={STATUSES.map((s) => ({ value: s.value || "none", label: s.value ? s.label : "No status" }))}
-            selected={filters.statuses}
-            onChange={(v) => f({ statuses: v })}
-          />
-          <select className={`${inputCls} w-auto`} value={filters.minPriority} onChange={(e) => f({ minPriority: Number(e.target.value) })}>
-            <option value={0}>Any priority</option>
-            {[1, 2, 3, 4, 5].map((i) => (
-              <option key={i} value={i}>
-                ≥ {"★".repeat(i)}
-              </option>
-            ))}
-          </select>
-          <input className={`${inputCls} w-28`} placeholder="Language" value={filters.language} onChange={(e) => f({ language: e.target.value })} />
-          <input className={`${inputCls} w-24`} placeholder="Tag" value={filters.tag} onChange={(e) => f({ tag: e.target.value })} />
-          <select className={`${inputCls} w-auto`} value={filters.noteCategory} onChange={(e) => f({ noteCategory: e.target.value })}>
-            <option value="">Notes: any</option>
-            <option value="__any">Has notes</option>
-            {categories.map((c) => (
-              <option key={c} value={c}>
-                Has “{c}”
-              </option>
-            ))}
-          </select>
-          <select className={`${inputCls} w-auto`} value={filters.location} onChange={(e) => f({ location: e.target.value as Filters["location"] })}>
-            <option value="">Location: any</option>
-            <option value="exact">Exact match</option>
-            <option value="auto">Resolved automatically</option>
-            <option value="unresolved">Unresolved</option>
-            <option value="manual">Manual</option>
-            <option value="missing">Missing</option>
-          </select>
-          <label className="flex items-center gap-1 text-sm">
-            <input type="checkbox" checked={filters.hideExpired} onChange={(e) => f({ hideExpired: e.target.checked })} /> Hide expired
-          </label>
-          <label className="flex items-center gap-1 text-sm">
-            <input type="checkbox" checked={filters.showHidden} onChange={(e) => f({ showHidden: e.target.checked })} /> Show hidden
-          </label>
-          {activeFilterCount > 0 && (
-            <button
-              className="text-sm text-indigo-600 hover:underline dark:text-indigo-400"
-              onClick={() =>
-                setFilters({ ...defaultFilters(), faculties: filters.faculties, programs: filters.programs, onlyActive: filters.onlyActive })
-              }
-            >
-              Reset filters
-            </button>
-          )}
-        </div>
+      {/* Filter Bar */}
+      {ui.showFilters && (
+        <FilterBar
+          filters={filters}
+          setFilters={setFilters}
+          facOptions={facOptions}
+          progOptions={progOptions}
+          countries={countries}
+          categories={categories}
+          activeFilterCount={activeFilterCount}
+        />
       )}
 
-      {/* Content */}
-      <div ref={splitRef} className={`flex min-h-0 flex-1 ${dragging ? "cursor-col-resize select-none" : ""}`}>
-        {showTable && (
-          <div
-            style={showMap ? { width: `${splitPct}%` } : undefined}
-            className={`relative flex min-w-0 flex-col bg-white dark:bg-slate-950 ${showMap ? "shrink-0" : "flex-1"} ${dragging ? "pointer-events-none" : ""}`}
-          >
-            <div ref={tableRef} className="min-h-0 flex-1 overflow-auto">
-              <table className="w-full border-collapse text-sm">
-                <thead className="sticky top-0 z-10 bg-white shadow-[0_1px_0_#e2e8f0] dark:bg-slate-900 dark:shadow-[0_1px_0_#1e293b]">
-                  <tr>
-                    {COLUMNS.map((c) => (
-                      <th
-                        key={c.key}
-                        className={`cursor-pointer select-none whitespace-nowrap px-2 py-2 text-left text-xs font-semibold text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800 ${c.cls ?? ""}`}
-                        onClick={() => setSort((s) => (s.key === c.key ? { key: c.key, dir: s.dir === 1 ? -1 : 1 } : { key: c.key, dir: 1 }))}
-                      >
-                        {c.label}
-                        {sort.key === c.key && <span className="ml-1">{sort.dir === 1 ? "▲" : "▼"}</span>}
-                      </th>
-                    ))}
-                    <th className="w-16" />
-                  </tr>
-                </thead>
-                <tbody>
-                  {sorted.map((a) => {
-                    const rd = state.row.get(a.id) ?? {};
-                    const ud = state.uni.get(a.uniKey) ?? {};
-                    const notes = state.notes.get(a.uniKey) ?? [];
-                    const links = state.links.get(a.uniKey) ?? [];
-                    const loc = locState(state, a.uniKey);
-                    const expired = a.validToTs != null && a.validToTs < now;
-                    const soon = !expired && a.validToTs != null && a.validToTs < now + 365 * 86400000;
-                    const isRow = a.id === selectedRow;
-                    const isUni = a.uniKey === selectedUni;
-                    return (
-                      <tr
-                        key={a.id}
-                        data-row={a.id}
-                        onClick={() => selectFromTable(a)}
-                        onDoubleClick={() => setDetailUni(a.uniKey)}
-                        className={`cursor-pointer border-b border-slate-100 dark:border-slate-800/80 ${
-                          isRow
-                            ? "bg-indigo-100 dark:bg-indigo-950/70"
-                            : isUni
-                              ? "bg-indigo-50 dark:bg-indigo-950/40"
-                              : "hover:bg-slate-50 dark:hover:bg-slate-900/60"
-                        } ${rd.hidden ? "opacity-50" : ""}`}
-                      >
-                        <td className="px-2 py-1.5">
-                          <Stars value={rd.priority ?? 0} disabled={ro} size="text-sm" onChange={(v) => store.setRow(a.id, { priority: v })} />
-                        </td>
-                        <td className="px-2 py-1.5">
-                          <div className="font-medium leading-tight hover:text-indigo-700 dark:hover:text-indigo-400">{a.uniName}</div>
-                          <div className="text-xs text-slate-400">
-                            {a.uniCode}
-                            {ud.city && ` · ${ud.city}`}
-                            {ud.tags && ` · #${ud.tags.split(",").map((t) => t.trim()).filter(Boolean).join(" #")}`}
-                          </div>
-                        </td>
-                        <td className="whitespace-nowrap px-2 py-1.5" title={countryName(a.country)}>
-                          {flag(a.country)} {a.country}
-                        </td>
-                        <td className="px-2 py-1.5">{a.faculty}</td>
-                        <td className="px-2 py-1.5 text-xs">{a.program}</td>
-                        <td className={`whitespace-nowrap px-2 py-1.5 text-xs ${expired ? "text-rose-600 dark:text-rose-400" : soon ? "text-amber-600 dark:text-amber-400" : ""}`}>
-                          {a.validTo}
-                          {!a.active && <div className="text-slate-400">inactive</div>}
-                        </td>
-                        <td className="px-2 py-1.5 text-xs">{ud.language}</td>
-                        <td className="px-2 py-1.5" onClick={(e) => e.stopPropagation()}>
-                          <select
-                            disabled={ro}
-                            value={rd.status ?? ""}
-                            onChange={(e) => store.setRow(a.id, { status: e.target.value as RowStatus })}
-                            className={`w-full rounded-md border-0 px-2 py-1 text-xs font-medium ${STATUSES.find((s) => s.value === (rd.status ?? ""))?.cls || STATUSES[0].cls}`}
-                          >
-                            {STATUSES.map((s) => (
-                              <option key={s.value} value={s.value}>
-                                {s.label}
-                              </option>
-                            ))}
-                          </select>
-                        </td>
-                        <td className="px-2 py-1.5 text-xs">
-                          <div className="inline-flex items-center gap-2">
-                            {notes.length > 0 && (
-                              <span
-                                className="inline-flex items-center gap-1 text-slate-600 dark:text-slate-300"
-                                title={[...new Set(notes.map((n) => n.category))].join(", ")}
-                              >
-                                <MessageSquareText className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
-                                {notes.length}
-                              </span>
-                            )}
-                            {links.length > 0 && (
-                              <span className="inline-flex items-center gap-1 text-slate-600 dark:text-slate-300">
-                                <Link2 className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
-                                {links.length}
-                              </span>
-                            )}
-                          </div>
-                        </td>
-                        <td
-                          className="px-2 py-1.5 text-center"
-                          title={
-                            loc === "exact"
-                              ? "Exact match"
-                              : loc === "auto"
-                                ? `Resolved automatically${ud.geoScore != null ? ` (${ud.geoScore}%)` : ""}`
-                                : loc === "manual"
-                                  ? "Manual location"
-                                  : loc === "unresolved"
-                                    ? `Unresolved — check location${ud.geoScore != null ? ` (${ud.geoScore}%)` : ""}`
-                                    : "No location"
-                          }
-                        >
-                          {loc === "exact" ? (
-                            <span className="inline-flex items-center justify-center rounded-md bg-emerald-100 px-1.5 py-0.5 text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300">
-                              <MapPin className="h-3.5 w-3.5" strokeWidth={1.75} />
-                            </span>
-                          ) : loc === "auto" ? (
-                            <span className="inline-flex items-center justify-center rounded-md bg-amber-100 px-1.5 py-0.5 text-amber-700 dark:bg-amber-950/70 dark:text-amber-300">
-                              <MapPin className="h-3.5 w-3.5" strokeWidth={1.75} />
-                            </span>
-                          ) : loc === "manual" ? (
-                            <span className="inline-flex items-center justify-center rounded-md bg-violet-100 px-1.5 py-0.5 text-violet-700 dark:bg-violet-950/70 dark:text-violet-300">
-                              <MapPin className="h-3.5 w-3.5" strokeWidth={1.75} />
-                            </span>
-                          ) : loc === "unresolved" ? (
-                            <span className="inline-flex items-center justify-center rounded-md bg-rose-100 px-1.5 py-0.5 text-rose-700 dark:bg-rose-950/70 dark:text-rose-300">
-                              <AlertTriangle className="h-3.5 w-3.5" strokeWidth={1.75} />
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center justify-center rounded-md bg-slate-100 px-1.5 py-0.5 text-slate-500 dark:bg-slate-800 dark:text-slate-400">
-                              <HelpCircle className="h-3.5 w-3.5" strokeWidth={1.75} />
-                            </span>
-                          )}
-                        </td>
-                        <td className="whitespace-nowrap px-1 py-1.5 text-right">
-                          <button
-                            className="inline-flex items-center justify-center rounded p-1 text-slate-400 hover:bg-slate-200 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200"
-                            title={rd.hidden ? "Show" : "Hide"}
-                            disabled={ro}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              store.setRow(a.id, { hidden: !rd.hidden });
-                            }}
-                          >
-                            {rd.hidden ? (
-                              <EyeOff className="h-3.5 w-3.5" strokeWidth={1.75} />
-                            ) : (
-                              <Eye className="h-3.5 w-3.5" strokeWidth={1.75} />
-                            )}
-                          </button>
-                          <button
-                            className="inline-flex items-center justify-center rounded p-1 text-slate-400 hover:bg-slate-200 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200"
-                            title="Details & notes"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              selectFromTable(a);
-                              setDetailUni(a.uniKey);
-                            }}
-                          >
-                            <Pencil className="h-3.5 w-3.5" strokeWidth={1.75} />
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-              {!sorted.length && <div className="p-8 text-center text-slate-400">No agreements match the filters.</div>}
-            </div>
+      {/* Main Content (Split Pane with Table & Map) */}
+      <SplitPane
+        showLeft={showTable}
+        showRight={showMap}
+        leftContent={
+          <div className="relative flex h-full min-w-0 flex-col bg-white dark:bg-slate-950">
+            <AgreementsTable
+              agreements={pagination.pagedItems}
+              state={state}
+              store={store}
+              sort={sort}
+              setSort={setSort}
+              selectedRow={selectedRow}
+              selectedUni={selectedUni}
+              comparedKeys={comparison.selectedKeys}
+              onToggleCompare={comparison.toggle}
+              onSelectAgreement={selectFromTable}
+              onDoubleClickRow={(uniKey) => setDetailUni(uniKey)}
+              onOpenDetails={(uniKey) => {
+                setSelectedUni(uniKey);
+                setDetailUni(uniKey);
+              }}
+              visibility={visibility}
+              grantCategories={grantCategories}
+              tableRef={tableRef}
+              now={now}
+            />
+
+            <PaginationBar
+              page={pagination.page}
+              setPage={pagination.setPage}
+              pageSize={pagination.pageSize}
+              setPageSize={pagination.setPageSize}
+              totalPages={pagination.totalPages}
+              totalItems={pagination.totalItems}
+              showingCount={pagination.pagedItems.length}
+            />
+
+            {/* University Details Drawer / Modal */}
             {detailGroup && (
               <div className="fixed inset-0 z-[1200] md:absolute md:inset-y-0 md:left-auto md:right-0 md:z-20 md:w-full md:max-w-md">
                 <DetailPanel
@@ -900,124 +466,136 @@ export function MainView(props: {
                   onStartPick={() => {
                     setPickUni(detailGroup.uniKey);
                     if (isMobile) {
-                      setMobileTab("map");
+                      uiStoreActions.setMobileTab("map");
                       setDetailUni(null);
                     } else {
-                      setDesktopMap(true);
+                      uiStoreActions.setDesktopMap(true);
                     }
                   }}
                 />
               </div>
             )}
           </div>
-        )}
-        {showTable && showMap && (
-          <div
-            role="separator"
-            aria-orientation="vertical"
-            title="Drag to resize (double-click to reset 50/50)"
-            onPointerDown={(e) => {
-              e.preventDefault();
-              setDragging(true);
+        }
+        rightContent={
+          <MapView
+            points={points}
+            selected={selectedUni}
+            flyKey={flyKey}
+            pickLabel={pickGroup?.name ?? null}
+            clusterMarkers={ui.clusterMarkers}
+            onSelectUni={selectFromMap}
+            onSelectRow={selectRowFromMap}
+            onOpenDetails={(k) => {
+              setSelectedUni(k);
+              setDetailUni(k);
+              if (isMobile) uiStoreActions.setMobileTab("table");
+              else uiStoreActions.setDesktopTable(true);
             }}
-            onDoubleClick={() => setSplitPct(50)}
-            className={`group relative z-10 flex w-1.5 shrink-0 cursor-col-resize items-center justify-center transition-colors ${
-              dragging ? "bg-indigo-500" : "bg-slate-200 hover:bg-indigo-400 dark:bg-slate-800 dark:hover:bg-indigo-500"
-            }`}
-          >
-            <div className="h-8 w-0.5 rounded-full bg-slate-400 group-hover:bg-white dark:bg-slate-600" />
-          </div>
-        )}
-        {showMap && (
-          <div className={`relative min-w-0 flex-1 ${dragging ? "pointer-events-none" : ""}`}>
-            <MapView
-              points={points}
-              selected={selectedUni}
-              flyKey={flyKey}
-              pickLabel={pickGroup?.name ?? null}
-              onSelectUni={selectFromMap}
-              onSelectRow={selectRowFromMap}
-              onOpenDetails={(k) => {
-                setSelectedUni(k);
-                setDetailUni(k);
-                if (isMobile) setMobileTab("table");
-                else setDesktopTable(true);
-              }}
-              onPick={(lat, lon) => {
-                if (pickUni) store.setUni(pickUni, { lat, lon, geoSource: "manual", geoScore: 100, geoLabel: "Picked on map" });
-                setPickUni(null);
-              }}
-              onCancelPick={() => setPickUni(null)}
-              missingCount={missing}
-              geoStatus={
-                geo.error ? (
-                  <div className="text-rose-600 dark:text-rose-400">Auto-locate stopped: {geo.error}</div>
-                ) : geoEnabled && geo.current ? (
-                  <div className="flex items-center gap-1 text-indigo-700 dark:text-indigo-400">
-                    <Spinner className="h-3 w-3" /> Locating {geo.done + 1}/{geo.total}: <span className="max-w-40 truncate">{geo.current}</span>
+            onPick={(lat, lon) => {
+              if (pickUni) store.setUni(pickUni, { lat, lon, geoSource: "manual", geoScore: 100, geoLabel: "Picked on map" });
+              setPickUni(null);
+            }}
+            onCancelPick={() => setPickUni(null)}
+            missingCount={missing}
+            geoStatus={
+              geo.error ? (
+                <div className="flex items-center justify-between gap-2 rounded bg-rose-50 px-2 py-1 text-xs text-rose-700 dark:bg-rose-950/70 dark:text-rose-300">
+                  <span className="truncate">Auto-locate stopped: {geo.error}</span>
+                  <button
+                    onClick={() => {
+                      setGeo((g) => ({ ...g, error: "" }));
+                      setGeoEnabled(true);
+                    }}
+                    className="underline hover:no-underline font-medium"
+                  >
+                    Retry
+                  </button>
+                </div>
+              ) : geoEnabled && geo.current ? (
+                <div className="flex items-center gap-2 rounded-md bg-indigo-50/90 px-2 py-1 text-xs text-indigo-700 transition-colors hover:bg-indigo-100/90 dark:bg-indigo-950/70 dark:text-indigo-300 dark:hover:bg-indigo-900/80">
+                  <button
+                    type="button"
+                    onClick={() => setGeoEnabled(false)}
+                    title="Pause auto-locating"
+                    className="inline-flex items-center gap-1 rounded bg-white px-1.5 py-0.5 text-[11px] font-medium text-slate-700 shadow-xs hover:bg-slate-100 hover:text-slate-900 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 shrink-0"
+                  >
+                    <Pause className="h-3 w-3 text-amber-600 dark:text-amber-400" />
+                    <span>Pause</span>
+                  </button>
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <Spinner className="h-3 w-3 shrink-0" />
+                    <span className="font-semibold shrink-0">Locating {geo.done + 1}/{geo.total}:</span>
+                    <span className="max-w-36 truncate">{geo.current}</span>
                   </div>
-                ) : null
-              }
-            />
-          </div>
-        )}
-      </div>
+                </div>
+              ) : !geoEnabled && missing > 0 ? (
+                <div className="flex items-center gap-2 rounded-md bg-slate-100/90 px-2 py-1 text-xs text-slate-700 dark:bg-slate-800/80 dark:text-slate-300">
+                  <button
+                    type="button"
+                    onClick={() => setGeoEnabled(true)}
+                    title="Resume auto-locating"
+                    className="inline-flex items-center gap-1 rounded bg-indigo-600 px-2 py-0.5 text-[11px] font-medium text-white shadow-xs hover:bg-indigo-700 shrink-0"
+                  >
+                    <Play className="h-2.5 w-2.5 fill-current" />
+                    <span>Continue</span>
+                  </button>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
+                    Auto-locate paused ({geo.done}/{geo.total || missing})
+                  </span>
+                </div>
+              ) : null
+            }
+          />
+        }
+      />
+
+      {/* Floating comparison badge (shows when 2+ universities selected) */}
+      <ComparisonFloatingBar
+        count={comparison.count}
+        onOpen={() => comparison.setIsOpen(true)}
+        onClear={comparison.clear}
+      />
+
+      {/* University Side-by-side comparison modal matrix */}
+      <ComparisonModal
+        isOpen={comparison.isOpen}
+        onClose={() => comparison.setIsOpen(false)}
+        comparedKeys={comparison.selectedKeys}
+        onRemove={comparison.remove}
+        allAgreements={props.agreements}
+        selectedFaculties={filters.faculties}
+        state={state}
+        grantCategories={grantCategories}
+        onOpenDetails={(uniKey) => {
+          setSelectedUni(uniKey);
+          setDetailUni(uniKey);
+          if (isMobile) uiStoreActions.setMobileTab("table");
+          else uiStoreActions.setDesktopTable(true);
+        }}
+      />
+
+      {/* Export Format Modal */}
+      <ExportModal
+        isOpen={ui.isExportModalOpen}
+        onClose={() => uiStoreActions.setIsExportModalOpen(false)}
+        onExportJson={handleExportJson}
+        onExportCsv={handleExportCsv}
+        agreementCount={visible.length}
+      />
+
+      {/* User-editable Erasmus Grants & Budget Modal */}
+      <BudgetEditorModal
+        isOpen={ui.isBudgetEditorOpen}
+        onClose={() => uiStoreActions.setIsBudgetEditorOpen(false)}
+        categories={grantCategories}
+        onSave={(cats) => {
+          setGrantCategories(cats);
+          saveGrantCategories(cats);
+          store.setGrants(cats);
+          showToast("Grant categories saved to spreadsheet", "success");
+        }}
+      />
     </div>
   );
-}
-
-function SyncBadge({ state, onRetry, onReconnect }: { state: StoreState; onRetry: () => void; onReconnect: () => void }) {
-  if (state.kind === "local")
-    return (
-      <span className="inline-flex items-center gap-1 rounded bg-slate-100 px-2 py-0.5 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-300">
-        <HardDrive className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
-        <span>Saved in this browser</span>
-      </span>
-    );
-  if (state.readOnly)
-    return (
-      <span className="inline-flex items-center gap-1 rounded bg-amber-100 px-2 py-0.5 text-xs text-amber-800 dark:bg-amber-950/60 dark:text-amber-300">
-        <Eye className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
-        <span>View only</span>
-      </span>
-    );
-  switch (state.status) {
-    case "saving":
-      return (
-        <span className="inline-flex items-center gap-1 rounded bg-indigo-50 px-2 py-0.5 text-xs text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300">
-          <Spinner className="h-3 w-3" /> Saving…
-        </span>
-      );
-    case "auth":
-      return (
-        <button
-          className="inline-flex items-center gap-1 rounded bg-rose-100 px-2 py-0.5 text-xs text-rose-700 hover:bg-rose-200 dark:bg-rose-950/60 dark:text-rose-300 dark:hover:bg-rose-950"
-          onClick={onReconnect}
-        >
-          <AlertTriangle className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
-          <span>Session expired — reconnect</span>
-        </button>
-      );
-    case "error":
-      return (
-        <button
-          className="inline-flex items-center gap-1 rounded bg-rose-100 px-2 py-0.5 text-xs text-rose-700 hover:bg-rose-200 dark:bg-rose-950/60 dark:text-rose-300 dark:hover:bg-rose-950"
-          onClick={onRetry}
-          title={state.error}
-        >
-          <AlertTriangle className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
-          <span>Sync error — retry</span>
-        </button>
-      );
-    default:
-      return (
-        <span
-          className="inline-flex items-center gap-1 rounded bg-emerald-50 px-2 py-0.5 text-xs text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300"
-          title={`Last sync ${new Date(state.lastSync).toLocaleTimeString()}`}
-        >
-          <Check className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
-          <span>Synced with Google Sheets</span>
-        </span>
-      );
-  }
 }

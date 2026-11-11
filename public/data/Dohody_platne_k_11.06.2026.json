@@ -1,0 +1,202 @@
+[
+  {
+    "Fakulta": "FIIT",
+    "Študijný program": "Informatika",
+    "Kód krajiny": "DE",
+    "Kód inštitúcie": "D WILHELM01",
+    "Názov inštitúcie": "Jade University of Applied Sciences",
+    "Platnosť od": "01.09.2021",
+    "Platnosť do": "31.08.2027",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "FIIT",
+    "Študijný program": "Informačná bezpečnosť",
+    "Kód krajiny": "DE",
+    "Kód inštitúcie": "D MUNCHEN02",
+    "Názov inštitúcie": "Technische Universität München",
+    "Platnosť od": "01.09.2021",
+    "Platnosť do": "31.08.2027",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "FEI",
+    "Študijný program": "Aplikovaná elektrotechnika",
+    "Kód krajiny": "AT",
+    "Kód inštitúcie": "A WIEN02",
+    "Názov inštitúcie": "Technische Universität Wien",
+    "Platnosť od": "01.09.2022",
+    "Platnosť do": "31.08.2028",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "FIIT",
+    "Študijný program": "Inteligentné softvérové systémy",
+    "Kód krajiny": "CZ",
+    "Kód inštitúcie": "CZ PRAHA01",
+    "Názov inštitúcie": "Czech Technical University in Prague",
+    "Platnosť od": "01.09.2020",
+    "Platnosť do": "31.08.2027",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "SvF",
+    "Študijný program": "Pozemné stavby a architektúra",
+    "Kód krajiny": "IT",
+    "Kód inštitúcie": "I MILANO02",
+    "Názov inštitúcie": "Politecnico di Milano",
+    "Platnosť od": "01.09.2021",
+    "Platnosť do": "31.08.2028",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "FCHPT",
+    "Študijný program": "Biotechnológia",
+    "Kód krajiny": "ES",
+    "Kód inštitúcie": "E BARCELO03",
+    "Názov inštitúcie": "Universitat Politècnica de Catalunya",
+    "Platnosť od": "01.09.2022",
+    "Platnosť do": "31.08.2027",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "FAD",
+    "Študijný program": "Architektúra a urbanizmus",
+    "Kód krajiny": "ES",
+    "Kód inštitúcie": "E MADRID05",
+    "Názov inštitúcie": "Universidad Politécnica de Madrid",
+    "Platnosť od": "01.09.2021",
+    "Platnosť do": "31.08.2027",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "SjF",
+    "Študijný program": "Strojárska technológia",
+    "Kód krajiny": "PL",
+    "Kód inštitúcie": "PL WARSZAW02",
+    "Názov inštitúcie": "Politechnika Warszawska",
+    "Platnosť od": "01.09.2021",
+    "Platnosť do": "31.08.2027",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "FIIT",
+    "Študijný program": "Počítačové inžinierstvo",
+    "Kód krajiny": "SE",
+    "Kód inštitúcie": "S STOCKHO04",
+    "Názov inštitúcie": "KTH Royal Institute of Technology",
+    "Platnosť od": "01.09.2022",
+    "Platnosť do": "31.08.2027",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "FEI",
+    "Študijný program": "Robotika a kybernetika",
+    "Kód krajiny": "FI",
+    "Kód inštitúcie": "SF ESPOO12",
+    "Názov inštitúcie": "Aalto University",
+    "Platnosť od": "01.09.2022",
+    "Platnosť do": "31.08.2027",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "SvF",
+    "Študijný program": "Vodné stavby a vodné hospodárstvo",
+    "Kód krajiny": "NL",
+    "Kód inštitúcie": "NL DELFT01",
+    "Názov inštitúcie": "Delft University of Technology",
+    "Platnosť od": "01.09.2021",
+    "Platnosť do": "31.08.2027",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "FCHPT",
+    "Študijný program": "Chemické inžinierstvo",
+    "Kód krajiny": "BE",
+    "Kód inštitúcie": "B LEUVEN01",
+    "Názov inštitúcie": "Katholieke Universiteit Leuven",
+    "Platnosť od": "01.09.2021",
+    "Platnosť do": "31.08.2027",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "FIIT",
+    "Študijný program": "Informatika",
+    "Kód krajiny": "SI",
+    "Kód inštitúcie": "SI MARIBOR01",
+    "Názov inštitúcie": "University of Maribor",
+    "Platnosť od": "01.09.2021",
+    "Platnosť do": "31.08.2027",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "FEI",
+    "Študijný program": "Telekomunikácie",
+    "Kód krajiny": "SI",
+    "Kód inštitúcie": "SI LJUBLJA01",
+    "Názov inštitúcie": "University of Ljubljana",
+    "Platnosť od": "01.09.2021",
+    "Platnosť do": "31.08.2027",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "SjF",
+    "Študijný program": "Automobilová výroba",
+    "Kód krajiny": "PT",
+    "Kód inštitúcie": "P LISBOA109",
+    "Názov inštitúcie": "Universidade de Lisboa",
+    "Platnosť od": "01.09.2021",
+    "Platnosť do": "31.08.2027",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "SvF",
+    "Študijný program": "Stavebné inžinierstvo",
+    "Kód krajiny": "HR",
+    "Kód inštitúcie": "HR ZAGREB01",
+    "Názov inštitúcie": "University of Zagreb",
+    "Platnosť od": "01.09.2022",
+    "Platnosť do": "31.08.2027",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "FIIT",
+    "Študijný program": "Informačné systémy",
+    "Kód krajiny": "EE",
+    "Kód inštitúcie": "EE TALLINN04",
+    "Názov inštitúcie": "Tallinn University of Technology",
+    "Platnosť od": "01.09.2021",
+    "Platnosť do": "31.08.2027",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "FEI",
+    "Študijný program": "Elektronika",
+    "Kód krajiny": "GR",
+    "Kód inštitúcie": "G ATHINE02",
+    "Názov inštitúcie": "National Technical University of Athens",
+    "Platnosť od": "01.09.2021",
+    "Platnosť do": "31.08.2026",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "FAD",
+    "Študijný program": "Dizajn",
+    "Kód krajiny": "IE",
+    "Kód inštitúcie": "IRL DUBLIN01",
+    "Názov inštitúcie": "Trinity College Dublin",
+    "Platnosť od": "01.09.2021",
+    "Platnosť do": "31.08.2027",
+    "Aktívna": "Áno"
+  },
+  {
+    "Fakulta": "SjF",
+    "Študijný program": "Aplikovaná mechanika",
+    "Kód krajiny": "HU",
+    "Kód inštitúcie": "HU BUDAPES02",
+    "Názov inštitúcie": "Budapest University of Technology and Economics",
+    "Platnosť od": "01.09.2021",
+    "Platnosť do": "31.08.2027",
+    "Aktívna": "Áno"
+  }
+]

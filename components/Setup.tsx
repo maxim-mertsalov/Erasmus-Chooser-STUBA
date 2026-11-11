@@ -1,10 +1,10 @@
 "use client";
 import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ChevronDown, Download, ExternalLink, FileSpreadsheet, FolderOpen, GraduationCap, RotateCcw, Upload } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronDown, Download, ExternalLink, FileSpreadsheet, FolderOpen, GraduationCap, RotateCcw, Upload, X } from "lucide-react";
 import { FIELD_LABELS, isMappingValid } from "@/lib/columns";
 import type { Agreement, ColumnMapping, FieldKey, Filters } from "@/lib/types";
-import { b, inputCls, Spinner } from "./ui";
+import { b, GITHUB_URL, inputCls, Spinner } from "./ui";
 
 function Card({ title, subtitle, children }: { title: string; subtitle?: string; children: React.ReactNode }) {
   return (
@@ -25,12 +25,15 @@ export function StartScreen(props: {
   resumeLabel: string | null;
   invite: string | null;
   busy: string;
+  onCancelBusy?: () => void;
   onSignIn: () => void;
   onSignOut: () => void;
   onPick: () => void;
   onOpenLink: (link: string) => void;
   onLocalFile: (f: File) => void;
+  onLoadSample?: () => void;
   onResume: () => void;
+  onClearResume?: () => void;
   onAcceptInvite: () => void;
 }) {
   const [link, setLink] = useState("");
@@ -50,8 +53,20 @@ export function StartScreen(props: {
       </div>
 
       {props.busy && (
-        <div className="flex items-center justify-center gap-2 rounded-lg bg-indigo-50 p-3 text-sm text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300">
-          <Spinner /> {props.busy}
+        <div className="flex items-center justify-between gap-3 rounded-lg border border-indigo-200 bg-indigo-50 p-3 text-sm text-indigo-700 shadow-sm dark:border-indigo-900 dark:bg-indigo-950/60 dark:text-indigo-300">
+          <div className="flex items-center gap-2 min-w-0">
+            <Spinner />
+            <span className="truncate">{props.busy}</span>
+          </div>
+          {props.onCancelBusy && (
+            <button
+              type="button"
+              onClick={props.onCancelBusy}
+              className="rounded bg-white px-2 py-0.5 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-100 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 shrink-0"
+            >
+              Cancel
+            </button>
+          )}
         </div>
       )}
 
@@ -66,15 +81,28 @@ export function StartScreen(props: {
       )}
 
       {props.resumeLabel && (
-        <button className={b("secondary", "justify-between py-3")} disabled={disabled} onClick={props.onResume}>
-          <span className="inline-flex items-center gap-2">
-            <RotateCcw className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
-            <span>
-              Continue with <b>{props.resumeLabel}</b>
+        <div className="flex items-center gap-1.5">
+          <button className={b("secondary", "flex-1 justify-between py-3")} disabled={disabled} onClick={props.onResume}>
+            <span className="inline-flex items-center gap-2">
+              <RotateCcw className="h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.75} />
+              <span>
+                Continue with <b>{props.resumeLabel}</b>
+              </span>
             </span>
-          </span>
-          <ArrowRight className="h-4 w-4 shrink-0 text-slate-400" strokeWidth={1.75} />
-        </button>
+            <ArrowRight className="h-4 w-4 shrink-0 text-slate-400" strokeWidth={1.75} />
+          </button>
+          {props.onClearResume && (
+            <button
+              type="button"
+              onClick={props.onClearResume}
+              disabled={disabled}
+              title="Forget this session"
+              className="rounded-lg border border-slate-200 bg-white p-3 text-slate-400 shadow-sm hover:border-slate-300 hover:text-rose-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-500 dark:hover:text-rose-400"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          )}
+        </div>
       )}
 
       <div className="grid gap-4 md:grid-cols-2">
@@ -109,11 +137,11 @@ export function StartScreen(props: {
           )}
         </Card>
 
-        <Card title="Local file" subtitle=".xlsx / .xls / .csv — notes are kept in this browser only (export/import as JSON).">
+        <Card title="Local file" subtitle=".xlsx / .xls / .csv / .json — notes and agreements stay in this browser only.">
           <input
             ref={fileRef}
             type="file"
-            accept=".xlsx,.xls,.csv,.ods"
+            accept=".xlsx,.xls,.csv,.ods,.json"
             className="hidden"
             onChange={(e) => {
               const f = e.target.files?.[0];
@@ -123,7 +151,7 @@ export function StartScreen(props: {
           />
           <button className={b("secondary", "w-full")} disabled={disabled} onClick={() => fileRef.current?.click()}>
             <Upload className="h-4 w-4 shrink-0" strokeWidth={1.75} />
-            <span>Upload spreadsheet</span>
+            <span>Upload file (.xlsx, .csv, .json)</span>
           </button>
         </Card>
       </div>
@@ -141,6 +169,17 @@ export function StartScreen(props: {
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
+            {props.onLoadSample && (
+              <button
+                type="button"
+                onClick={props.onLoadSample}
+                disabled={disabled}
+                className={b("primary", "py-1 text-xs shadow-sm")}
+                title="Open sample agreements directly in the app"
+              >
+                <span>⚡️ Try sample data (Dohody_platne_k_11.06.2026.xlsx)</span>
+              </button>
+            )}
             <a
               href="https://www.stuba.sk/dokumenty/docs/stu/pracoviska/rektorat/odd_zahranicne_vztahy/Erasmus_studium/Dohody_platne_k_11.06.2026.xlsx"
               target="_blank"
@@ -232,14 +271,27 @@ export function StartScreen(props: {
         </details>
       </div>
 
-      <div className="flex items-center justify-center gap-3 pt-2 text-xs text-slate-400/70 dark:text-slate-600">
-        <Link href="/privacy" className="transition-colors hover:text-slate-600 dark:hover:text-slate-400">
+      <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs text-slate-400/80 dark:text-slate-500">
+        <Link href="/about" className="transition-colors hover:text-indigo-600 dark:hover:text-indigo-400">
+          About
+        </Link>
+        <span>·</span>
+        <Link href="/privacy" className="transition-colors hover:text-indigo-600 dark:hover:text-indigo-400">
           Privacy Policy
         </Link>
         <span>·</span>
-        <Link href="/terms" className="transition-colors hover:text-slate-600 dark:hover:text-slate-400">
+        <Link href="/terms" className="transition-colors hover:text-indigo-600 dark:hover:text-indigo-400">
           Terms of Use
         </Link>
+        <span>·</span>
+        <a
+          href={GITHUB_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="transition-colors hover:text-indigo-600 dark:hover:text-indigo-400"
+        >
+          GitHub
+        </a>
       </div>
     </div>
   );

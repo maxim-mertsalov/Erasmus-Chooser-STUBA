@@ -53,19 +53,10 @@ export type Workbook = Record<string, string[][]>; // sheet name -> rows
 
 const localFileKey = (fileName: string) => `erasmus-localfile:${fileName}`;
 
+import { parseSpreadsheetAsync } from "./workers/excelParser";
+
 export async function parseWorkbook(buf: ArrayBuffer): Promise<Workbook> {
-  const XLSX = await import("xlsx");
-  const wb = XLSX.read(buf, { type: "array" });
-  const out: Workbook = {};
-  for (const name of wb.SheetNames) {
-    out[name] = XLSX.utils.sheet_to_json<string[]>(wb.Sheets[name], {
-      header: 1,
-      raw: false,
-      defval: "",
-      blankrows: false,
-    });
-  }
-  return out;
+  return parseSpreadsheetAsync(buf);
 }
 
 export function saveLocalWorkbook(fileName: string, wb: Workbook) {

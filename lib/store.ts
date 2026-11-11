@@ -13,6 +13,7 @@
 //  - Rows are never deleted (deletions are tombstones), so row positions stay stable.
 import * as G from "./google";
 import type { LinkData, NoteData, RecordType, RowData, SetupConfig, StoredRecord, UniData } from "./types";
+import type { GrantCategory } from "./config/erasmusGrants";
 
 export const APP_SHEET = "_erasmus_app";
 const HEADER = ["key", "type", "data", "updatedAt", "updatedBy"];
@@ -140,6 +141,7 @@ export interface StoreState {
   notes: Map<string, NoteItem[]>;
   links: Map<string, LinkItem[]>;
   config: SetupConfig | null;
+  grants: GrantCategory[] | null;
   status: SyncStatus;
   error: string;
   lastSync: number;
@@ -314,6 +316,7 @@ export class RecordStore {
     const notes = new Map<string, NoteItem[]>();
     const links = new Map<string, LinkItem[]>();
     let config: SetupConfig | null = null;
+    let grants: GrantCategory[] | null = null;
     const keys = new Set([...this.records.keys(), ...this.pending.keys()]);
     for (const key of keys) {
       const data = this.dataOf(key);
@@ -328,6 +331,9 @@ export class RecordStore {
         const l = data as unknown as LinkData;
         (links.get(l.uniKey) ?? links.set(l.uniKey, []).get(l.uniKey)!).push({ ...l, key });
       } else if (type === "config" && key === "config:setup") config = data as unknown as SetupConfig;
+      else if (type === "config" && key === "config:grants") {
+        grants = (data as { grants: GrantCategory[] }).grants ?? null;
+      }
     }
     notes.forEach((arr) => arr.sort((a, b) => (a.createdAt ?? "").localeCompare(b.createdAt ?? "")));
     this.state = {
@@ -337,6 +343,7 @@ export class RecordStore {
       notes,
       links,
       config,
+      grants,
       status: this.status,
       error: this.error,
       lastSync: this.lastSync,
@@ -371,6 +378,9 @@ export class RecordStore {
   }
   setConfig(cfg: SetupConfig) {
     this.upsert("config:setup", "config", cfg as unknown as Record<string, unknown>, true);
+  }
+  setGrants(cats: GrantCategory[]) {
+    this.upsert("config:grants", "config", { grants: cats } as Record<string, unknown>, true);
   }
 
   /** All records (for JSON export). */

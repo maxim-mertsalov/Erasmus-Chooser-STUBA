@@ -32,12 +32,16 @@ export async function geocode(
 ): Promise<GeoHit[]> {
   const provider = opts.provider ?? "nominatim";
   const cc = opts.cc ? toIso2(opts.cc) : "";
-  const key = `${provider}|${cc}|${opts.places ? 1 : 0}|${q.toLowerCase()}`;
+  const qNorm = q.replace(/\s+/g, " ").trim().toLowerCase();
+  if (!qNorm) return [];
+  const key = `${provider}|${cc}|${opts.places ? 1 : 0}|${qNorm}`;
   const c = loadCache();
   if (c[key]) return c[key];
-  const params = new URLSearchParams({ q, provider });
+  // Canonical query parameter order so Vercel Edge CDN shares the same cache entry across users.
+  const params = new URLSearchParams({ provider });
   if (cc) params.set("cc", cc);
   if (opts.places) params.set("places", "1");
+  params.set("q", qNorm);
   const res = await fetch(`/api/geocode?${params}`);
   if (!res.ok) throw new Error(`Geocoding failed (${res.status})`);
   const { results } = (await res.json()) as { results: GeoHit[] };

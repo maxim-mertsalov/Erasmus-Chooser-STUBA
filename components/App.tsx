@@ -19,9 +19,20 @@ import type { ColumnMapping, Filters, SetupConfig } from "@/lib/types";
 import { MainView } from "./MainView";
 import { ColumnMappingStep, FilterSetup, SheetSelect, StartScreen } from "./Setup";
 import { b, Modal } from "./ui";
+import { ToastProvider } from "./ui/Toast";
+import { SAMPLE_DATA, SAMPLE_FILE_NAME, SAMPLE_SHEET_NAME } from "@/lib/data/sampleDataset";
 
 type Step = "start" | "sheet" | "mapping" | "filters" | "main";
 type Dialog = { kind: "xlsx" | "readonly"; file: G.FileMeta } | null;
+
+function TopLoader({ busy }: { busy: boolean }) {
+  if (!busy) return null;
+  return (
+    <div className="fixed top-0 left-0 right-0 z-[9999] h-1 overflow-hidden bg-indigo-100/60 dark:bg-indigo-950/60 pointer-events-none">
+      <div className="h-full w-1/2 bg-gradient-to-r from-indigo-500 via-purple-500 to-sky-400 rounded-full animate-[pulse_1.2s_ease-in-out_infinite]" />
+    </div>
+  );
+}
 
 export default function App() {
   const [step, setStep] = useState<Step>("start");
@@ -217,9 +228,41 @@ export default function App() {
       }),
     localFile: (file: File) =>
       run("Reading file…", async () => {
+        if (file.name.toLowerCase().endsWith(".json")) {
+          const text = await file.text();
+          const parsed = JSON.parse(text);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            if ("type" in parsed[0] && "key" in parsed[0]) {
+              throw new Error(
+                "This file contains exported notes (.json). Open an agreements spreadsheet first, then choose 'Import' in the menu to restore notes.",
+              );
+            }
+            const headers = Object.keys(parsed[0]);
+            const rows = [headers, ...parsed.map((obj) => headers.map((k) => String(obj[k] ?? "")))];
+            const wb = { [file.name.replace(/\.json$/i, "")]: rows };
+            saveLocalWorkbook(file.name, wb);
+            await startLocal(file.name, wb);
+            return;
+          }
+        }
         const wb = await parseWorkbook(await file.arrayBuffer());
         saveLocalWorkbook(file.name, wb);
         await startLocal(file.name, wb);
+      }),
+    loadSample: () =>
+      run("Loading Dohody_platne_k_11.06.2026.xlsx…", async () => {
+        try {
+          const res = await fetch("/Dohody_platne_k_11.06.2026.xlsx");
+          if (!res.ok) throw new Error(`Status ${res.status}`);
+          const buf = await res.arrayBuffer();
+          const wb = await parseWorkbook(buf);
+          saveLocalWorkbook("Dohody_platne_k_11.06.2026.xlsx", wb);
+          await startLocal("Dohody_platne_k_11.06.2026.xlsx", wb);
+        } catch {
+          const wb = { [SAMPLE_SHEET_NAME]: SAMPLE_DATA };
+          saveLocalWorkbook(SAMPLE_FILE_NAME, wb);
+          await startLocal(SAMPLE_FILE_NAME, wb);
+        }
       }),
     resume: () =>
       run("Restoring…", async () => {
@@ -248,7 +291,8 @@ export default function App() {
   // ----- Render -----
   if (step === "main" && store && source) {
     return (
-      <>
+      <ToastProvider>
+        <TopLoader busy={Boolean(busy)} />
         {error && (
           <div className="fixed left-1/2 top-3 z-[3000] flex max-w-xl -translate-x-1/2 items-start gap-2 rounded-lg border border-rose-200 bg-rose-50 px-4 py-2.5 text-sm text-rose-800 shadow-lg dark:border-rose-900 dark:bg-rose-950 dark:text-rose-200">
             <span className="flex-1">⚠ {error}</span>
@@ -257,8 +301,15 @@ export default function App() {
         )}
         {busy && (
           <div className="fixed inset-0 z-[3000] flex items-center justify-center bg-slate-900/30 dark:bg-black/60">
-            <div className="rounded-lg border border-slate-200 bg-white px-5 py-3 text-sm font-medium shadow-xl dark:border-slate-700 dark:bg-slate-900">
-              {busy}
+            <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-5 py-3 text-sm font-medium shadow-xl dark:border-slate-700 dark:bg-slate-900">
+              <span className="flex-1">{busy}</span>
+              <button
+                type="button"
+                onClick={() => setBusy("")}
+                className="ml-2 text-xs text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+              >
+                Cancel
+              </button>
             </div>
           </div>
         )}
@@ -279,12 +330,14 @@ export default function App() {
               .catch((e) => alert(e.message))
           }
         />
-      </>
+      </ToastProvider>
     );
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 px-4 py-10 dark:bg-slate-950">
+    <ToastProvider>
+      <TopLoader busy={Boolean(busy)} />
+      <main className="min-h-screen bg-slate-50 px-4 py-10 dark:bg-slate-950">
       {error && (
         <div className="mx-auto mb-4 flex max-w-3xl items-start gap-2 rounded-lg border border-rose-200 bg-rose-50 p-3 text-sm text-rose-800 dark:border-rose-900 dark:bg-rose-950/70 dark:text-rose-200">
           <span className="flex-1">⚠ {error}</span>
@@ -298,6 +351,7 @@ export default function App() {
           signedIn={signedIn}
           user={user}
           busy={busy}
+          onCancelBusy={() => setBusy("")}
           invite={invite}
           resumeLabel={resume ? (resume.source.kind === "google" ? resume.source.title : resume.source.fileName) : null}
           onSignIn={handlers.signIn}
@@ -305,7 +359,12 @@ export default function App() {
           onPick={handlers.pick}
           onOpenLink={handlers.openLink}
           onLocalFile={handlers.localFile}
+          onLoadSample={handlers.loadSample}
           onResume={handlers.resume}
+          onClearResume={() => {
+            saveSession(null);
+            setResume(null);
+          }}
           onAcceptInvite={handlers.acceptInvite}
         />
       )}
@@ -411,6 +470,7 @@ export default function App() {
           </div>
         </Modal>
       )}
-    </main>
+      </main>
+    </ToastProvider>
   );
 }

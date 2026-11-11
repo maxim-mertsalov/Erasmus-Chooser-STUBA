@@ -134,10 +134,20 @@ export function MultiSelect({
   );
 }
 
-export function Modal({ title, children, onClose }: { title: string; children: ReactNode; onClose?: () => void }) {
+export function Modal({
+  title,
+  children,
+  onClose,
+  maxWidth = "max-w-lg",
+}: {
+  title: string;
+  children: ReactNode;
+  onClose?: () => void;
+  maxWidth?: string;
+}) {
   return (
     <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-slate-900/50 p-4 dark:bg-black/70" onClick={onClose}>
-      <div className="w-full max-w-lg rounded-xl border border-slate-200 bg-white p-5 shadow-xl dark:border-slate-700 dark:bg-slate-900" onClick={(e) => e.stopPropagation()}>
+      <div className={`w-full ${maxWidth} rounded-xl border border-slate-200 bg-white p-5 shadow-xl dark:border-slate-700 dark:bg-slate-900`} onClick={(e) => e.stopPropagation()}>
         <h2 className="mb-3 text-lg font-semibold">{title}</h2>
         {children}
       </div>

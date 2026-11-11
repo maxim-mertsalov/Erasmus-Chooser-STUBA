@@ -16,8 +16,14 @@ Built with **Next.js (App Router)**, **Tailwind CSS**, **Leaflet + OpenStreetMap
   - If you only have **View** access to a spreadsheet (or if it is an `.xlsx` file on Google Drive), the app lets you view it or create an editable Google Sheet copy in one click.
 - **Wizard setup:** Sheet selection (if multiple sheets) → automatic column matching (with manual override & preview) → initial Faculty & Program selection.
 - **Split-screen workspace:**
-  - **Sortable & filterable table** on the left (search, faculty, program, country, status, min priority, language, tag, note category, location state, expired/hidden toggles).
-  - **Interactive OpenStreetMap** on the right (`Table` / `Map` toggles to hide either pane).
+  - **Sortable & filterable table** on the left (search with 160ms debounce, faculty, program, country, status, min priority, language, tag, note category, location state, expired/hidden toggles).
+  - **Customizable column visibility** (toggle table columns to fit laptop or tablet screens, saved in localStorage).
+  - **Side-by-side University Comparison:** Select multiple universities to compare their grants, agreements, ratings, notes, and view their locations on a dedicated comparison map.
+  - **Erasmus+ Grant Calculator / Group hints:** Automatic grant rate tags (`~670 €/mo`, `~600 €/mo`, `~540 €/mo`) based on destination country group guidelines (`lib/config/erasmusGrants.ts`).
+  - **Pagination controls:** Switch between All (default), 25, 50, or 100 rows per page.
+  - **Interactive OpenStreetMap** on the right (`Table` / `Map` toggles to hide either pane, with auto-dark mode support).
+  - **Toast notifications:** Replaced native browser alerts with non-intrusive floating toasts.
+  - **Pre-seeded static geocache & one-click sample:** Built-in instant coordinates cache for European technical universities and one-click demo data loading.
   - Clicking a table row flies to and highlights the university on the map; clicking a map marker highlights and scrolls to the row and shows agreement info in a popup.
 - **Free auto-geocoding + manual mapping:**
   - Automatically locates universities in the background using free OpenStreetMap **Nominatim** and **Komoot Photon** (with Erasmus code city fallback, e.g. `E MADRID05` → Madrid).
@@ -89,7 +95,7 @@ To enable **Sign in with Google**, **Google Picker**, and **Google Sheets sync**
 - Geocoding runs through `/api/geocode` (`app/api/geocode/route.ts`), which proxies requests to:
   - **OpenStreetMap Nominatim** (throttled to ~1 req/sec as required by Nominatim usage policy).
   - **Komoot Photon** (fuzzy/prefix search + city fallback).
-- Results are cached in both server memory and browser `localStorage` (`erasmus-geocache-v1`), and resolved coordinates are saved into the `_erasmus_app` sheet so friends opening the same file don't need to re-geocode.
+- Results are cached across three layers: Vercel Edge CDN (`Cache-Control: s-maxage` on `/api/geocode` only, never caching Google Sheets requests), in-memory server cache, and browser `localStorage` (`erasmus-geocache-v1`). Resolved coordinates are also saved into the `_erasmus_app` sheet so friends opening the same file don't need to re-geocode.
 - Optionally set `GEOCODER_CONTACT=your-email@example.com` in `.env.local` so Nominatim receives a contact identifier in the `User-Agent` header.
 
 ---
